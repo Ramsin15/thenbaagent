@@ -1,3 +1,4 @@
+<!-- /header.html -->
 <nav class="nav-wrap" role="navigation" aria-label="Main">
   <div class="nav">
     <a class="brand" href="/">
@@ -15,7 +16,7 @@
 
       <li class="has-sub" aria-haspopup="true">
         <a href="/players/">Players</a>
-        <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu"></button>
+        <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu" data-subtoggle></button>
         <ul class="sub" aria-label="Players submenu">
           <li><a href="/players/lacey.html">Lacey James</a></li>
           <li><a href="/players/birima.html">Birima Seck</a></li>
@@ -26,21 +27,37 @@
     </ul>
   </div>
 
+  <!-- Mobile-only behavior CSS (style-neutral: no colors/spacing altered) -->
   <style>
-    /* === Mobile menu scroll fix === */
-    @media (max-width: 900px) {
-      body.nav-open { overflow: hidden; } /* Prevent background scroll */
+    /* Prevent horizontal wobble */
+    html, body { overflow-x: hidden; }
 
-      [data-nav].open {
+    @media (max-width: 900px){
+      /* Lock background scroll when menu open */
+      body.nav-open { overflow: hidden; }
+
+      /* Make the nav list a fixed, full-height panel when open (under header) */
+      [data-nav]{
+        /* your desktop styles stay via your existing CSS; mobile adds only when open */
+      }
+      [data-nav].open{
         position: fixed;
-        top: 60px; /* match your header height */
-        left: 0;
-        right: 0;
+        left: 0; right: 0;
+        top: 60px;             /* adjust if your header is taller */
         max-height: calc(100dvh - 60px);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         z-index: 9999;
-        background: inherit; /* keeps your existing background */
+        background: inherit;   /* keeps your current background */
+      }
+
+      /* Submenu: collapsed by default on mobile; open class shows it */
+      .has-sub > .sub{ display: none; }
+      .has-sub.open > .sub{ display: block; }
+
+      /* Make caret easier to tap on mobile */
+      .has-sub > [data-subtoggle]{
+        touch-action: manipulation;
       }
     }
   </style>
@@ -49,6 +66,7 @@
     (function () {
       const btn = document.querySelector('[data-nav-toggle]');
       const panel = document.querySelector('[data-nav]');
+      const caretBtns = document.querySelectorAll('[data-subtoggle]');
       if (!btn || !panel) return;
 
       function setOpen(isOpen) {
@@ -57,14 +75,38 @@
         btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
 
+      // Toggle main menu
       btn.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+
+      // Close menu when a link is clicked
       panel.addEventListener('click', (e) => {
-        if (e.target.closest('a')) setOpen(false);
+        const a = e.target.closest('a');
+        if (a) setOpen(false);
       });
+
+      // Close when tapping outside the panel or button
       document.addEventListener('click', (e) => {
         if (!panel.classList.contains('open')) return;
         if (e.target.closest('[data-nav]') || e.target.closest('[data-nav-toggle]')) return;
         setOpen(false);
+      });
+
+      // Submenu toggles (Players)
+      caretBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const li = btn.closest('.has-sub');
+          const isOpen = li.classList.toggle('open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      });
+
+      // Ensure panel height stays correct on orientation change
+      window.addEventListener('resize', () => {
+        if (panel.classList.contains('open')) {
+          // reflow keeps max-height tied to 100dvh reliably on iOS
+          panel.style.maxHeight = getComputedStyle(panel).maxHeight;
+        }
       });
     })();
   </script>
