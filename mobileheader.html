@@ -1,0 +1,96 @@
+<nav class="mobile-nav-wrap" role="navigation" aria-label="Main">
+  <div class="nav">
+    <a class="brand" href="/">
+      <span class="name">The NBA Agent</span>
+      <span class="kicker">Player Representation</span>
+    </a>
+
+    <!-- Hamburger -->
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Full screen menu overlay -->
+  <div class="mobile-menu" hidden>
+    <button class="close-btn" aria-label="Close menu">✕</button>
+    <ul>
+      <li><a href="/">About</a></li>
+      <li><a href="/players/lacey.html">Lacey James</a></li>
+      <li><a href="/players/birima.html">Birima Seck</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </div>
+
+  <style>
+    .mobile-nav-wrap {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      position: relative;
+      z-index: 1000;
+    }
+    .mobile-nav-wrap .brand {
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: #000;
+    }
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      float: right;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #000;
+      margin: 5px 0;
+    }
+    .mobile-menu {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(128,128,128,0.8);
+      color: white;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 50px 0 0;
+    }
+    .mobile-menu li {
+      margin: 20px 0;
+    }
+    .mobile-menu a {
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      align-self: flex-end;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    const hamb = document.querySelector('.hamburger');
+    const menu = document.querySelector('.mobile-menu');
+    const closeBtn = document.querySelector('.close-btn');
+
+    hamb.addEventListener('click', () => {
+      menu.hidden = false;
+    });
+    closeBtn.addEventListener('click', () => {
+      menu.hidden = true;
+    });
+  </script>
+</nav>
