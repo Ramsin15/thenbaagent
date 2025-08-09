@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Birima Seck — Player Profile | The NBA Agent</title>
-  <link rel="stylesheet" href="/assets/site.css">
+
   <!-- Open Graph / Twitter Card for rich previews -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="The NBA Agent" />
@@ -20,11 +20,15 @@
   <meta name="twitter:description" content="Birima Seck player profile, highlights, and full scouting report." />
   <meta name="twitter:image" content="https://www.dropbox.com/scl/fi/kjigcpnkp2ai32e5oces7/resize.jpeg?rlkey=ri48zonte87k8jtn3idgd4j8f&st=n2uyiuzo&raw=1" />
   <meta name="twitter:image:alt" content="Headshot of Birima Seck" />
-  <!-- Optional: canonical URL for consistency across scrapers -->
   <link rel="canonical" href="https://thenbaagent.com/players/birima.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Shared site CSS (header/footer + mobile fixes) -->
+  <link rel="stylesheet" href="/assets/site.css">
+
   <style>
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb;
@@ -35,34 +39,10 @@
     body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== NAV (hover + click; no flicker) ===== */
-    .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
-    .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:baseline;gap:10px}
-    .brand .name{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-    .brand .kicker{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-    .links{display:flex;gap:6px;align-items:center;margin:0;padding:0}
-    .links>li{list-style:none;position:relative}
-    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem;display:inline-block}
-    .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
-
-    .has-sub{position:relative;display:inline-flex;align-items:center}
-    .has-sub>.caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
-    .has-sub>.caret::after{content:"▾";font-size:.9rem}
-    .sub{position:absolute;top:100%;left:0;min-width:220px;background:#fff;border:1px solid var(--divider);border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,.12);padding:8px;margin-top:0;display:none;z-index:50}
-    .sub li{list-style:none}
-    .sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
-    .sub a:hover{background:#f8fafc}
-    /* click open */
-    .has-sub.open > .sub{display:block}
-    /* hover + keyboard focus open */
-    @media (hover:hover) and (pointer:fine){ .has-sub:hover > .sub{display:block} }
-    .has-sub:focus-within > .sub{display:block}
-
-    /* ===== PAGE WRAP ===== */
+    /* ===== (page) PAGE WRAP ===== */
     .wrap{width:min(1100px,94vw);margin:32px auto}
 
-    /* ===== ROW 1: IMAGE + PROFILE ===== */
+    /* ===== (page) ROW 1: IMAGE + PROFILE ===== */
     .hero{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:start}
     .panel{background:var(--panel);border:1px solid #eee;border-radius:14px;box-shadow:0 10px 34px rgba(17,24,39,.08);overflow:hidden}
     .panel-inner{padding:26px 22px 18px}
@@ -75,7 +55,7 @@
     .profile{display:flex;flex-direction:column;gap:18px;min-width:0}
     .summary{font-size:1rem;background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:18px}
 
-    /* ===== VIDEOS GRID ===== */
+    /* ===== (page) VIDEOS GRID ===== */
     .videos{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .vcard{border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fff}
     .vtitle{padding:12px 14px;text-align:center;font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.01em;line-height:1.35}
@@ -83,63 +63,45 @@
     .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
     .vcard a:hover .thumb img{transform:scale(1.02)}
 
-    /* ===== SCOUTING REPORT ===== */
+    /* ===== (page) SCOUTING REPORT ===== */
     .report{margin-top:36px;border:1px solid var(--divider);border-radius:14px;background:var(--soft);box-shadow:0 8px 30px rgba(2,6,23,.06)}
     .report header{padding:18px 18px 0}
     .report h2{margin:0;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.01em}
     .rgrid{display:grid;grid-template-columns:1fr;gap:18px;padding:18px}
 
-    /* ===== Player Summary – CLEAN paragraphs (no numbers, no gradients) ===== */
-    .summary-card{background:#ffffff;border:0px solid #e6edf3;border-radius:0px}
+    /* Player Summary – CLEAN paragraphs */
+    .summary-card{background:#ffffff;border:0;border-radius:0}
     .summary-card h3{margin:12px 16px 6px;font-size:1.05rem}
     .summary-card .body{padding:4px 16px 16px}
-    .summary-card .body p{margin:0 0 12px;line-height:1.75;background:#fff;border:0px solid #eef2f7;border-radius:10px;padding:14px}
+    .summary-card .body p{margin:0 0 12px;line-height:1.75;background:#fff;border:0;border-radius:10px;padding:14px}
     .summary-card .body p:last-child{margin-bottom:0}
 
-    /* ===== CONTRAST SECTIONS (above/below your split) ===== */
-    .contrast-top{background:#FFF6EF;border:0px solid #f1e6de;border-radius:0px;padding:0px}
+    /* Contrast sections */
+    .contrast-top{background:#FFF6EF;border:0;border-radius:0;padding:0}
     .contrast-bottom{background:#F6FAFF;border:1px solid #e6edf3;border-radius:14px;padding:14px}
     .contrast-divider{height:12px;margin:6px 0;background:repeating-linear-gradient(90deg,#e5e7eb 0 10px,transparent 10px 20px)}
 
-    /* ===== Cards inside contrast-bottom ===== */
+    /* Cards inside contrast-bottom */
     .card{border:1px solid var(--divider);border-radius:12px;background:#fff;padding:14px 16px}
     .card h3{margin:0 0 8px;font-size:1rem}
     .card p{margin:0}
 
-    /* ===== 4 VERTICAL PHOTOS (Bottom) ===== */
+    /* 4 VERTICAL PHOTOS (Bottom) */
     .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .gimg{border-radius:12px;overflow:hidden;border:1px solid var(--divider);background:#000;aspect-ratio:3/4}
     .gimg img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
     .gimg:hover img{transform:scale(1.02)}
 
-    /* ===== FOOTER ===== */
-    footer{margin:56px 0 48px}
-    .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;padding-bottom:20px;border-top:1px solid var(--divider);text-align:center}
-    .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-    .foot .cell,.foot .email{font-weight:700}
-    .foot .follow{display:flex;gap:10px;justify-content:center}
-    .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
-    .foot .follow img{width:18px;height:18px}
-
-    /* ===== RESPONSIVE ===== */
+    /* RESPONSIVE */
     @media (max-width:980px){
       .hero{grid-template-columns:1fr}
       .panel{max-width:520px;margin:0 auto}
       .videos{grid-template-columns:1fr}
       .gallery{grid-template-columns:repeat(2,1fr)}
-      .kv-row{grid-template-columns:150px 1fr}
-      .nav{justify-content:center;gap:12px}
-      .links a{padding:12px 10px}
-    }
-    @media (max-width:700px){
-      .kv-row{grid-template-columns:120px 1fr}
     }
     @media (max-width:560px){
-      .brand .kicker{display:none}
-      .links a{font-size:.86rem;letter-spacing:.18em}
       .portrait img{width:220px;height:220px}
       .gallery{grid-template-columns:1fr}
-      .kv-row{grid-template-columns:105px 1fr}
     }
 
     /* TABLE-GRID STATS (from your original) */
@@ -151,28 +113,8 @@
   </style>
 </head>
 <body>
+  <!-- Shared header (loads /header.html) -->
   <div id="site-header" data-src="/header.html"></div>
-  <!-- HEADER -->
-  <div class="nav-wrap">
-    <nav class="nav" role="navigation" aria-label="Main">
-      <div class="brand">
-        <div class="name">The NBA Agent</div>
-        <div class="kicker">Player Representation</div>
-      </div>
-      <ul class="links">
-        <li><a href="/">About</a></li>
-        <li class="has-sub" aria-haspopup="true">
-          <a href="/players/" class="active">Players</a>
-          <button class="caret" aria-expanded="false" aria-label="Toggle Players menu"></button>
-          <ul class="sub" aria-label="Players submenu">
-            <li><a href="/players/lacey.html">Lacey James</a></li>
-            <li><a href="/players/birima.html" class="active">Birima Seck</a></li>
-          </ul>
-        </li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
 
   <main class="wrap">
     <!-- ROW 1: IMAGE + PROFILE -->
@@ -298,51 +240,12 @@
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/dulrkkll7ox6hh47m4hr2/convert.jpeg?rlkey=6p6uugqfvo6yi439tlogs9kin&st=ut6k5t4s&raw=1" alt="Birima Seck photo 3" loading="lazy"></figure>
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" alt="Birima Seck photo 4" loading="lazy"></figure>
     </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="foot">
-        <div><h4>Cell</h4><div class="cell">(408) 909-0900</div></div>
-        <div><h4>Email</h4><div class="email">RJ@TheNBAAgent.com</div></div>
-        <div><h4>Follow</h4>
-          <div class="follow">
-            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
-            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
-            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-          </div>
-        </div>
-      </div>
-    </footer>
   </main>
 
-  <!-- Dropdown: click + hover support (no flicker) -->
-  <script>
-    document.querySelectorAll('.has-sub > .caret').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const item = e.currentTarget.closest('.has-sub');
-        const willOpen = !item.classList.contains('open');
-        document.querySelectorAll('.has-sub.open').forEach(el => el.classList.remove('open'));
-        if (willOpen) item.classList.add('open');
-        e.currentTarget.setAttribute('aria-expanded', String(willOpen));
-      });
-    });
-    document.addEventListener('click', (e) => {
-      if(!e.target.closest('.has-sub')){
-        document.querySelectorAll('.has-sub.open').forEach(el => {
-          el.classList.remove('open');
-          const caret = el.querySelector('.caret'); if(caret) caret.setAttribute('aria-expanded','false');
-        });
-      }
-    });
-    // highlight active link
-    const path = location.pathname.replace(/\/+$/,'');
-    document.querySelectorAll('.links a').forEach(a=>{
-      const href=a.getAttribute('href').replace(/\/+$/,'');
-      if (href && href!=='' && (href===path || (href!=='/' && path.startsWith(href)))) a.classList.add('active');
-    });
-  </script>
+  <!-- Shared footer (loads /footer.html) -->
   <div id="site-footer" data-src="/footer.html"></div>
-<script src="/assets/site.js" defer></script>
+
+  <!-- Shared behavior (injects header/footer; handles nav hover+click; mobile menu) -->
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
