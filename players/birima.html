@@ -18,7 +18,7 @@
     body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== NAV (stable dropdown; CLICK ONLY to prevent flicker) ===== */
+    /* ===== NAV (hover + click; no flicker) ===== */
     .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
     .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;align-items:baseline;gap:10px}
@@ -38,6 +38,11 @@
     .sub a:hover{background:#f8fafc}
     /* open state (CLICK toggled) */
     .has-sub.open > .sub{display:block}
+    /* hover + keyboard focus open (restores previous behavior) */
+    @media (hover:hover) and (pointer:fine){
+      .has-sub:hover > .sub{display:block}
+    }
+    .has-sub:focus-within > .sub{display:block}
 
     /* ===== PAGE WRAP ===== */
     .wrap{width:min(1100px,94vw);margin:32px auto}
@@ -79,15 +84,13 @@
     .card h3{margin:0 0 8px;font-size:1rem}
     .card p{margin:0}
 
-    /* ===== Player Summary readability upgrade (no text changes) ===== */
+    /* ===== Player Summary NEW layout (stacked cards, numbered chips) ===== */
     .summary-card{background:#ffffff;border:1px solid #e6edf3}
-    .summary-card h3{font-size:1.05rem}
-    .summary-card .body{font-size:1rem;line-height:1.75}
-    .summary-card .body p{margin:0 0 12px}
-    @media(min-width:980px){
-      .summary-card .body{column-count:2;column-gap:28px}
-      .summary-card .body p{break-inside:avoid}
-    }
+    .summary-card h3{font-size:1.05rem;margin-bottom:6px}
+    .summary-card .body{font-size:1rem;line-height:1.7;counter-reset:ps}
+    .summary-card .body p{position:relative;margin:0;padding:14px 14px 14px 46px;border:1px solid #eef2f7;background:linear-gradient(180deg,#fff 0%,#fafcff 100%);border-radius:12px}
+    .summary-card .body p + p{margin-top:10px}
+    .summary-card .body p::before{counter-increment:ps;content:counter(ps);position:absolute;left:12px;top:12px;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:999px;background:#111827;color:#fff;font-size:.8rem;font-weight:800}
 
     /* ===== 4 VERTICAL PHOTOS (bottom of page) ===== */
     .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -113,6 +116,7 @@
       .kv-row{grid-template-columns:150px 1fr}
       .nav{justify-content:center;gap:12px}
       .links a{padding:12px 10px}
+      .summary-card .body p{padding-left:44px}
     }
     @media (max-width:700px){
       .kv-row{grid-template-columns:120px 1fr}
@@ -174,12 +178,12 @@
       <!-- Right: Summary + Table grid stats -->
       <article class="profile">
         <div class="summary">
-          <strong>Summary:</strong> Emerging front‑court prospect with elite length and mobility, bringing rim protection, switchability, and vertical spacing upside.
+          <strong>Summary:</strong> Emerging front‑court prospect with elite length and mobility,explosiveness, and strength to protect the rim, rebound, and finish through contact, he is defensively versatile with the ability to guard the post, switch onto smaller players, and provide disciplined help-side rotations while securing rebounds with sound positioning and creating second-chance points through persistence; offensively, he is effective in pick-and-roll or pick-and-pop situations with a developing mid-range game and the ability to knock down the three, and his high basketball IQ, relentless motor, and strong leadership make him a valuable presence on both ends of the floor.
         </div>
 
         <!-- Table grid stats -->
         <div class="kv-table">
-          <div class="kv-row"><div class="kv-label">Status</div><div class="kv-value">Free Agent - Toronto Raptors 905 (Starting Center Last Season)</div></div>
+          <div class="kv-row"><div class="kv-label">Status</div><div class="kv-value">Undrafted Free Agent - Rookie Season (Fairfield College)</div></div>
           <div class="kv-row"><div class="kv-label">POS</div><div class="kv-value">PF / C</div></div>
           <div class="kv-row"><div class="kv-label">Height</div><div class="kv-value">6'11"</div></div>
           <div class="kv-row"><div class="kv-label">Weight</div><div class="kv-value">200 LBS</div></div>
@@ -289,7 +293,7 @@
     </footer>
   </main>
 
-  <!-- Dropdown click support (no flicker on tap/click); hover disabled -->
+  <!-- Dropdown: click + hover support (no flicker) -->
   <script>
     document.querySelectorAll('.has-sub > .caret').forEach(btn => {
       btn.addEventListener('click', (e) => {
