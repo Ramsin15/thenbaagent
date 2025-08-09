@@ -8,6 +8,18 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,
 img{max-width:100%;height:auto;display:block}
 
 /* ---------- Header (desktop + mobile) ---------- */
+/* ---- Mobile scroll stability ---- */
+html, body { overflow-x: hidden; }
+body { overscroll-behavior-y: contain; }
+
+/* Reserve space so injected footer doesn't shift layout */
+#site-header { min-height: 64px; }                 /* adjust if your header is taller */
+#site-footer { min-height: clamp(240px, 26vh, 340px); }  /* match your real footer height */
+
+/* Optional: avoid map causing jank when swiping near bottom */
+.map-frame { -webkit-transform: translateZ(0); transform: translateZ(0); }
+
+
 .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
 .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
 .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:inherit}
