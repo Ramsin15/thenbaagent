@@ -1,1 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Birima Seck — Player Profile | The NBA Agent</title>
+  <meta name="description" content="Birima Seck player profile, highlights, and full scouting report." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb;
+      --brand:#0b0b0b; --accent:#111827; --card:#fbfbfb;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
+    img{max-width:100%;height:auto;display:block}
+
+    /* NAV (same as other pages) */
+    .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
+    .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:baseline;gap:10px}
+    .brand .name{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+    .brand .kicker{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+    .links{display:flex;gap:6px;align-items:center;margin:0;padding:0}
+    .links>li{list-style:none;position:relative}
+    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem;display:inline-block}
+    .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
+    .has-sub{display:inline-flex;align-items:center}
+    .has-sub>.caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
+    .has-sub>.caret::after{content:"▾";font-size:.9rem}
+    .sub{position:absolute;top:100%;left:8px;min-width:220px;margin-top:6px;background:#fff;border:1px solid var(--divider);border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,.12);padding:8px;display:none}
+    .sub li{list-style:none}
+    .sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
+    .sub a:hover{background:#f8fafc}
+    @media (pointer:fine){ .has-sub:hover .sub{display:block} }
+    .has-sub.open .sub{display:block}
+
+    /* PAGE WRAP */
+    .wrap{width:min(1100px,94vw);margin:32px auto}
+
+    /* ROW 1: IMAGE + PROFILE */
+    .hero{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:start}
+    .panel{background:var(--panel);border:1px solid #eee;border-radius:14px;box-shadow:0 10px 34px rgba(17,24,39,.08);overflow:hidden}
+    .panel-inner{padding:26px 22px 18px}
+    .portrait{display:grid;place-items:center;padding:8px 0 12px}
+    .portrait img{
+      width:260px;height:260px;object-fit:contain;background:#fff;border-radius:12px;
+      box-shadow:0 12px 28px rgba(0,0,0,.06);padding:10px
+    }
+    .player-name{text-align:center;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.02em;margin-top:16px;font-size:clamp(1.5rem,3.2vw,2rem)}
+    .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
+    .player-role{text-align:center;font-weight:800;letter-spacing:.28em;font-size:.9rem}
+
+    .profile{display:flex;flex-direction:column;gap:18px;min-width:0}
+    .summary{font-size:1rem;background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:18px}
+
+    /* TABLE-GRID STATS (label left | value with underline) */
+    .kv-table{display:grid;row-gap:10px;background:#fff;border:1px solid var(--divider);border-radius:12px;padding:14px}
+    .kv-row{display:grid;grid-template-columns:170px 1fr;align-items:center;column-gap:16px}
+    .kv-label{font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem;color:var(--muted);white-space:nowrap}
+    .kv-value{padding:8px 0;border-bottom:1.5px solid #d1d5db;line-height:1.45;font-weight:400;font-size:.95rem;min-height:32px}
+    .kv-row:last-child .kv-value{border-bottom:0}
+
+    /* ROW 2: VIDEOS */
+    .videos{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .vcard{border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fff}
+    .vtitle{padding:12px 14px;text-align:center;font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.01em;line-height:1.35}
+    .thumb{display:block;aspect-ratio:16/9;background:#000;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+    .vcard a:hover .thumb img{transform:scale(1.02)}
+
+    /* ROW 3: REPORT */
+    .report{margin-top:36px;border:1px solid var(--divider);border-radius:14px;background:
+      radial-gradient(140% 100% at 0% 0%, #f7fbff 0%, #ffffff 40%),
+      linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+      box-shadow:0 8px 30px rgba(2,6,23,.06)
+    }
+    .report header{padding:18px 18px 0}
+    .report h2{margin:0;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.01em}
+    .rgrid{display:grid;grid-template-columns:1fr;gap:18px;padding:18px}
+    .card{border:1px solid var(--divider);border-radius:12px;background:#fff;padding:14px 16px}
+    .card h3{margin:0 0 8px;font-size:1rem}
+    .card p{margin:0}
+
+    /* ROW 4: 4 VERTICAL PHOTOS */
+    .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .gimg{border-radius:12px;overflow:hidden;border:1px solid var(--divider);background:#000;aspect-ratio:3/4}
+    .gimg img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+    .gimg:hover img{transform:scale(1.02)}
+
+    /* FOOTER */
+    footer{margin:56px 0 48px}
+    .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;padding-bottom:20px;border-top:1px solid var(--divider);text-align:center}
+    .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .foot .cell,.foot .email{font-weight:700}
+    .foot .follow{display:flex;gap:10px;justify-content:center}
+    .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
+    .foot .follow img{width:18px;height:18px}
+
+    /* RESPONSIVE */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .panel{max-width:520px;margin:0 auto}
+      .videos{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .kv-row{grid-template-columns:150px 1fr}
+      .nav{justify-content:center;gap:12px}
+      .links a{padding:12px 10px}
+    }
+    @media (max-width:700px){
+      .kv-row{grid-template-columns:120px 1fr}
+    }
+    @media (max-width:560px){
+      .brand .kicker{display:none}
+      .links a{font-size:.86rem;letter-spacing:.18em}
+      .portrait img{width:220px;height:220px}
+      .gallery{grid-template-columns:1fr}
+      .kv-row{grid-template-columns:105px 1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <div class="nav-wrap">
+    <nav class="nav" role="navigation" aria-label="Main">
+      <div class="brand">
+        <div class="name">The NBA Agent</div>
+        <div class="kicker">Player Representation</div>
+      </div>
+      <ul class="links">
+        <li><a href="/">About</a></li>
+        <li class="has-sub" aria-haspopup="true">
+          <a href="/players/" class="active">Players</a>
+          <button class="caret" aria-expanded="false" aria-label="Toggle Players menu"></button>
+          <ul class="sub" aria-label="Players submenu">
+            <li><a href="/players/lacey.html">Lacey James</a></li>
+            <li><a href="/players/birima.html" class="active">Birima Seck</a></li>
+          </ul>
+        </li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main class="wrap">
+    <!-- ROW 1: IMAGE + PROFILE -->
+    <section class="hero">
+      <!-- Left: Headshot -->
+      <aside class="panel">
+        <div class="panel-inner">
+          <div class="portrait">
+            <img src="https://www.dropbox.com/scl/fi/kjigcpnkp2ai32e5oces7/resize.jpeg?rlkey=ri48zonte87k8jtn3idgd4j8f&st=n2uyiuzo&raw=1" alt="Birima Seck headshot" />
+          </div>
+          <div class="player-name">BIRIMA&nbsp;SECK</div>
+          <div class="rule"></div>
+          <div class="player-role">PF / C</div>
+        </div>
+      </aside>
+
+      <!-- Right: Summary + Table grid stats -->
+      <article class="profile">
+        <div class="summary">
+          <strong>Summary:</strong> Emerging front‑court prospect with elite length and mobility, bringing rim protection, switchability, and vertical spacing upside.
+        </div>
+
+        <!-- Table grid stats -->
+        <div class="kv-table">
+          <div class="kv-row"><div class="kv-label">Status</div><div class="kv-value">Free Agent - Toronto Raptors 905 (Starting Center Last Season)</div></div>
+          <div class="kv-row"><div class="kv-label">POS</div><div class="kv-value">PF / C</div></div>
+          <div class="kv-row"><div class="kv-label">Height</div><div class="kv-value">6'11"</div></div>
+          <div class="kv-row"><div class="kv-label">Weight</div><div class="kv-value">200 LBS</div></div>
+          <div class="kv-row"><div class="kv-label">DOB</div><div class="kv-value">8/15/22 (22 years old)</div></div>
+          <div class="kv-row"><div class="kv-label">Hometown</div><div class="kv-value">Louga, Senegal</div></div>
+          <div class="kv-row"><div class="kv-label">Nationality</div><div class="kv-value">Senegal</div></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ROW 2: VIDEOS -->
+    <section class="videos">
+      <div class="vcard">
+        <div class="vtitle">Birima Seck - Highlights - 2024/2025 Season</div>
+        <a href="https://www.youtube.com/watch?v=e8JdhKTeXuQ" target="_blank" rel="noopener">
+          <span class="thumb"><img src="https://i.ytimg.com/vi/e8JdhKTeXuQ/hqdefault.jpg" alt="Birima Seck Highlights 2024/2025" loading="lazy"></span>
+        </a>
+      </div>
+      <div class="vcard">
+        <div class="vtitle">Birima Seck - Full Game Minutes - 2024/2025 Season</div>
+        <a href="https://www.youtube.com/watch?v=nhNqH1skVZg" target="_blank" rel="noopener">
+          <span class="thumb"><img src="https://i.ytimg.com/vi/nhNqH1skVZg/hqdefault.jpg" alt="Birima Seck Full Game Minutes 2024/2025" loading="lazy"></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ROW 3: SCOUTING REPORT -->
+    <section class="report">
+      <header>
+        <h2>Birima Seck — Full Scouting Report</h2>
+      </header>
+      <div class="rgrid">
+        <div class="card">
+          <h3>Player Summary</h3>
+          <p><em>Do Not Change any text</em></p>
+          <p>"Birima Seck’s journey from Senegal to NCAA Division I basketball is a story of rapid development, resilience & adaptability. Born in Louga, Senegal, Seck initially played soccer, but a dramatic growth spurt led him to basketball, where his natural athleticism and size quickly drew attention. He began his basketball training in earnest only a few years before coming to the United States, making his ascent to college basketball all the more impressive.</p>
+          <p>Seck’s early basketball education took place at the Canterbury Basketball Academy in Spain, where he was introduced to a European style of play, emphasizing fundamentals, skill development, and versatility. This experience laid a strong foundation for his later success and exposed him to high-level competition at a young age. Seeking further growth and greater opportunities, Seck moved to Arizona to attend Dream City Christian School. There, he continued to refine his skills, adapt to the American game, and attract attention from college recruiters—even before playing a single prep game in the U.S. His potential was quickly recognized & he received multiple Division I scholarship offers.</p>
+          <p>Seck began his collegiate career at the University of New Mexico, where he spent two seasons as a member of the Lobos. At New Mexico, he was primarily a reserve but made his mark as a high-energy forward, valued for his defensive presence, rebounding, and shot-blocking ability. He was often called upon to provide a spark off the bench, using his length and athleticism to disrupt opponents & protect the rim. Coaches & teammates appreciated his willingness to do the dirty work—setting screens, contesting shots, and battling on the boards. His best performances came in games where his defensive impact and hustle stood out, even if his contributions didn’t always show up in the box score.</p>
+          <p>After two years with the Lobos, Seck transferred to Fairfield University. With the Stags, he continued to grow as a player, earning more playing time & a larger role within the team. At Fairfield, Seck’s international experience & maturity became assets, as he brought a unique perspective & work ethic to the program. He was known for his adaptability, having successfully transitioned between different styles of play & levels of competition throughout his career. His presence on the court was felt most on the defensive end, where he used his length and timing to alter shots & provide interior toughness.</p>
+          <p>Off the court, Seck is recognized for his positive attitude, humility & commitment to his teammates. His journey from Senegal to Spain, then to Arizona & across two NCAA programs, reflects a deep determination to succeed & a willingness to embrace new challenges. Seck’s story is not just about basketball talent, but also about perseverance, cultural adaptation & the pursuit of personal & athletic growth."</p>
+        </div>
+
+        <div class="card">
+          <h3>1. Physical Tools</h3>
+          <p>Length &amp; Wingspan Utilization – Effectively uses his reach to alter shots and snag rebounds.<br>
+          Athleticism &amp; Explosiveness – Vertical leap &amp; first-step quickness, especially in rim-protecting &amp; chase-downs.<br>
+          Strength &amp; Body Control – Ability to hold position in the post, absorb contact &amp; finish through traffic.</p>
+        </div>
+
+        <div class="card">
+          <h3>2. Defensive Prowess</h3>
+          <p>Rim Protection &amp; Shot-Blocking – Timing of his jump, ability to contest w/o fouling.<br>
+          On-Ball Defense – Lateral quickness, stance &amp; ability to stay in front of smaller players.<br>
+          Help Defense &amp; Rotations – Court awareness, communication &amp; recovering to his man after help.<br>
+          Screen Coverage – Effectiveness in navigating &amp; switching or fighting through screens.</p>
+        </div>
+
+        <div class="card">
+          <h3>3. Rebounding</h3>
+          <p>Defensive Rebounding – Box-out technique, anticipation of the ball’s trajectory.<br>
+          Offensive Rebounding – Positioning &amp; persistence to create second-chance opportunities.</p>
+        </div>
+
+        <div class="card">
+          <h3>4. Offensive Skill-Set</h3>
+          <p>Finishing Around the Rim – Variety of finishes (put-backs, floaters, drop-steps).<br>
+          Pick-and-Roll/Pop Participation – Decision-making as screener: roll to the rim vs. pop for mid-range.<br>
+          Stretch Potential (if applicable) – Consistency on mid-range or three-point attempts.<br>
+          Passing &amp; Vision – Ability to find cutters or kick out when double-teamed.<br>
+          Screen Setting – Quality &amp; consistency of his off-ball &amp; on-ball screens.</p>
+        </div>
+
+        <div class="card">
+          <h3>5. Basketball IQ &amp; Intangibles</h3>
+          <p>Defensive IQ – Recognition of opponent tendencies &amp; quick reads on rotations.<br>
+          Offensive Awareness – Understanding spacing, timing of cuts &amp; rhythm of the offense.<br>
+          Effort &amp; Motor – Hustle plays—diving for loose balls, sprinting the floor, closing out shooters.<br>
+          Coach-ability &amp; Adaptability – How quickly he learns new schemes &amp; adjusts in-game.<br>
+          Leadership &amp; Communication – Vocal presence on both ends and ability to rally teammates.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROW 4: 4 VERTICAL PHOTOS -->
+    <section class="gallery">
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/d4d4jup1de9zenipgd4hq/FgnNi6fXEAE36vd.jpeg?rlkey=eymzxgblbbu01qnxoss3dbbth&st=dq1j1t2s&raw=1" alt="Birima Seck photo 1" loading="lazy"></figure>
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/skmq5kuccjp4h0sgzmlll/Gbi9XueWAAARzAE.jpeg?rlkey=vpj2hbqenqe7h15conjjedb2m&st=h2pf4rp3&raw=1" alt="Birima Seck photo 2" loading="lazy"></figure>
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/dulrkkll7ox6hh47m4hr2/convert.jpeg?rlkey=6p6uugqfvo6yi439tlogs9kin&st=ut6k5t4s&raw=1" alt="Birima Seck photo 3" loading="lazy"></figure>
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" alt="Birima Seck photo 4" loading="lazy"></figure>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="foot">
+        <div><h4>Cell</h4><div class="cell">(408) 909-0900</div></div>
+        <div><h4>Email</h4><div class="email">RJ@TheNBAAgent.com</div></div>
+        <div><h4>Follow</h4>
+          <div class="follow">
+            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
+            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Dropdown script -->
+  <script>
+    document.querySelectorAll('.has-sub > .caret').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const item = e.currentTarget.closest('.has-sub');
+        const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.has-sub.open').forEach(el => { if (el!==item) el.classList.remove('open'); });
+        item.classList.toggle('open', !expanded);
+        e.currentTarget.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+    const path = location.pathname.replace(/\/+$/,'');
+    document.querySelectorAll('.links a').forEach(a=>{
+      const href = a.getAttribute('href').replace(/\/+$/,'');
+      if (href && href !== '' && (href === path || (href !== '/' && path.startsWith(href)))) a.classList.add('active');
+    });
+  </script>
+</body>
+</html>
 
