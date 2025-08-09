@@ -2,14 +2,16 @@ async function inject(id){
   const el = document.getElementById(id);
   if(!el) return;
   const src = el.getAttribute('data-src');
+  if(!src) return;
   const res = await fetch(src, { cache: 'no-cache' });
   el.innerHTML = await res.text();
 }
 
 (async () => {
+  // Load shared header/footer
   await Promise.all([inject('site-header'), inject('site-footer')]);
 
-  // Active link highlight
+  // Highlight active link
   const path = location.pathname.replace(/\/+$/,'');
   document.querySelectorAll('.links a').forEach(a=>{
     const href = (a.getAttribute('href')||'').replace(/\/+$/,'');
