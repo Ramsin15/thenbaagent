@@ -5,15 +5,15 @@
       <span class="kicker">Player Representation</span>
     </a>
 
-    <!-- Mobile toggle -->
-    <input id="navToggle" class="mobile-toggle" type="checkbox" aria-hidden="true" />
+    <!-- Mobile toggle (CSS-only state) -->
+    <input id="navToggle" class="m-toggle" type="checkbox" aria-hidden="true" />
 
-    <!-- Hamburger -->
-    <label for="navToggle" class="mobile-hamburger" aria-label="Toggle menu">
+    <!-- Hamburger (mobile) -->
+    <label for="navToggle" class="m-hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </label>
 
-    <!-- Desktop links -->
+    <!-- Desktop links (unchanged) -->
     <ul class="links" data-navlist>
       <li><a href="/">About</a></li>
       <li class="has-sub" aria-haspopup="true">
@@ -27,11 +27,11 @@
       <li><a href="/contact.html">Contact</a></li>
     </ul>
 
-    <!-- Mobile full-screen overlay -->
-    <div id="mobileMenu" class="mobile-overlay">
-      <label for="navToggle" class="mobile-close" aria-label="Close menu">✕</label>
-      <nav class="mobile-panel">
-        <ul class="mobile-links">
+    <!-- Mobile full-screen overlay (must be a sibling of the checkbox) -->
+    <div class="m-overlay" aria-hidden="true">
+      <label for="navToggle" class="m-close" aria-label="Close menu">✕</label>
+      <nav class="m-panel" role="dialog" aria-modal="true" aria-label="Site Menu">
+        <ul class="m-links">
           <li><a href="/">About</a></li>
           <li>
             <details>
@@ -49,100 +49,67 @@
   </div>
 
   <style>
-    html, body { margin: 0; padding: 0; }
+    /* Never allow horizontal scroll from header */
+    html, body { overflow-x: hidden; margin:0; padding:0; }
 
-    /* Hide checkbox visually */
-    .mobile-toggle {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-      border: 0;
-      padding: 0;
-      margin: -1px;
+    /* Hidden checkbox holds open/close state */
+    .m-toggle{
+      position:absolute; width:1px; height:1px; overflow:hidden;
+      clip:rect(0 0 0 0); white-space:nowrap; border:0; padding:0; margin:-1px;
     }
 
-    /* Hamburger icon */
-    .mobile-hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      cursor: pointer;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 8px;
-      background: #fff;
+    /* Hamburger button */
+    .m-hamburger{
+      display:none; /* shown only on mobile */
+      width:44px; height:44px; cursor:pointer;
+      background:#fff; border:1px solid rgba(0,0,0,.12); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
     }
-    .mobile-hamburger span {
-      display: block;
-      width: 20px; height: 2px;
-      background: #000;
-      margin: 4px 0;
+    .m-hamburger span{
+      display:block; width:20px; height:2px; background:#000; margin:4px 0;
+      transition:transform .25s, opacity .25s;
     }
+    /* Animate to X */
+    .m-toggle:checked + .m-hamburger span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+    .m-toggle:checked + .m-hamburger span:nth-child(2){ opacity:0; }
+    .m-toggle:checked + .m-hamburger span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
 
-    /* Full-screen overlay menu */
-    .mobile-overlay {
-      display: none;
-    }
+    /* Overlay (mobile) */
+    .m-overlay{ display:none; } /* hidden on desktop */
 
-    @media (max-width: 900px) {
-      .links { display: none; }
-      .mobile-hamburger { display: flex; }
+    @media (max-width: 900px){
+      .links{ display:none; }       /* hide desktop list */
+      .m-hamburger{ display:flex; } /* show hamburger */
 
-      .mobile-toggle:checked ~ .mobile-overlay {
-        display: block;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        height: 100vh;
-        background: #fff;
-        z-index: 9999;
-        padding-top: 60px;
+      /* Show overlay when checked (requires sibling relationship) */
+      .m-toggle:not(:checked) ~ .m-overlay{ display:none; }
+      .m-toggle:checked       ~ .m-overlay{
+        display:block;
+        position:fixed;
+        inset:0;
+        width:100vw;
+        height:100dvh;        /* robust on mobile chrome/safari */
+        background:#ffffff;   /* solid white */
+        z-index:9999;
       }
 
-      /* Close button */
-      .mobile-close {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        width: 44px;
-        height: 44px;
-        font-size: 28px;
-        line-height: 1;
-        background: none;
-        border: none;
-        color: #000;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* Close button (top-right) */
+      .m-close{
+        position:fixed; top:16px; right:16px;
+        width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+        font-size:28px; color:#000; background:none; border:1px solid rgba(0,0,0,.12); border-radius:8px;
+        cursor:pointer; text-decoration:none;
       }
 
-      /* Menu panel */
-      .mobile-panel {
-        padding: 20px;
+      /* Panel + links */
+      .m-panel{ padding:84px 20px 24px; } /* space below top bar */
+      .m-links{ list-style:none; margin:0; padding:0; }
+      .m-links a, .m-links summary{
+        display:block; padding:16px 0; font-size:20px; font-weight:700; color:#000; text-decoration:none;
       }
-
-      /* Menu links */
-      .mobile-links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .mobile-links a,
-      .mobile-links summary {
-        display: block;
-        padding: 14px 0;
-        font-size: 20px;
-        font-weight: bold;
-        color: #000;
-        text-decoration: none;
-      }
-      .mobile-links summary::-webkit-details-marker {
-        display: none;
-      }
+      .m-links summary::-webkit-details-marker{ display:none; }
+      .m-links details ul{ list-style:none; margin:0; padding:0 0 0 10px; }
+      .m-links details ul a{ font-size:18px; font-weight:700; opacity:.9; padding:12px 0; }
     }
   </style>
 </nav>
