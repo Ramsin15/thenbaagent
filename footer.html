@@ -1,26 +1,16 @@
-<footer class="site-footer" role="contentinfo">
-  <div class="foot">
-    <div>
-      <h4>Cell</h4>
-      <div class="cell">(408) 909-0900</div>
-    </div>
-    <div>
-      <h4>Email</h4>
-      <div class="email">RJ@TheNBAAgent.com</div>
-    </div>
-    <div>
-      <h4>Follow</h4>
-      <div class="follow">
-        <a aria-label="X" href="https://x.com/RamsinJacob" target="_blank" rel="noopener">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
-        </a>
-        <a aria-label="LinkedIn" href="https://www.linkedin.com/in/ramsinjacob/" target="_blank" rel="noopener">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-        </a>
-        <a aria-label="Instagram" href="https://www.instagram.com/the.nba.agent/" target="_blank" rel="noopener">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-        </a>
-      </div>
-    </div>
+<!-- /footer.html -->
+<footer class="site-footer">
+  <style>
+    .site-footer{background:#0b0b0b; color:#fff; margin-top:40px}
+    .site-footer .inner{max-width:1200px; margin:0 auto; padding:36px 16px; min-height:320px; display:flex; flex-direction:column; gap:14px; justify-content:center}
+    .site-footer a{color:#fff; text-decoration:none; opacity:.9}
+    .site-footer a:hover{opacity:1}
+    @media (max-width:900px){ .site-footer .inner{min-height:340px} }
+  </style>
+  <div class="inner">
+    <div>&copy; <span id="y"></span> The NBA Agent</div>
+    <div>1900 Camden Ave, San Jose, CA 95124</div>
+    <div><a href="mailto:RJ@TheNBAAgent.com">RJ@TheNBAAgent.com</a> · <a href="tel:+14089090900">(408) 909-0900</a></div>
   </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </footer>
