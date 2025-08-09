@@ -8,22 +8,48 @@
 <style>
   :root{
     --bg:#e9ebe6; --ink:#0b0b0b; --muted:#6b7280; --radius:28px;
+    --border:#0b0b0b;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%}
+  html,body{margin:0; height:100%}
   body{
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background: linear-gradient(180deg,var(--bg),#e5e7e3 40%, #e7e8e5);
     color:var(--ink);
   }
-  .wrap{
-    max-width:1200px; margin:0 auto; padding:48px 20px 72px;
+
+  /* Header / Footer placeholders so page doesn't jump while loading */
+  #site-header, #site-footer{min-height:56px}
+
+  /* Page container */
+  .page{
+    max-width:1200px; margin:0 auto; padding:48px 20px 80px;
+  }
+
+  /* Hero */
+  .hero{
+    padding:10px 0 24px;
+    border-bottom:1px solid rgba(0,0,0,.06);
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(40px,6vw,76px);
+    line-height:.95; margin:0 0 12px; font-weight:800; letter-spacing:-.02em;
+  }
+  .hero .kicker{
+    color:var(--muted); letter-spacing:.14em; font-size:12px;
+  }
+
+  /* Content grid */
+  .grid{
+    margin-top:24px;
     display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;
   }
-  h1{font-size:clamp(40px,6vw,76px); line-height:.95; margin:0 0 16px; font-weight:800; letter-spacing:-.02em}
-  .lines{margin:12px 0 24px; font-size:16px}
+
+  /* Left panel */
+  .lines{margin:0 0 22px; font-size:16px}
   .lines p{margin:10px 0}
-  .badge{display:inline-block; margin-top:4px; color:var(--muted); font-size:12px; letter-spacing:.14em}
+  .badge{display:inline-block; margin-top:2px; color:var(--muted); font-size:12px; letter-spacing:.14em}
 
   form{margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:14px 18px}
   label{font-size:12px; letter-spacing:.08em; color:var(--muted)}
@@ -32,71 +58,114 @@
     border-radius:12px; background:#f7f8fa; font-size:16px; outline:none;
   }
   textarea{min-height:110px; grid-column: span 2;}
-  .btn{grid-column: span 2; padding:16px 22px; border:0; border-radius:14px; background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer}
+  .btn{
+    grid-column: span 2; padding:16px 22px; border:0; border-radius:14px;
+    background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer
+  }
   .small{grid-column: span 2; color:var(--muted); font-size:12px}
 
-  .map-card{background:#d7d9d2; border-radius:var(--radius); padding:24px; display:flex; align-items:center; justify-content:center}
-  .map-frame{width:100%; aspect-ratio: 1.25 / 1; border:4px solid #0b0b0b; border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7}
+  /* Right side map card */
+  .map-card{
+    background:#d7d9d2; border-radius:var(--radius); padding:24px;
+    display:flex; align-items:center; justify-content:center
+  }
+  .map-frame{
+    width:100%; aspect-ratio: 1.25 / 1;
+    border:4px solid var(--border); border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
+  }
   .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
-  /* Basketball pin overlay (centered) */
+
+  /* Basketball pin overlay (center) */
   .pin{
     position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:38px; height:38px; pointer-events:none; /* keeps map scroll/zoom usable */
+    width:38px; height:38px; pointer-events:none;
     filter: drop-shadow(0 2px 2px rgba(0,0,0,.35));
   }
-  @media (max-width:900px){ .wrap{grid-template-columns:1fr; gap:24px} .map-card{padding:12px}}
+
+  @media (max-width: 900px){
+    .grid{grid-template-columns:1fr; gap:24px}
+    .map-card{padding:12px}
+  }
 </style>
 </head>
 <body>
-  <main class="wrap">
-    <!-- Left side -->
-    <section>
-      <h1>Let’s Connect</h1>
-      <div class="lines">
-        <p><strong>Phone:</strong> (408) 909-0900</p>
-        <p><strong>Email:</strong> RJ@TheNBAAgent.com</p>
-        <p><strong>Office:</strong> 1900 Camden Ave, San Jose, CA 95124</p>
-      </div>
-      <div class="badge">THE NBA AGENT</div>
+  <!-- Shared header gets injected here -->
+  <div id="site-header"></div>
 
-      <!-- 100% static: email is sent by the user's mail app via mailto -->
-      <form id="contactForm">
-        <div>
-          <label for="name">NAME</label>
-          <input id="name" name="name" type="text" placeholder="Your name" required />
-        </div>
-        <div>
-          <label for="email">EMAIL</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
-        </div>
-        <div class="full" style="grid-column:span 2">
-          <label for="message">MESSAGE</label>
-          <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
-        </div>
-        <button class="btn" type="submit">SEND</button>
-        <div class="small">Submitting opens your email app with a pre‑filled message to RJ@TheNBAAgent.com.</div>
-      </form>
+  <main class="page">
+    <section class="hero">
+      <div class="kicker">THE NBA AGENT</div>
+      <h1>Let’s Connect</h1>
     </section>
 
-    <!-- Right side: simple Google Maps iframe, no API key -->
-    <aside class="map-card" aria-label="Office map">
-      <div class="map-frame">
-        <iframe
-          src="https://maps.google.com/maps?q=1900%20Camden%20Ave%2C%20San%20Jose%2C%20CA%2095124&z=15&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <section class="grid">
+      <!-- Left: details + form -->
+      <div>
+        <div class="lines">
+          <p><strong>Phone:</strong> (408) 909-0900</p>
+          <p><strong>Email:</strong> RJ@TheNBAAgent.com</p>
+          <p><strong>Office:</strong> 1900 Camden Ave, San Jose, CA 95124</p>
+        </div>
 
-        <!-- Basketball icon overlay -->
-        <svg class="pin" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="36" cy="36" r="28" fill="#f15a24" stroke="#111" stroke-width="3"/>
-          <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40"
-                stroke="#111" stroke-width="3" fill="none"/>
-        </svg>
+        <!-- 100% static: mailto opens the user's email app -->
+        <form id="contactForm">
+          <div>
+            <label for="name">NAME</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="email">EMAIL</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="full" style="grid-column:span 2">
+            <label for="message">MESSAGE</label>
+            <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
+          </div>
+          <button class="btn" type="submit">SEND</button>
+          <div class="small">Submitting opens your email app with a pre‑filled message to RJ@TheNBAAgent.com (Subject: “Website Inquiry”).</div>
+        </form>
       </div>
-    </aside>
+
+      <!-- Right: rounded map with basketball pin; no API key needed -->
+      <aside class="map-card" aria-label="Office map">
+        <div class="map-frame">
+          <iframe
+            src="https://maps.google.com/maps?q=1900%20Camden%20Ave%2C%20San%20Jose%2C%20CA%2095124&z=15&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+
+          <!-- Basketball icon overlay -->
+          <svg class="pin" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="36" cy="36" r="28" fill="#f15a24" stroke="#111" stroke-width="3"/>
+            <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40"
+                  stroke="#111" stroke-width="3" fill="none"/>
+          </svg>
+        </div>
+      </aside>
+    </section>
   </main>
 
+  <!-- Shared footer gets injected here -->
+  <div id="site-footer"></div>
+
 <script>
-  // Compose a mailto with subject & body. No backend needed.
+  // === Include header & footer (keeps one source of truth) ===
+  // Assumes /header.html and /footer.html exist at the repo root.
+  async function inject(id, url){
+    try{
+      const res = await fetch(url, {cache:'no-cache'});
+      if(!res.ok) throw new Error();
+      const html = await res.text();
+      document.getElementById(id).innerHTML = html;
+    }catch(e){
+      // If fetch fails (e.g. different path), you can adjust the URLs here.
+      console.warn('Could not load', url);
+    }
+  }
+  inject('site-header','/header.html');
+  inject('site-footer','/footer.html');
+
+  // === 100% static form handler → mailto ===
   document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
@@ -112,8 +181,8 @@ Email: ${email}
 Message:
 ${msg}`;
 
-    const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto; // opens the user's email client
+    window.location.href =
+      `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 </script>
 </body>
