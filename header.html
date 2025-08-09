@@ -5,16 +5,17 @@
       <span class="kicker">Player Representation</span>
     </a>
 
-    <!-- Mobile toggle (CSS-only). Input is the state; labels are the buttons -->
-    <input id="navToggle" class="nav-toggle" type="checkbox" aria-hidden="true" />
-    <label for="navToggle" class="hamburger" aria-label="Toggle menu" aria-controls="mobileMenu" aria-expanded="false">
+    <!-- Mobile toggle state (CSS-only) -->
+    <input id="navToggle" class="mobile-toggle" type="checkbox" aria-hidden="true" />
+
+    <!-- Hamburger (shows only on mobile) -->
+    <label for="navToggle" class="mobile-hamburger" aria-label="Toggle menu" aria-controls="mobileMenu" aria-expanded="false">
       <span></span><span></span><span></span>
     </label>
 
-    <!-- Desktop links (unchanged for desktop) -->
+    <!-- Desktop links (unchanged look; hidden on mobile only) -->
     <ul class="links" data-navlist>
       <li><a href="/">About</a></li>
-
       <li class="has-sub" aria-haspopup="true">
         <a href="/players/">Players</a>
         <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu"></button>
@@ -23,28 +24,23 @@
           <li><a href="/players/birima.html">Birima Seck</a></li>
         </ul>
       </li>
-
       <li><a href="/contact.html">Contact</a></li>
     </ul>
   </div>
 
-  <!-- Full-screen overlay menu (mobile only) -->
+  <!-- Mobile full-screen overlay (scoped styles) -->
   <div id="mobileMenu" class="mobile-overlay" aria-hidden="true">
-    <!-- Top bar space so the close “X” sits exactly where the hamburger is -->
-    <div class="overlay-top">
-      <!-- Close “X” is just the same label pointing to the same checkbox -->
-      <label for="navToggle" class="close-btn" aria-label="Close menu">✕</label>
-    </div>
+    <label for="navToggle" class="mobile-close" aria-label="Close menu">✕</label>
 
-    <nav class="overlay-nav" role="dialog" aria-modal="true" aria-label="Site Menu">
-      <ul class="overlay-links">
+    <nav class="mobile-panel" role="dialog" aria-modal="true" aria-label="Site Menu">
+      <ul class="mobile-links">
         <li><a href="/">About</a></li>
 
         <!-- Players accordion (CSS-only via <details>) -->
-        <li class="overlay-has-sub">
+        <li class="mobile-has-sub">
           <details>
             <summary><span>Players</span><i class="car"></i></summary>
-            <ul class="overlay-sub">
+            <ul class="mobile-sub">
               <li><a href="/players/lacey.html">Lacey James</a></li>
               <li><a href="/players/birima.html">Birima Seck</a></li>
             </ul>
@@ -55,105 +51,109 @@
       </ul>
     </nav>
 
-    <!-- Clickable backdrop area; clicking it also closes via the same checkbox -->
-    <label for="navToggle" class="overlay-backdrop" aria-label="Close menu"></label>
+    <!-- Backdrop closes the menu as well -->
+    <label for="navToggle" class="mobile-backdrop" aria-label="Close menu"></label>
   </div>
 
   <style>
-    /* ===== Base structure (keeps your existing look) ===== */
-    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; }
-    .brand { text-decoration:none; display:inline-flex; flex-direction:column; gap:2px; }
-    .brand .name { font-weight:800; letter-spacing:.02em; line-height:1; }
-    .brand .kicker { font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; }
+    /* ===============================
+       MOBILE HEADER — SCOPED STYLES
+       (Desktop look stays as your site defines it)
+       =============================== */
 
-    /* Hide the checkbox (it holds open/close state) */
-    .nav-toggle { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; padding:0; margin:-1px; }
+    /* Never affect layout horizontally */
+    html, body { overflow-x: hidden; }
 
-    /* Hamburger button */
-    .hamburger {
-      display:none; /* only on mobile */
-      -webkit-tap-highlight-color: transparent;
+    /* Hidden checkbox to store open/close state */
+    .mobile-toggle {
+      position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);
+      white-space:nowrap; border:0; padding:0; margin:-1px;
+    }
+
+    /* Hamburger button (mobile only). Keep neutral styling to avoid theme clash */
+    .mobile-hamburger {
+      display:none;
+      -webkit-tap-highlight-color:transparent;
       width:44px; height:44px;
       border:1px solid rgba(0,0,0,.12);
       border-radius:12px; background:#fff;
-      align-items:center; justify-content:center;
-      cursor:pointer;
+      align-items:center; justify-content:center; cursor:pointer;
     }
-    .hamburger span {
+    .mobile-hamburger span {
       display:block; width:20px; height:2px; background:#0b0b0b; margin:2.5px 0;
       transition:transform .25s ease, opacity .25s ease;
     }
 
-    /* When checked, animate hamburger into X */
-    .nav-toggle:checked + .hamburger span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
-    .nav-toggle:checked + .hamburger span:nth-child(2){ opacity:0; }
-    .nav-toggle:checked + .hamburger span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
+    /* Turn hamburger into X when open */
+    .mobile-toggle:checked + .mobile-hamburger span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
+    .mobile-toggle:checked + .mobile-hamburger span:nth-child(2){ opacity:0; }
+    .mobile-toggle:checked + .mobile-hamburger span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
 
-    /* ===== Mobile overlay (only active under 900px) ===== */
+    /* Overlay base (mobile only) */
     .mobile-overlay { display:none; } /* hidden on desktop */
 
-    @media (max-width:900px){
-      /* Show hamburger; hide desktop list */
-      .hamburger { display:inline-flex; }
+    @media (max-width: 900px){
+      /* Hide desktop links and show hamburger */
       .links { display:none; }
+      .mobile-hamburger { display:inline-flex; }
 
-      /* Full-screen overlay container */
+      /* Full-screen overlay container (covers everything) */
       .mobile-overlay{
-        position:fixed; inset:0; z-index:9999;
-        display:grid; grid-template-rows: auto 1fr;
-        pointer-events:none; /* re-enabled on children */
+        position:fixed; inset:0; z-index:9999; pointer-events:none;
       }
 
       /* Backdrop: 80% grey */
-      .overlay-backdrop{
-        position:fixed; inset:0;
-        background: rgba(128,128,128,0.8);
-        pointer-events:auto; /* so taps close when clicking backdrop */
-        cursor: default;
+      .mobile-backdrop{
+        position:fixed; inset:0; background:rgba(128,128,128,0.8);
+        pointer-events:auto; cursor:default;
       }
 
-      /* Top spacer: keeps the X exactly where the hamburger is */
-      .overlay-top{
-        height:64px; /* header height; adjust if yours is different */
-        pointer-events:none;
-      }
-      /* Close X button in the same place as hamburger (top-right) */
-      .close-btn{
-        position:fixed; top:12px; right:16px;
+      /* Close X in the top-right (aligned with hamburger area) */
+      .mobile-close{
+        position:fixed; top: max(12px, env(safe-area-inset-top)); right:16px;
         width:44px; height:44px; display:flex; align-items:center; justify-content:center;
         border:1px solid rgba(255,255,255,.35); border-radius:12px;
         color:#fff; background:transparent; font-size:22px; line-height:1;
         pointer-events:auto; cursor:pointer; text-decoration:none;
       }
 
-      /* Menu content */
-      .overlay-nav{ position:relative; pointer-events:auto; display:block; }
-      .overlay-links{ list-style:none; margin:0; padding:18px; display:grid; gap:6px; }
-      .overlay-links > li > a{
-        display:block; padding:14px 4px; font-size:22px; color:#fff; text-decoration:none;
+      /* Menu panel (scrollable) */
+      .mobile-panel{
+        position:fixed; inset:0; display:flex; align-items:flex-start; justify-content:flex-start;
+        padding: calc(16px + env(safe-area-inset-top)) 18px 18px 18px;
+        pointer-events:auto;
       }
 
-      /* Accordion for Players using details/summary (CSS-only) */
-      .overlay-has-sub details{ border-top:1px solid rgba(255,255,255,.18); }
-      .overlay-has-sub summary{
+      .mobile-links{
+        list-style:none; margin:0; padding:64px 0 0 0;  /* top pad so items sit below brand area visually */
+        display:grid; gap:6px; max-height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch;
+        width:100%;
+        color:#fff;
+      }
+      .mobile-links > li > a{
+        display:block; padding:14px 2px; font-size:22px; color:#fff; text-decoration:none;
+      }
+
+      /* Players accordion (CSS-only details/summary) */
+      .mobile-has-sub details { border-top:1px solid rgba(255,255,255,.18); }
+      .mobile-has-sub summary{
         list-style:none; display:flex; align-items:center; justify-content:space-between;
-        cursor:pointer; padding:14px 4px; color:#fff; font-size:22px;
+        cursor:pointer; padding:14px 2px; color:#fff; font-size:22px;
       }
-      .overlay-has-sub summary::-webkit-details-marker{ display:none; }
-      .overlay-has-sub .car{
+      .mobile-has-sub summary::-webkit-details-marker{ display:none; }
+      .mobile-has-sub .car{
         width:14px; height:14px; border-right:2px solid #fff; border-bottom:2px solid #fff;
-        transform: rotate(-45deg); transition: transform .2s ease;
+        transform: rotate(-45deg); transition: transform .2s ease; flex:0 0 14px;
       }
-      .overlay-has-sub details[open] .car{ transform: rotate(135deg); }
-      .overlay-sub{ list-style:none; margin:0; padding: 0 0 8px 10px; }
-      .overlay-sub a{ display:block; padding:10px 4px; color:#fff; font-size:18px; text-decoration:none; opacity:.95; }
+      .mobile-has-sub details[open] .car{ transform: rotate(135deg); }
+      .mobile-sub{ list-style:none; margin:0; padding: 0 0 8px 10px; }
+      .mobile-sub a{ display:block; padding:10px 2px; color:#fff; font-size:18px; text-decoration:none; opacity:.95; }
 
-      /* Toggle visibility using the checkbox (no JS) */
-      .nav-toggle:not(:checked) ~ .mobile-overlay{ display:none; }
-      .nav-toggle:checked       ~ .mobile-overlay{ display:block; }
+      /* Toggle overlay visibility using the checkbox (CSS-only) */
+      .mobile-toggle:not(:checked) ~ .mobile-overlay { display:none; }
+      .mobile-toggle:checked       ~ .mobile-overlay { display:block; }
 
-      /* Prevent background scrolling by covering everything with fixed overlay.
-         (No body class change needed because overlay intercepts scroll.) */
+      /* Because overlay is fixed and intercepts scroll, no body class is needed */
     }
   </style>
 </nav>
