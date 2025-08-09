@@ -8,6 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- NEW: shared site CSS (nav + footer + mobile fixes) -->
+  <link rel="stylesheet" href="/assets/site.css">
+
   <style>
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb; --brand:#0b0b0b; --accent:#111827;
@@ -16,53 +20,6 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;line-height:1.65}
-
-    /* ===== NAV (shared with dropdown) ===== */
-    .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
-    .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:baseline;gap:10px}
-    .brand .name{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-    .brand .kicker{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-
-    .links{display:flex;gap:6px;align-items:center}
-    .links>li{list-style:none;position:relative}
-    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem;display:inline-block}
-    .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
-
-    /* Dropdown (stable hover + focus + click) */
-.has-sub{position:relative; display:inline-flex; align-items:center}
-.has-sub > .caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
-.has-sub > .caret::after{content:"▾";font-size:.9rem}
-
-/* Remove the gap that causes flicker; keep it open on hover/focus */
-.sub{
-  position:absolute;
-  top:100%;              /* sit flush under the parent (no hover gap) */
-  left:0;
-  min-width:220px;
-  background:#fff;
-  border:1px solid var(--divider);
-  border-radius:10px;
-  box-shadow:0 12px 30px rgba(2,6,23,.12);
-  padding:8px;           /* we use padding instead of margin-top to avoid gaps */
-  margin-top:0;          /* important: no margin gap */
-  display:none;
-  z-index:50;
-}
-
-/* Show submenu while hovering the li, or when keyboard focusing inside */
-.has-sub:hover .sub,
-.has-sub:focus-within .sub{ display:block; }
-
-/* Optional: tighter hit area on items */
-.sub li{list-style:none}
-.sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
-.sub a:hover{background:#f8fafc}
-
-/* Keep the hover-driven behavior only on devices with a mouse */
-@media (pointer:fine){
-  .has-sub:hover .sub{ display:block; }
-}
 
     /* ===== LAYOUT ===== */
     .wrap{width:min(1100px,94vw);margin:32px auto 0}
@@ -89,7 +46,7 @@
     .copy .lead{font-size:1.05rem;font-weight:700}
     .copy p{margin:0 0 16px}
 
-    /* FOOTER */
+    /* PAGE FOOTER SPACING (content area’s footer container) */
     footer{margin:56px 0 28px}
     .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;border-top:1px solid var(--divider);text-align:center}
     .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
@@ -103,39 +60,16 @@
       .about{grid-template-columns:1fr}
       .panel{max-width:520px;margin:0 auto}
       .copy{text-align:center}
-      .nav{justify-content:center;gap:12px}
-      .links a{padding:12px 10px}
     }
     @media (max-width:560px){
-      .brand .kicker{display:none}
-      .links a{font-size:.86rem;letter-spacing:.18em}
       .portrait img{max-width:220px}
       .name{font-size:1.5rem}
     }
   </style>
 </head>
 <body>
-  <!-- NAVIGATION with dropdown -->
-  <div class="nav-wrap">
-    <nav class="nav" role="navigation" aria-label="Main">
-      <div class="brand">
-        <div class="name">The NBA Agent</div>
-        <div class="kicker">Player Representation</div>
-      </div>
-      <ul class="links">
-        <li><a href="/" class="active">About</a></li>
-        <li class="has-sub" aria-haspopup="true">
-          <a href="/players/">Players</a>
-          <button class="caret" aria-expanded="false" aria-label="Toggle Players menu"></button>
-          <ul class="sub" aria-label="Players submenu">
-            <li><a href="/players/lacey.html">Lacey James</a></li>
-            <li><a href="/players/birima.html">Birima Seck</a></li>
-          </ul>
-        </li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
+  <!-- NEW: shared header injected from /header.html -->
+  <div id="site-header" data-src="/header.html"></div>
 
   <!-- ABOUT SECTION -->
   <main class="wrap">
@@ -174,7 +108,7 @@
       </article>
     </section>
 
-    <!-- DUPLICATED FOOTER CONTENT -->
+    <!-- (Optional) per-page footer content — you can remove this block if not needed -->
     <footer>
       <div class="foot">
         <div>
@@ -197,26 +131,10 @@
     </footer>
   </main>
 
-  <!-- Dropdown script -->
-  <script>
-    // Toggle submenu on mobile tap
-    document.querySelectorAll('.has-sub > .caret').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const item = e.currentTarget.closest('.has-sub');
-        const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
-        document.querySelectorAll('.has-sub.open').forEach(el => { if (el!==item) el.classList.remove('open'); });
-        item.classList.toggle('open', !expanded);
-        e.currentTarget.setAttribute('aria-expanded', String(!expanded));
-      });
-    });
-    // Mark active link based on path
-    const path = location.pathname.replace(/\/+$/,'');
-    document.querySelectorAll('.links a').forEach(a=>{
-      const href = a.getAttribute('href').replace(/\/+$/,'');
-      if (href && href !== '' && (href === path || (href !== '/' && path.startsWith(href)))) {
-        a.classList.add('active');
-      }
-    });
-  </script>
+  <!-- NEW: shared footer injected from /footer.html -->
+  <div id="site-footer" data-src="/footer.html"></div>
+
+  <!-- NEW: shared behavior (injects partials; handles hover+click; mobile menu) -->
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
