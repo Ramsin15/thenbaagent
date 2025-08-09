@@ -6,11 +6,11 @@
     </a>
 
     <!-- Mobile hamburger -->
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="links" data-navlist>
+    <ul class="links" data-navlist data-nav>
       <li><a href="/">About</a></li>
 
       <li class="has-sub" aria-haspopup="true">
@@ -25,4 +25,47 @@
       <li><a href="/contact.html">Contact</a></li>
     </ul>
   </div>
+
+  <style>
+    /* === Mobile menu scroll fix === */
+    @media (max-width: 900px) {
+      body.nav-open { overflow: hidden; } /* Prevent background scroll */
+
+      [data-nav].open {
+        position: fixed;
+        top: 60px; /* match your header height */
+        left: 0;
+        right: 0;
+        max-height: calc(100dvh - 60px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 9999;
+        background: inherit; /* keeps your existing background */
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      const btn = document.querySelector('[data-nav-toggle]');
+      const panel = document.querySelector('[data-nav]');
+      if (!btn || !panel) return;
+
+      function setOpen(isOpen) {
+        panel.classList.toggle('open', isOpen);
+        document.body.classList.toggle('nav-open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      btn.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+      panel.addEventListener('click', (e) => {
+        if (e.target.closest('a')) setOpen(false);
+      });
+      document.addEventListener('click', (e) => {
+        if (!panel.classList.contains('open')) return;
+        if (e.target.closest('[data-nav]') || e.target.closest('[data-nav-toggle]')) return;
+        setOpen(false);
+      });
+    })();
+  </script>
 </nav>
