@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
 <style>
   :root{
     --bg:#fff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb;
@@ -19,7 +18,7 @@
   body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
   img{max-width:100%;height:auto;display:block}
 
-  /* ===== NAV (dropdown) ===== */
+  /* NAV (kept same as other pages, includes Players dropdown) */
   .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
   .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
   .brand{display:flex;align-items:baseline;gap:10px}
@@ -39,7 +38,7 @@
   @media (pointer:fine){ .has-sub:hover .sub{display:block} }
   .has-sub.open .sub{display:block}
 
-  /* ===== LAYOUT ===== */
+  /* LAYOUT */
   .wrap{width:min(1100px,94vw);margin:32px auto}
   .hero{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:start}
 
@@ -59,16 +58,16 @@
   .profile{display:flex;flex-direction:column;gap:18px;min-width:0}
   .summary{font-size:1rem;background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:18px}
 
-  /* ===== STAT BOXES: left→right, left aligned, clean ===== */
+  /* STAT BOXES — left→right row, left-aligned, equal heights */
   .kv{
     display:grid;
     grid-template-columns:repeat(5,minmax(180px,1fr));
     gap:12px;
-    align-items:start;
+    align-items:stretch;
   }
   .field{
     background:#fff;border:1px solid var(--divider);border-radius:12px;
-    padding:12px 14px;text-align:left;min-height:92px;display:flex;flex-direction:column;justify-content:flex-start
+    padding:12px 14px;text-align:left;display:flex;flex-direction:column;justify-content:flex-start
   }
   .field .k{
     font-weight:800;letter-spacing:.04em;text-transform:uppercase;
@@ -76,7 +75,7 @@
   }
   .field .v{font-weight:400;font-size:.95rem;line-height:1.45;margin:0;word-break:break-word}
 
-  /* ===== VIDEOS ===== */
+  /* VIDEOS */
   .videos{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
   .vcard{border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fff}
   .vtitle{
@@ -87,7 +86,7 @@
   .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
   .vcard a:hover .thumb img{transform:scale(1.02)}
 
-  /* ===== REPORT ===== */
+  /* REPORT */
   .report{margin-top:36px;border:1px solid var(--divider);border-radius:14px;background:
     radial-gradient(140% 100% at 0% 0%, #f7fbff 0%, #ffffff 40%),
     linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
@@ -108,22 +107,22 @@
   .list{margin:0;padding-left:18px}
   .list li{margin:6px 0}
 
-  /* ===== GALLERY ===== */
+  /* GALLERY */
   .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
   .gimg{border-radius:12px;overflow:hidden;border:1px solid var(--divider);background:#000;aspect-ratio:3/4}
   .gimg img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
   .gimg:hover img{transform:scale(1.02)}
 
-  /* ===== FOOTER (+20px) ===== */
+  /* FOOTER (+20px extra padding under content) */
   footer{margin:56px 0 48px}
-  .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;border-top:1px solid var(--divider);text-align:center}
+  .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;padding-bottom:20px;border-top:1px solid var(--divider);text-align:center}
   .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
   .foot .cell,.foot .email{font-weight:700}
   .foot .follow{display:flex;gap:10px;justify-content:center}
   .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
   .foot .follow img{width:18px;height:18px}
 
-  /* ===== RESPONSIVE (no overflow) ===== */
+  /* RESPONSIVE — no overflow at any width */
   @media (max-width:1100px){ .kv{grid-template-columns:repeat(4,minmax(0,1fr))} }
   @media (max-width:980px){
     .hero{grid-template-columns:1fr}
@@ -168,7 +167,7 @@
   </div>
 
   <main class="wrap">
-    <!-- ROW 1: IMAGE + PROFILE -->
+    <!-- ROW 1 -->
     <section class="hero">
       <!-- Left: Headshot -->
       <aside class="panel">
@@ -199,28 +198,23 @@
       </article>
     </section>
 
-    <!-- ROW 2: VIDEOS -->
+    <!-- ROW 2: Videos -->
     <section class="videos">
       <div class="vcard">
         <div class="vtitle">Lacey James – Toronto Raptors 905 Game Highlight &amp; Minutes — NBA G League</div>
         <a href="https://www.youtube.com/watch?v=WP9wTkMJ_HU" target="_blank" rel="noopener">
-          <span class="thumb">
-            <img src="https://i.ytimg.com/vi/WP9wTkMJ_HU/hqdefault.jpg" alt="Raptors 905 Highlights" loading="lazy">
-          </span>
+          <span class="thumb"><img src="https://i.ytimg.com/vi/WP9wTkMJ_HU/hqdefault.jpg" alt="Raptors 905 Highlights" loading="lazy"></span>
         </a>
       </div>
-
       <div class="vcard">
         <div class="vtitle">Lacey James – Drew League Basketball — July 26, 2025 (26 Pts &amp; 10 Reb) Led All Players</div>
         <a href="https://www.youtube.com/watch?v=WbexDYHoge0" target="_blank" rel="noopener">
-          <span class="thumb">
-            <img src="https://i.ytimg.com/vi/WbexDYHoge0/hqdefault.jpg" alt="Drew League Highlights" loading="lazy">
-          </span>
+          <span class="thumb"><img src="https://i.ytimg.com/vi/WbexDYHoge0/hqdefault.jpg" alt="Drew League Highlights" loading="lazy"></span>
         </a>
       </div>
     </section>
 
-    <!-- ROW 3: SCOUTING REPORT (unchanged content) -->
+    <!-- ROW 3: Report (unchanged content) -->
     <section class="report">
       <header>
         <h2>Lacey James – Full Scouting Report — NBA 2025 Unrestricted Free Agent</h2>
@@ -265,7 +259,7 @@
       </div>
     </section>
 
-    <!-- ROW 4: 4 VERTICAL PHOTOS (JPEGs, given order) -->
+    <!-- ROW 4: Gallery (JPEGs in your order) -->
     <section class="gallery">
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/5xnycrouj2olmixqls440/IMG_6288.jpg?raw=1" alt="Lacey James photo 1" loading="lazy"></figure>
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/0qtwxv9tp0hqjpzhya6o5/A48I4282.jpg?raw=1" alt="Lacey James photo 2" loading="lazy"></figure>
@@ -273,7 +267,7 @@
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/86g9rx967nxp3o6479h9c/0ECB59FB-3807-4466-A6CE-172B02E8A0FE.JPG?raw=1" alt="Lacey James photo 4" loading="lazy"></figure>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (+20px padding below content) -->
     <footer>
       <div class="foot">
         <div><h4>Cell</h4><div class="cell">(408) 909-0900</div></div>
