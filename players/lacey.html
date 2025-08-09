@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lacey James — Player Profile | The NBA Agent</title>
+  <meta name="description" content="Lacey James player profile, highlights, and full scouting report." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb;
+      --brand:#0b0b0b; --accent:#111827; --chip:#0f172a0d; --card:#fbfbfb;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
+
+    /* HEADER (same as index) */
+    .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
+    .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:baseline;gap:10px}
+    .brand .name{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+    .brand .kicker{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem}
+    .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
+
+    /* WRAP */
+    .wrap{width:min(1100px,94vw);margin:32px auto}
+
+    /* ROW 1: IMAGE + PROFILE */
+    .hero{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:stretch}
+    .panel{background:var(--panel);border:1px solid #eee;border-radius:14px;box-shadow:0 10px 34px rgba(17,24,39,.08);display:flex;flex-direction:column;overflow:hidden}
+    .panel-inner{padding:26px 22px 18px}
+    .portrait{display:grid;place-items:center;padding:8px 0 12px}
+    .portrait img{
+      max-width:260px;height:auto;display:block;border-radius:999px;
+      image-rendering:auto;
+      box-shadow:0 12px 28px rgba(0,0,0,.12)
+    }
+    .player-name{text-align:center;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.04em;margin-top:16px;font-size:clamp(1.5rem,3.2vw,2rem)}
+    .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
+    .player-role{text-align:center;font-weight:900;letter-spacing:.35em;font-size:.9rem}
+    .panel-footer{background:#fff;border-top:1px solid var(--divider);padding:14px 16px;margin-top:auto}
+    .icons{display:flex;gap:12px;justify-content:center}
+    .icons a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
+    .icons img{width:18px;height:18px}
+
+    .profile{display:flex;flex-direction:column;gap:18px}
+    .summary{font-size:1rem;background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:18px}
+    .kv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .chip{background:var(--chip);border:1px solid var(--divider);padding:10px 12px;border-radius:10px;text-align:center;font-weight:800;letter-spacing:.08em}
+
+    /* ROW 2: YOUTUBE THUMBS */
+    .videos{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .vcard{border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fff}
+    .vtitle{padding:12px 14px;font-weight:900;letter-spacing:.02em}
+    .thumb{display:block;aspect-ratio:16/9;background:#000;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+    .vcard a:hover .thumb img{transform:scale(1.02)}
+
+    /* ROW 3: SCOUTING REPORT */
+    .report{margin-top:36px;border:1px solid var(--divider);border-radius:14px;background:
+      radial-gradient(140% 100% at 0% 0%, #f7fbff 0%, #ffffff 40%),
+      linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+      box-shadow:0 8px 30px rgba(2,6,23,.06)
+    }
+    .report header{padding:18px 18px 0}
+    .report h2{margin:0;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.02em}
+    .meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+    .badge{border:1px dashed #cbd5e1;border-radius:999px;padding:6px 10px;font-size:.82rem;background:#f8fafc}
+    .rgrid{display:grid;grid-template-columns:1fr;gap:18px;padding:18px}
+    .statline{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+    .stat{border:1px solid var(--divider);border-radius:10px;text-align:center;padding:10px 8px;background:#fff}
+    .stat .k{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.16em}
+    .stat .v{font-size:1.05rem;font-weight:900}
+    .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{border:1px solid var(--divider);border-radius:12px;background:#fff;padding:14px 16px}
+    .card h3{margin:0 0 8px;font-size:1rem}
+    .list{margin:0;padding-left:18px}
+    .list li{margin:6px 0}
+
+    /* ROW 4: 4 VERTICAL PHOTOS */
+    .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .gimg{border-radius:12px;overflow:hidden;border:1px solid var(--divider);background:#000;aspect-ratio:3/4}
+    .gimg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+    .gimg:hover img{transform:scale(1.02)}
+
+    /* FOOTER */
+    footer{margin:56px 0 28px}
+    .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;border-top:1px solid var(--divider);text-align:center}
+    .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .foot .cell,.foot .email{font-weight:700}
+    .foot .follow{display:flex;gap:10px;justify-content:center}
+    .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
+    .foot .follow img{width:18px;height:18px}
+
+    /* MOBILE */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .panel{max-width:520px;margin:0 auto}
+      .kv{grid-template-columns:repeat(3,1fr)}
+      .videos{grid-template-columns:1fr}
+      .cols{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .nav{justify-content:center;gap:12px}
+      .links a{padding:12px 10px}
+    }
+    @media (max-width:560px){
+      .brand{display:none}
+      .links a{font-size:.86rem;letter-spacing:.18em}
+      .portrait img{max-width:220px}
+      .kv{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <div class="nav-wrap">
+    <nav class="nav">
+      <div class="brand">
+        <div class="name">The NBA Agent</div>
+        <div class="kicker">Player Representation</div>
+      </div>
+      <div class="links">
+        <a href="../index.html">About</a>
+        <a class="active" href="./index.html">Players</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="wrap">
+
+    <!-- ROW 1: IMAGE + PROFILE -->
+    <section class="hero">
+      <aside class="panel">
+        <div class="panel-inner">
+          <div class="portrait">
+            <img
+              src="https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1"
+              srcset="
+                https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1 1x,
+                https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1 2x
+              "
+              alt="Lacey James headshot"
+            />
+          </div>
+          <div class="player-name">LACEY&nbsp;JAMES</div>
+          <div class="rule"></div>
+          <div class="player-role">PF / C</div>
+        </div>
+        <div class="panel-footer">
+          <div class="icons">
+            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
+            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+          </div>
+        </div>
+      </aside>
+
+      <article class="profile">
+        <div class="summary">
+          <strong>Summary:</strong> Lacey James is a rugged, high-motor big man whose game is defined by physicality, rebounding, and defensive effort. His resilience in overcoming a heart condition and his track record of leadership and hustle make him a respected figure on and off the court. While he is not a primary offensive weapon, his ability to impact games with energy, toughness, and team-first play make him a valuable asset for teams needing interior presence and grit.
+        </div>
+
+        <div class="kv">
+          <div class="chip">Status: Free Agent — Raptors 905 (Starting C, last season)</div>
+          <div class="chip">Position: PF/C</div>
+          <div class="chip">Height/Weight: 6‑9, 240 lbs</div>
+          <div class="chip">DOB: 7/12/96</div>
+          <div class="chip">Hometown: Grand Rapids, MI</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ROW 2: YOUTUBE THUMBS -->
+    <section class="videos">
+      <div class="vcard">
+        <div class="vtitle">Lacey James - Toronto Raptors 905 Game Highlight & Minutes - NBA G League</div>
+        <a href="https://www.youtube.com/watch?v=WP9wTkMJ_HU" target="_blank" rel="noopener">
+          <span class="thumb">
+            <img src="https://i.ytimg.com/vi/WP9wTkMJ_HU/hqdefault.jpg" alt="Raptors 905 Highlights" loading="lazy">
+          </span>
+        </a>
+      </div>
+
+      <div class="vcard">
+        <div class="vtitle">Lacey James - Drew League Basketball - July 26th, 2025 (26 Pts & 10 RBS) Led All Players</div>
+        <a href="https://www.youtube.com/watch?v=WbexDYHoge0" target="_blank" rel="noopener">
+          <span class="thumb">
+            <img src="https://i.ytimg.com/vi/WbexDYHoge0/hqdefault.jpg" alt="Drew League Highlights" loading="lazy">
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ROW 3: SCOUTING REPORT -->
+    <section class="report">
+      <header>
+        <h2>Lacey James – Full Scouting Report — NBA 2025 Unrestricted Free Agent</h2>
+        <div class="meta">
+          <span class="badge">Position: PF/C</span>
+          <span class="badge">Height/Weight: 6‑9, 240 lbs</span>
+          <span class="badge">DOB: 7/12/96</span>
+          <span class="badge">College: Northern Illinois</span>
+          <span class="badge">Hometown: Grand Rapids, MI</span>
+          <span class="badge">Pro: G League & BBL (Surrey)</span>
+        </div>
+      </header>
+
+      <div class="rgrid">
+        <div class="card">
+          <p><strong>Mar 3, 2025:</strong> The Raptors 905 claimed Lacey James from the player pool. Acquired late in the G League season; quickly adapted to the team and earned the starting Center position.</p>
+        </div>
+
+        <div class="card">
+          <h3>Starter Averages with Toronto Raptors 905 (6 Games)</h3>
+          <div class="statline">
+            <div class="stat"><div class="k">MIN</div><div class="v">31.9</div></div>
+            <div class="stat"><div class="k">PTS</div><div class="v">6.5</div></div>
+            <div class="stat"><div class="k">REB</div><div class="v">8.8</div></div>
+            <div class="stat"><div class="k">AST</div><div class="v">2.8</div></div>
+            <div class="stat"><div class="k">STL</div><div class="v">0.7</div></div>
+            <div class="stat"><div class="k">BLK</div><div class="v">1.3</div></div>
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="card">
+            <h3>Attributes</h3>
+            <ul class="list">
+              <li>High IQ, Adaptable, Team‑First, Coachable</li>
+              <li>Size Advantage in Paint, Dominant Rebounder</li>
+              <li>Ball Handling for size, Off‑Ball Awareness</li>
+              <li>Rim Protection & Shot Blocking</li>
+              <li>High Motor, Defensive Minded, Playmaker, Versatility</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Strengths</h3>
+            <ul class="list">
+              <li><strong>Elite Rebounding</strong> on both ends, especially offensive glass</li>
+              <li><strong>Physical Defense</strong>—battles in paint, contests shots, absorbs contact</li>
+              <li><strong>Effort & Hustle</strong>—energy, hard screens, dirty‑work plays</li>
+              <li><strong>Versatility</strong>—PF/C, multi‑position defending (G League/international)</li>
+              <li><strong>Intangibles</strong>—leadership, resilience, high character</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Physical Profile & Athleticism</h3>
+          <p>Sturdy, physically mature big with a strong, broad frame suited for PF or small‑ball C roles. Not an explosive leaper, but compensates with strength, balance, positioning, and a relentless motor.</p>
+        </div>
+
+        <div class="cols">
+          <div class="card">
+            <h3>Skill Set Breakdown — Rebounding</h3>
+            <p>Tenacious rebounder, especially on the offensive glass. Uses strength, seals, and effort to create second‑chance opportunities. Track record of productivity at every level.</p>
+          </div>
+          <div class="card">
+            <h3>Skill Set Breakdown — Defense</h3>
+            <p>Physical presence in the paint. Rotates well, contests at the rim, absorbs contact. Capable shot‑blocker with event creation through hustle. Can guard multiple front‑court positions.</p>
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="card">
+            <h3>Skill Set Breakdown — Offense</h3>
+            <p>Thrives on effort plays: putbacks, rim runs, rolls, finishes through contact. Not a primary scorer but can hit open mid‑range and flashes situational 3‑pt range.</p>
+          </div>
+          <div class="card">
+            <h3>Intangibles</h3>
+            <p>Resilient, team‑first leader. Overcame health adversity; respected by teammates and coaches for professionalism and work ethic. Vocal on court; leads by example.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Player History & Notable Background</h3>
+          <p>Began in Grand Rapids, MI; standout at Wayland Union HS. Started at Rider; transferred to Northern Illinois, becoming a consistent starter and front‑court anchor. A high‑school health scare led to discovery of hypertrophic cardiomyopathy; cleared to play with monitoring—shaped his perspective and drive. Professionally, has played in the NBA G League (Windy City Bulls, Raptors 905, Grand Rapids, Rip City) and the British Basketball League (Surrey Scorchers).</p>
+        </div>
+
+        <div class="card">
+          <h3>Projection & Fit</h3>
+          <p>Projects as a rotation big for teams seeking rebounding, defense, and toughness. Fits as a reliable G League rotation/spot starter or international starter/rotation piece. Continued growth in shooting consistency and foul discipline will further raise value.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROW 4: 4 VERTICAL PHOTOS (use JPGs) -->
+    <section class="gallery">
+      <!-- Replace the two placeholders below with the converted JPG Dropbox links (end with ?raw=1) -->
+      <figure class="gimg">
+        <img src="PHOTO1_JPG_URL" alt="Lacey James photo 1" loading="lazy">
+      </figure>
+      <figure class="gimg">
+        <img src="PHOTO2_JPG_URL" alt="Lacey James photo 2" loading="lazy">
+      </figure>
+      <!-- These two are already JPG and good to go -->
+      <figure class="gimg">
+        <img src="https://www.dropbox.com/scl/fi/sdj9ho7ycf1pqjf3njaui/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?raw=1" alt="Lacey James photo 3" loading="lazy">
+      </figure>
+      <figure class="gimg">
+        <img src="https://www.dropbox.com/scl/fi/c9x6la1jm9tl4uuqi2fdh/0ECB59FB-3807-4466-A6CE-172B02E8A0FE.JPG?raw=1" alt="Lacey James photo 4" loading="lazy">
+      </figure>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="foot">
+        <div>
+          <h4>Cell</h4>
+          <div class="cell">(408) 909-0900</div>
+        </div>
+        <div>
+          <h4>Email</h4>
+          <div class="email">RJ@TheNBAAgent.com</div>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="follow">
+            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
+            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
