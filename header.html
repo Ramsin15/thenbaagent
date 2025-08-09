@@ -1,66 +1,28 @@
-<!-- /header.html -->
-<header class="site-header">
-  <style>
-    .site-header{position:sticky; top:0; z-index:1000; background:#fff; border-bottom:1px solid rgba(0,0,0,.06)}
-    .nav-wrap{max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.02em}
-    .brand img{height:26px; width:auto}
-    .main-nav ul{list-style:none; margin:0; padding:0; display:flex; gap:18px}
-    .main-nav a{display:block; padding:8px 10px; text-decoration:none; color:#111}
-    .hamburger{display:none; background:none; border:1px solid rgba(0,0,0,.12); padding:8px 10px; border-radius:10px}
-
-    @media (max-width:900px){
-      .hamburger{display:inline-block}
-      .main-nav{display:none}
-      .main-nav.open{
-        display:block; position:fixed; top:60px; left:0; right:0;
-        max-height:calc(100dvh - 60px); overflow-y:auto; -webkit-overflow-scrolling:touch;
-        background:#fff; border-top:1px solid rgba(0,0,0,.06); z-index:9999; padding:12px 16px;
-      }
-      .main-nav ul{flex-direction:column; gap:8px}
-      body.nav-open{overflow:hidden}
-    }
-  </style>
-
-  <div class="nav-wrap">
-    <a href="/index.html" class="brand">
-      <img src="/assets/logo-nbaagent.svg" alt="The NBA Agent" />
-      <span>The NBA Agent</span>
+<nav class="nav-wrap" role="navigation" aria-label="Main">
+  <div class="nav">
+    <a class="brand" href="/">
+      <span class="name">The NBA Agent</span>
+      <span class="kicker">Player Representation</span>
     </a>
 
-    <button class="hamburger" data-nav-toggle aria-expanded="false" aria-controls="mainNav">Menu</button>
+    <!-- Mobile hamburger -->
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
 
-    <nav id="mainNav" class="main-nav" data-nav>
-      <ul>
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/players/lacey.html">Lacey James</a></li>
-        <li><a href="/players/birima.html">Birima Seck</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
+    <ul class="links" data-navlist>
+      <li><a href="/">About</a></li>
+
+      <li class="has-sub" aria-haspopup="true">
+        <a href="/players/">Players</a>
+        <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu"></button>
+        <ul class="sub" aria-label="Players submenu">
+          <li><a href="/players/lacey.html">Lacey James</a></li>
+          <li><a href="/players/birima.html">Birima Seck</a></li>
+        </ul>
+      </li>
+
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
   </div>
-
-  <script>
-    (function () {
-      const btn = document.querySelector('[data-nav-toggle]');
-      const panel = document.querySelector('[data-nav]');
-      if (!btn || !panel) return;
-
-      function setOpen(isOpen) {
-        panel.classList.toggle('open', isOpen);
-        document.body.classList.toggle('nav-open', isOpen);
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      }
-      btn.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
-      panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
-      document.addEventListener('click', (e) => {
-        if (!panel.classList.contains('open')) return;
-        if (e.target.closest('[data-nav]') || e.target.closest('[data-nav-toggle]')) return;
-        setOpen(false);
-      });
-      window.addEventListener('resize', () => {
-        if (panel.classList.contains('open')) panel.style.maxHeight = 'calc(100dvh - 60px)';
-      });
-    })();
-  </script>
-</header>
+</nav>
