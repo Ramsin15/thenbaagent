@@ -155,28 +155,8 @@
   </style>
 </head>
 <body>
+  <!-- Shared header (loads /header.html) -->
   <div id="site-header" data-src="/header.html"></div>
-  <!-- HEADER -->
-  <div class="nav-wrap">
-    <nav class="nav" role="navigation" aria-label="Main">
-      <div class="brand">
-        <div class="name">The NBA Agent</div>
-        <div class="kicker">Player Representation</div>
-      </div>
-      <ul class="links">
-        <li><a href="/">About</a></li>
-        <li class="has-sub" aria-haspopup="true">
-          <a href="/players/" class="active">Players</a>
-          <button class="caret" aria-expanded="false" aria-label="Toggle Players menu"></button>
-          <ul class="sub" aria-label="Players submenu">
-            <li><a href="/players/lacey.html" class="active">Lacey James</a></li>
-            <li><a href="/players/birima.html">Birima Seck</a></li>
-          </ul>
-        </li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
 
   <main class="wrap">
     <!-- ROW 1: IMAGE + PROFILE -->
@@ -282,51 +262,11 @@ Professionally, James last 24/25 season played in the NBA G League for the Windy
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" alt="Lacey James photo 3" loading="lazy"></figure>
       <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/86g9rx967nxp3o6479h9c/0ECB59FB-3807-4466-A6CE-172B02E8A0FE.JPG?rlkey=dh855q1ryxdy1mkjkanuxsqhz&raw=1" alt="Lacey James photo 4" loading="lazy"></figure>
     </section>
-
-    <!-- FOOTER (unchanged aside from extra padding) -->
-    <footer>
-      <div class="foot">
-        <div><h4>Cell</h4><div class="cell">(408) 909-0900</div></div>
-        <div><h4>Email</h4><div class="email">RJ@TheNBAAgent.com</div></div>
-        <div><h4>Follow</h4>
-          <div class="follow">
-            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
-            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
-            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-          </div>
-        </div>
-      </div>
-    </footer>
   </main>
 
-  <!-- Dropdown: click + hover support (no flicker) -->
-  <script>
-    document.querySelectorAll('.has-sub > .caret').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const item = e.currentTarget.closest('.has-sub');
-        const willOpen = !item.classList.contains('open');
-        document.querySelectorAll('.has-sub.open').forEach(el => el.classList.remove('open'));
-        if (willOpen) item.classList.add('open');
-        e.currentTarget.setAttribute('aria-expanded', String(willOpen));
-      });
-    });
-    document.addEventListener('click', (e) => {
-      if(!e.target.closest('.has-sub')){
-        document.querySelectorAll('.has-sub.open').forEach(el => {
-          el.classList.remove('open');
-          const caret = el.querySelector('.caret'); if(caret) caret.setAttribute('aria-expanded','false');
-        });
-      }
-    });
-    // highlight active link
-    const path = location.pathname.replace(/\/+$/,'');
-    document.querySelectorAll('.links a').forEach(a=>{
-      const href=a.getAttribute('href').replace(/\/+$/,'');
-      if (href && href!=='' && (href===path || (href!=='/' && path.startsWith(href)))) a.classList.add('active');
-    });
-  </script>
+  <!-- Shared footer (loads /footer.html) -->
   <div id="site-footer" data-src="/footer.html"></div>
-<script src="/assets/site.js" defer></script>
+  <!-- Shared behavior -->
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
