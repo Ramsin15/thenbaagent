@@ -5,70 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact | The NBA Agent</title>
   <meta name="description" content="Contact The NBA Agent" />
+  <!-- Keep your existing site styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
 
+  <!-- Page-scoped styles ONLY (prefixed) -->
   <style>
-    /* ===== Minimal, page-local fixes (no theme changes) ===== */
-    :root { --header-h: 60px; --footer-h: 320px; }
-    html, body { margin:0; height:100%; overflow-x:hidden; }
-    body { overscroll-behavior-y: contain; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:#0b0b0b; }
-
-    /* Reserve space so footer injection doesn't cause a jump */
-    #site-header { min-height: var(--header-h); }
-    #site-footer { min-height: var(--footer-h); }
-
-    /* Contact split layout — exactly as previously provided */
-    :root{ --bg:#e9ebe6; --muted:#6b7280; --border:#0b0b0b; }
-    .contact-shell{min-height:70vh; display:grid; grid-template-columns:1fr 1fr;}
-    .left{
-      background:linear-gradient(180deg,var(--bg),#e5e7e3 40%, #e7e8e5);
+    .contact-page{display:grid; grid-template-columns:1fr 1fr; min-height:70vh}
+    .contact-page .left{
+      background:linear-gradient(180deg,#e9ebe6,#e5e7e3 40%, #e7e8e5);
       padding:64px clamp(18px,4vw,56px);
       display:flex; align-items:flex-start; justify-content:flex-start;
     }
-    .left .inner{max-width:620px; width:100%;}
-    .left h1{font-size:clamp(44px,6vw,84px); line-height:.95; margin:0 0 20px; font-weight:800; letter-spacing:-.02em}
-    .left .lines{font-size:16px; margin:18px 0 28px}
-    .left .lines p{margin:10px 0}
-    .left .badge{display:inline-block; margin:6px 0 18px; color:var(--muted); font-size:12px; letter-spacing:.14em}
+    .contact-page .inner{max-width:620px; width:100%;}
+    .contact-page h1{font-size:clamp(44px,6vw,84px); line-height:.95; margin:0 0 20px; font-weight:800; letter-spacing:-.02em}
+    .contact-page .lines{font-size:16px; margin:18px 0 28px}
+    .contact-page .lines p{margin:10px 0}
+    .contact-page .badge{display:inline-block; margin:6px 0 18px; color:#6b7280; font-size:12px; letter-spacing:.14em}
 
-    form{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; max-width:620px}
-    label{font-size:12px; letter-spacing:.08em; color:var(--muted)}
-    input, textarea{
+    .contact-page form{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; max-width:620px}
+    .contact-page label{font-size:12px; letter-spacing:.08em; color:#6b7280}
+    .contact-page input, .contact-page textarea{
       width:100%; margin-top:6px; padding:14px; border:1px solid #dadfe5;
       border-radius:12px; background:#f7f8fa; font-size:16px; outline:none;
     }
-    textarea{min-height:110px; grid-column: span 2;}
-    .btn{grid-column: span 2; padding:16px 22px; border:0; border-radius:14px; background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer}
-    .small{grid-column: span 2; color:var(--muted); font-size:12px}
-
-    .right{background:#d7d9d2; display:flex; align-items:center; justify-content:center; padding:48px;}
-    .map-frame{
-      width:min(640px,84%); aspect-ratio: 1.25 / 1;
-      border:4px solid var(--border); border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
-      -webkit-transform: translateZ(0); transform: translateZ(0); /* prevents jank near bottom */
+    .contact-page textarea{min-height:110px; grid-column: span 2;}
+    .contact-page .btn{
+      grid-column: span 2; padding:16px 22px; border:0; border-radius:14px;
+      background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer;
     }
-    .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
-    .pin{
+    .contact-page .small{grid-column: span 2; color:#6b7280; font-size:12px}
+
+    .contact-page .right{background:#d7d9d2; display:flex; align-items:center; justify-content:center; padding:48px;}
+    .contact-page .map-frame{
+      width:min(640px,84%); aspect-ratio: 1.25 / 1;
+      border:4px solid #0b0b0b; border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
+      -webkit-transform: translateZ(0); transform: translateZ(0); /* smooth near footer on mobile */
+    }
+    .contact-page .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+    .contact-page .pin{
       position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
       width:38px; height:38px; pointer-events:none; filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));
     }
 
     @media (max-width: 980px){
-      :root { --header-h: 60px; --footer-h: 340px; }
-      .contact-shell{grid-template-columns:1fr}
-      .right{padding:24px}
-      .map-frame{width:92%}
+      .contact-page{grid-template-columns:1fr}
+      .contact-page .right{padding:24px}
+      .contact-page .map-frame{width:92%}
     }
   </style>
 </head>
 <body>
-  <!-- Global header placeholder -->
-  <div id="site-header"></div>
 
-  <!-- Split Contact Section -->
-  <section class="contact-shell">
+  <!-- YOUR EXACT HEADER (no style changes) -->
+  <nav class="nav-wrap" role="navigation" aria-label="Main">
+    <div class="nav">
+      <a class="brand" href="/">
+        <span class="name">The NBA Agent</span>
+        <span class="kicker">Player Representation</span>
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="links" data-navlist>
+        <li><a href="/">About</a></li>
+
+        <li class="has-sub" aria-haspopup="true">
+          <a href="/players/">Players</a>
+          <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu"></button>
+          <ul class="sub" aria-label="Players submenu">
+            <li><a href="/players/lacey.html">Lacey James</a></li>
+            <li><a href="/players/birima.html">Birima Seck</a></li>
+          </ul>
+        </li>
+
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTACT SPLIT -->
+  <section class="contact-page">
     <div class="left">
       <div class="inner">
         <h1>Let’s Connect</h1>
@@ -115,24 +137,36 @@
     </div>
   </section>
 
-  <!-- Global footer placeholder -->
-  <div id="site-footer"></div>
+  <!-- YOUR EXACT FOOTER (no style changes) -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="foot">
+      <div>
+        <h4>Cell</h4>
+        <div class="cell">(408) 909-0900</div>
+      </div>
+      <div>
+        <h4>Email</h4>
+        <div class="email">RJ@TheNBAAgent.com</div>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <div class="follow">
+          <a aria-label="X" href="https://x.com/RamsinJacob" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+          </a>
+          <a aria-label="LinkedIn" href="https://www.linkedin.com/in/ramsinjacob/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+          </a>
+          <a aria-label="Instagram" href="https://www.instagram.com/the.nba.agent/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
+  <!-- Page-only JS (mailto composer). No header/footer injection. -->
   <script>
-    /* Load global header & footer (paths tried in order, no visual change) */
-    async function inject(elId, paths){
-      for (const p of paths){
-        try{
-          const res = await fetch(p, {cache:'no-cache'});
-          if(res.ok){ document.getElementById(elId).innerHTML = await res.text(); return; }
-        }catch(e){}
-      }
-      console.warn('Could not load', elId, 'from', paths);
-    }
-    inject('site-header', ['/header.html','/partials/header.html','./header.html']);
-    inject('site-footer', ['/footer.html','/partials/footer.html','./footer.html']);
-
-    /* Mailto compose (no backend) */
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
       const name = document.getElementById('name').value.trim();
