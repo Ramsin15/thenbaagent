@@ -1,114 +1,79 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contact | The NBA Agent</title>
-<meta name="description" content="Contact The NBA Agent" />
-<style>
-  :root{
-    --bg:#e9ebe6; --ink:#0b0b0b; --muted:#6b7280; --radius:28px;
-    --border:#0b0b0b;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0; height:100%}
-  body{
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: linear-gradient(180deg,var(--bg),#e5e7e3 40%, #e7e8e5);
-    color:var(--ink);
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | The NBA Agent</title>
+  <meta name="description" content="Contact The NBA Agent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css"><!-- keep your global stylesheet -->
+  <style>
+    /* Page-only styles to get the split look (keeps your global CSS intact) */
+    :root{ --bg:#e9ebe6; --ink:#0b0b0b; --muted:#6b7280; --border:#0b0b0b; }
+    body{ font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+    .contact-shell{min-height:70vh; display:grid; grid-template-columns:1fr 1fr;}
+    .left{
+      background:linear-gradient(180deg,var(--bg),#e5e7e3 40%, #e7e8e5);
+      padding:64px clamp(18px,4vw,56px);
+      display:flex; align-items:flex-start; justify-content:flex-start;
+    }
+    .left .inner{max-width:620px; width:100%;}
+    .left h1{font-size:clamp(44px,6vw,84px); line-height:.95; margin:0 0 20px; font-weight:800; letter-spacing:-.02em}
+    .left .lines{font-size:16px; margin:18px 0 28px}
+    .left .lines p{margin:10px 0}
+    .left .badge{display:inline-block; margin:6px 0 18px; color:var(--muted); font-size:12px; letter-spacing:.14em}
 
-  /* Header / Footer placeholders so page doesn't jump while loading */
-  #site-header, #site-footer{min-height:56px}
+    form{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; max-width:620px}
+    label{font-size:12px; letter-spacing:.08em; color:var(--muted)}
+    input, textarea{
+      width:100%; margin-top:6px; padding:14px; border:1px solid #dadfe5;
+      border-radius:12px; background:#f7f8fa; font-size:16px; outline:none;
+    }
+    textarea{min-height:110px; grid-column: span 2;}
+    .btn{grid-column: span 2; padding:16px 22px; border:0; border-radius:14px; background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer}
+    .small{grid-column: span 2; color:var(--muted); font-size:12px}
 
-  /* Page container */
-  .page{
-    max-width:1200px; margin:0 auto; padding:48px 20px 80px;
-  }
+    .right{
+      background:#d7d9d2; display:flex; align-items:center; justify-content:center; padding:48px;
+    }
+    .map-frame{
+      width:min(640px,84%); aspect-ratio: 1.25 / 1;
+      border:4px solid var(--border); border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
+    }
+    .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+    .pin{
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:38px; height:38px; pointer-events:none; filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));
+    }
 
-  /* Hero */
-  .hero{
-    padding:10px 0 24px;
-    border-bottom:1px solid rgba(0,0,0,.06);
-    margin-bottom:24px;
-  }
-  .hero h1{
-    font-size:clamp(40px,6vw,76px);
-    line-height:.95; margin:0 0 12px; font-weight:800; letter-spacing:-.02em;
-  }
-  .hero .kicker{
-    color:var(--muted); letter-spacing:.14em; font-size:12px;
-  }
-
-  /* Content grid */
-  .grid{
-    margin-top:24px;
-    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;
-  }
-
-  /* Left panel */
-  .lines{margin:0 0 22px; font-size:16px}
-  .lines p{margin:10px 0}
-  .badge{display:inline-block; margin-top:2px; color:var(--muted); font-size:12px; letter-spacing:.14em}
-
-  form{margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:14px 18px}
-  label{font-size:12px; letter-spacing:.08em; color:var(--muted)}
-  input, textarea{
-    width:100%; margin-top:6px; padding:14px; border:1px solid #dadfe5;
-    border-radius:12px; background:#f7f8fa; font-size:16px; outline:none;
-  }
-  textarea{min-height:110px; grid-column: span 2;}
-  .btn{
-    grid-column: span 2; padding:16px 22px; border:0; border-radius:14px;
-    background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer
-  }
-  .small{grid-column: span 2; color:var(--muted); font-size:12px}
-
-  /* Right side map card */
-  .map-card{
-    background:#d7d9d2; border-radius:var(--radius); padding:24px;
-    display:flex; align-items:center; justify-content:center
-  }
-  .map-frame{
-    width:100%; aspect-ratio: 1.25 / 1;
-    border:4px solid var(--border); border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
-    box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
-  }
-  .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
-
-  /* Basketball pin overlay (center) */
-  .pin{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:38px; height:38px; pointer-events:none;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,.35));
-  }
-
-  @media (max-width: 900px){
-    .grid{grid-template-columns:1fr; gap:24px}
-    .map-card{padding:12px}
-  }
-</style>
+    @media (max-width: 980px){
+      .contact-shell{grid-template-columns:1fr}
+      .right{padding:24px}
+      .map-frame{width:92%}
+    }
+  </style>
 </head>
 <body>
-  <!-- Shared header gets injected here -->
+  <!-- GLOBAL HEADER (auto-loaded) -->
   <div id="site-header"></div>
 
-  <main class="page">
-    <section class="hero">
-      <div class="kicker">THE NBA AGENT</div>
-      <h1>Let’s Connect</h1>
-    </section>
+  <!-- Split Contact Section -->
+  <section class="contact-shell">
+    <div class="left">
+      <div class="inner">
+        <h1>Let’s Connect</h1>
 
-    <section class="grid">
-      <!-- Left: details + form -->
-      <div>
         <div class="lines">
           <p><strong>Phone:</strong> (408) 909-0900</p>
           <p><strong>Email:</strong> RJ@TheNBAAgent.com</p>
           <p><strong>Office:</strong> 1900 Camden Ave, San Jose, CA 95124</p>
         </div>
 
-        <!-- 100% static: mailto opens the user's email app -->
+        <div class="badge">THE NBA AGENT</div>
+
+        <!-- Static mailto form (subject: Website Inquiry) -->
         <form id="contactForm">
           <div>
             <label for="name">NAME</label>
@@ -123,67 +88,57 @@
             <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
           </div>
           <button class="btn" type="submit">SEND</button>
-          <div class="small">Submitting opens your email app with a pre‑filled message to RJ@TheNBAAgent.com (Subject: “Website Inquiry”).</div>
+          <div class="small">Submitting opens your email app pre‑filled to RJ@TheNBAAgent.com (Subject: “Website Inquiry”).</div>
         </form>
       </div>
+    </div>
 
-      <!-- Right: rounded map with basketball pin; no API key needed -->
-      <aside class="map-card" aria-label="Office map">
-        <div class="map-frame">
-          <iframe
-            src="https://maps.google.com/maps?q=1900%20Camden%20Ave%2C%20San%20Jose%2C%20CA%2095124&z=15&output=embed"
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <div class="right" aria-label="Office map">
+      <div class="map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=1900%20Camden%20Ave%2C%20San%20Jose%2C%20CA%2095124&z=15&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <!-- Basketball Pin -->
+        <svg class="pin" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="36" cy="36" r="28" fill="#f15a24" stroke="#111" stroke-width="3"/>
+          <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40"
+                stroke="#111" stroke-width="3" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </section>
 
-          <!-- Basketball icon overlay -->
-          <svg class="pin" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="36" cy="36" r="28" fill="#f15a24" stroke="#111" stroke-width="3"/>
-            <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40"
-                  stroke="#111" stroke-width="3" fill="none"/>
-          </svg>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <!-- Shared footer gets injected here -->
+  <!-- GLOBAL FOOTER (auto-loaded) -->
   <div id="site-footer"></div>
 
-<script>
-  // === Include header & footer (keeps one source of truth) ===
-  // Assumes /header.html and /footer.html exist at the repo root.
-  async function inject(id, url){
-    try{
-      const res = await fetch(url, {cache:'no-cache'});
-      if(!res.ok) throw new Error();
-      const html = await res.text();
-      document.getElementById(id).innerHTML = html;
-    }catch(e){
-      // If fetch fails (e.g. different path), you can adjust the URLs here.
-      console.warn('Could not load', url);
+  <script>
+    // Robust header/footer injector: tries common paths so it matches your other pages.
+    async function inject(elId, paths){
+      for (const p of paths){
+        try{
+          const res = await fetch(p, {cache:'no-cache'});
+          if(res.ok){
+            document.getElementById(elId).innerHTML = await res.text();
+            return;
+          }
+        }catch(e){}
+      }
+      console.warn('Could not load', elId, 'from', paths);
     }
-  }
-  inject('site-header','/header.html');
-  inject('site-footer','/footer.html');
+    inject('site-header', ['/header.html','/partials/header.html','./header.html']);
+    inject('site-footer', ['/footer.html','/partials/footer.html','./footer.html']);
 
-  // === 100% static form handler → mailto ===
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const msg = document.getElementById('message').value.trim();
-
-    const to = 'RJ@TheNBAAgent.com';
-    const subject = 'Website Inquiry';
-    const body =
-`Name: ${name}
-Email: ${email}
-
-Message:
-${msg}`;
-
-    window.location.href =
-      `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
-</script>
+    // Mailto compose (no backend)
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      const to = 'RJ@TheNBAAgent.com';
+      const subject = 'Website Inquiry';
+      const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
+      window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
 </body>
 </html>
