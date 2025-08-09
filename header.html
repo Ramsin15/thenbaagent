@@ -5,15 +5,15 @@
       <span class="kicker">Player Representation</span>
     </a>
 
-    <!-- Mobile toggle state (CSS-only) -->
+    <!-- Mobile toggle -->
     <input id="navToggle" class="mobile-toggle" type="checkbox" aria-hidden="true" />
 
-    <!-- Hamburger (shows only on mobile) -->
-    <label for="navToggle" class="mobile-hamburger" aria-label="Toggle menu" aria-controls="mobileMenu" aria-expanded="false">
+    <!-- Hamburger -->
+    <label for="navToggle" class="mobile-hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </label>
 
-    <!-- Desktop links (unchanged for desktop) -->
+    <!-- Desktop links -->
     <ul class="links" data-navlist>
       <li><a href="/">About</a></li>
       <li class="has-sub" aria-haspopup="true">
@@ -27,18 +27,16 @@
       <li><a href="/contact.html">Contact</a></li>
     </ul>
 
-    <!-- Mobile full-screen overlay (NOW a sibling of the checkbox) -->
-    <div id="mobileMenu" class="mobile-overlay" aria-hidden="true">
-      <!-- Close X in top-right (same checkbox target) -->
+    <!-- Mobile full-screen overlay -->
+    <div id="mobileMenu" class="mobile-overlay">
       <label for="navToggle" class="mobile-close" aria-label="Close menu">✕</label>
-
-      <nav class="mobile-panel" role="dialog" aria-modal="true" aria-label="Site Menu">
+      <nav class="mobile-panel">
         <ul class="mobile-links">
           <li><a href="/">About</a></li>
-          <li class="mobile-has-sub">
+          <li>
             <details>
-              <summary><span>Players</span><i class="car"></i></summary>
-              <ul class="mobile-sub">
+              <summary><span>Players</span></summary>
+              <ul>
                 <li><a href="/players/lacey.html">Lacey James</a></li>
                 <li><a href="/players/birima.html">Birima Seck</a></li>
               </ul>
@@ -47,91 +45,93 @@
           <li><a href="/contact.html">Contact</a></li>
         </ul>
       </nav>
-
-      <!-- Backdrop closes the menu -->
-      <label for="navToggle" class="mobile-backdrop" aria-label="Close menu"></label>
     </div>
   </div>
 
   <style>
-    /* Scope to mobile-only classes so desktop theme stays intact */
-    html, body { overflow-x: hidden; }
+    html, body { overflow-x: hidden; margin:0; padding:0; }
 
-    .mobile-toggle{
-      position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);
-      white-space:nowrap; border:0; padding:0; margin:-1px;
+    .mobile-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+      padding: 0;
+      margin: -1px;
     }
 
-    .mobile-hamburger{
-      display:none;
-      -webkit-tap-highlight-color:transparent;
-      width:44px; height:44px;
-      border:1px solid rgba(0,0,0,.12);
-      border-radius:12px; background:#fff;
-      align-items:center; justify-content:center; cursor:pointer;
+    .mobile-hamburger {
+      display: none;
+      width: 44px; height: 44px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
-    .mobile-hamburger span{
-      display:block; width:20px; height:2px; background:#0b0b0b; margin:2.5px 0;
-      transition:transform .25s ease, opacity .25s ease;
+    .mobile-hamburger span {
+      display: block;
+      width: 20px; height: 2px;
+      background: #000;
+      margin: 4px 0;
     }
-    .mobile-toggle:checked + .mobile-hamburger span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
-    .mobile-toggle:checked + .mobile-hamburger span:nth-child(2){ opacity:0; }
-    .mobile-toggle:checked + .mobile-hamburger span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
 
-    .mobile-overlay{ display:none; } /* hidden on desktop */
+    .mobile-overlay {
+      display: none;
+    }
 
-    @media (max-width: 900px){
-      .links{ display:none; }
-      .mobile-hamburger{ display:inline-flex; }
+    @media (max-width: 900px) {
+      .links { display: none; }
+      .mobile-hamburger { display: inline-flex; }
 
-      /* Show overlay when checkbox is checked (requires same parent — fixed) */
-      .mobile-toggle:not(:checked) ~ .mobile-overlay{ display:none; }
-      .mobile-toggle:checked       ~ .mobile-overlay{ display:block; }
-
-      .mobile-overlay{
-        position:fixed; inset:0; z-index:9999; pointer-events:none;
+      .mobile-toggle:checked ~ .mobile-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        z-index: 9999;
+        padding-top: 60px;
       }
 
-      .mobile-backdrop{
-        position:fixed; inset:0; background:rgba(128,128,128,0.8);
-        pointer-events:auto; cursor:default;
+      .mobile-close {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 44px; height: 44px;
+        font-size: 28px;
+        line-height: 1;
+        background: none;
+        border: none;
+        color: #000;
+        cursor: pointer;
       }
 
-      .mobile-close{
-        position:fixed; top: max(12px, env(safe-area-inset-top)); right:16px;
-        width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-        border:1px solid rgba(255,255,255,.35); border-radius:12px;
-        color:#fff; background:transparent; font-size:22px; line-height:1;
-        pointer-events:auto; cursor:pointer; text-decoration:none;
+      .mobile-panel {
+        padding: 20px;
       }
 
-      .mobile-panel{
-        position:fixed; inset:0; display:flex; align-items:flex-start; justify-content:flex-start;
-        padding: calc(16px + env(safe-area-inset-top)) 18px 18px 18px;
-        pointer-events:auto;
-      }
-      .mobile-links{
-        list-style:none; margin:0; padding:64px 0 0 0;
-        display:grid; gap:6px; max-height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch;
-        width:100%; color:#fff;
-      }
-      .mobile-links > li > a{
-        display:block; padding:14px 2px; font-size:22px; color:#fff; text-decoration:none;
+      .mobile-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
       }
 
-      .mobile-has-sub details{ border-top:1px solid rgba(255,255,255,.18); }
-      .mobile-has-sub summary{
-        list-style:none; display:flex; align-items:center; justify-content:space-between;
-        cursor:pointer; padding:14px 2px; color:#fff; font-size:22px;
+      .mobile-links a, .mobile-links summary {
+        display: block;
+        padding: 14px 0;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000;
+        text-decoration: none;
       }
-      .mobile-has-sub summary::-webkit-details-marker{ display:none; }
-      .mobile-has-sub .car{
-        width:14px; height:14px; border-right:2px solid #fff; border-bottom:2px solid #fff;
-        transform: rotate(-45deg); transition: transform .2s ease; flex:0 0 14px;
+
+      .mobile-links summary::-webkit-details-marker {
+        display: none;
       }
-      .mobile-has-sub details[open] .car{ transform: rotate(135deg); }
-      .mobile-sub{ list-style:none; margin:0; padding: 0 0 8px 10px; }
-      .mobile-sub a{ display:block; padding:10px 2px; color:#fff; font-size:18px; text-decoration:none; opacity:.95; }
     }
   </style>
 </nav>
