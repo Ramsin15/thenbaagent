@@ -46,9 +46,15 @@
     .panel{background:var(--panel);border:1px solid #eee;border-radius:14px;box-shadow:0 10px 34px rgba(17,24,39,.08);overflow:hidden}
     .panel-inner{padding:26px 22px 18px}
     .portrait{display:grid;place-items:center;padding:8px 0 12px}
-    .portrait img{
-      width:260px;height:260px;object-fit:contain;background:#fff;border-radius:12px;
-      box-shadow:0 12px 28px rgba(0,0,0,.06);padding:10px
+    .portrait img {
+  width: 260px;
+  height: 260px;
+  object-fit: cover; /* makes sure it fills the circle without distortion */
+  background: #fff;
+  border-radius: 50%; /* perfect circle */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  padding: 10px;
+  border: 4px solid #fff; /* optional, adds a nice white border */
     }
     .player-name{text-align:center;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.02em;margin-top:16px;font-size:clamp(1.5rem,3.2vw,2rem)}
     .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
