@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Birima Seck — Player Profile | The NBA Agent</title>
+  <link rel="stylesheet" href="/assets/site.css">
   <!-- Open Graph / Twitter Card for rich previews -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="The NBA Agent" />
@@ -150,6 +151,7 @@
   </style>
 </head>
 <body>
+  <div id="site-header" data-src="/header.html"></div>
   <!-- HEADER -->
   <div class="nav-wrap">
     <nav class="nav" role="navigation" aria-label="Main">
@@ -340,5 +342,7 @@
       if (href && href!=='' && (href===path || (href!=='/' && path.startsWith(href)))) a.classList.add('active');
     });
   </script>
+  <div id="site-footer" data-src="/footer.html"></div>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
