@@ -84,6 +84,9 @@
     text-decoration: none;
     color: #000;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .name {
@@ -205,9 +208,11 @@
     z-index: 9999;
   }
 
-  /* Show overlay when checkbox is checked - more specific selector for contact page */
+  /* Show overlay when checkbox is checked - multiple selectors for better compatibility */
+  .m-toggle:checked ~ .m-overlay,
+  .nav .m-toggle:checked ~ .m-overlay,
   .nav-wrap .m-toggle:checked ~ .m-overlay {
-    display: block;
+    display: block !important;
   }
 
   /* Close button (top-right) */
