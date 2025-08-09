@@ -49,8 +49,9 @@
   </div>
 
   <style>
-    html, body { overflow-x: hidden; margin:0; padding:0; }
+    html, body { margin: 0; padding: 0; }
 
+    /* Hide checkbox visually */
     .mobile-toggle {
       position: absolute;
       width: 1px;
@@ -63,15 +64,17 @@
       margin: -1px;
     }
 
+    /* Hamburger icon */
     .mobile-hamburger {
       display: none;
-      width: 44px; height: 44px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 8px;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
       cursor: pointer;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      background: #fff;
     }
     .mobile-hamburger span {
       display: block;
@@ -80,47 +83,56 @@
       margin: 4px 0;
     }
 
+    /* Full-screen overlay menu */
     .mobile-overlay {
       display: none;
     }
 
     @media (max-width: 900px) {
       .links { display: none; }
-      .mobile-hamburger { display: inline-flex; }
+      .mobile-hamburger { display: flex; }
 
       .mobile-toggle:checked ~ .mobile-overlay {
         display: block;
         position: fixed;
-        inset: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
+        height: 100vh;
         background: #fff;
         z-index: 9999;
         padding-top: 60px;
       }
 
+      /* Close button */
       .mobile-close {
         position: fixed;
         top: 16px;
         right: 16px;
-        width: 44px; height: 44px;
+        width: 44px;
+        height: 44px;
         font-size: 28px;
         line-height: 1;
         background: none;
         border: none;
         color: #000;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
+      /* Menu panel */
       .mobile-panel {
         padding: 20px;
       }
 
+      /* Menu links */
       .mobile-links {
         list-style: none;
         padding: 0;
         margin: 0;
       }
-
-      .mobile-links a, .mobile-links summary {
+      .mobile-links a,
+      .mobile-links summary {
         display: block;
         padding: 14px 0;
         font-size: 20px;
@@ -128,7 +140,6 @@
         color: #000;
         text-decoration: none;
       }
-
       .mobile-links summary::-webkit-details-marker {
         display: none;
       }
