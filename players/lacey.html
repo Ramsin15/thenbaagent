@@ -7,7 +7,7 @@
   <meta name="description" content="Lacey James player profile, highlights, and full scouting report." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb;
@@ -17,77 +17,92 @@
     html,body{height:100%}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
 
-    /* HEADER (same as index) */
+    /* ===== NAV (same as home, with dropdown) ===== */
     .nav-wrap{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--divider)}
     .nav{width:min(1100px,94vw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;align-items:baseline;gap:10px}
-    .brand .name{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+    .brand .name{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(1.2rem,2.2vw,1.6rem)}
     .brand .kicker{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem}
+    .links{display:flex;gap:6px;align-items:center}
+    .links>li{list-style:none;position:relative}
+    .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem;display:inline-block}
     .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
+    .has-sub{display:inline-flex;align-items:center}
+    .has-sub>.caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
+    .has-sub>.caret::after{content:"▾";font-size:.9rem}
+    .sub{position:absolute;top:100%;left:8px;min-width:220px;margin-top:6px;background:#fff;border:1px solid var(--divider);border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,.12);padding:8px;display:none}
+    .sub li{list-style:none}
+    .sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
+    .sub a:hover{background:#f8fafc}
+    @media (pointer:fine){ .has-sub:hover .sub{display:block} }
+    .has-sub.open .sub{display:block}
 
-    /* WRAP */
+    /* ===== PAGE WRAP ===== */
     .wrap{width:min(1100px,94vw);margin:32px auto}
 
-    /* ROW 1: IMAGE + PROFILE */
+    /* ===== ROW 1: IMAGE + PROFILE ===== */
     .hero{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:stretch}
     .panel{background:var(--panel);border:1px solid #eee;border-radius:14px;box-shadow:0 10px 34px rgba(17,24,39,.08);display:flex;flex-direction:column;overflow:hidden}
     .panel-inner{padding:26px 22px 18px}
     .portrait{display:grid;place-items:center;padding:8px 0 12px}
     .portrait img{
-      max-width:260px;height:auto;display:block;border-radius:999px;
-      image-rendering:auto;
+      width:260px;height:260px;object-fit:contain; /* ensure PNG shows fully */
+      display:block;border-radius:999px;background:#fff; /* helps visibility if source is transparent */
       box-shadow:0 12px 28px rgba(0,0,0,.12)
     }
-    .player-name{text-align:center;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.04em;margin-top:16px;font-size:clamp(1.5rem,3.2vw,2rem)}
+    .player-name{text-align:center;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.02em;margin-top:16px;font-size:clamp(1.5rem,3.2vw,2rem)}
     .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
-    .player-role{text-align:center;font-weight:900;letter-spacing:.35em;font-size:.9rem}
-    .panel-footer{background:#fff;border-top:1px solid var(--divider);padding:14px 16px;margin-top:auto}
-    .icons{display:flex;gap:12px;justify-content:center}
-    .icons a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
-    .icons img{width:18px;height:18px}
+    .player-role{text-align:center;font-weight:800;letter-spacing:.28em;font-size:.9rem}
 
     .profile{display:flex;flex-direction:column;gap:18px}
     .summary{font-size:1rem;background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:18px}
-    .kv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-    .chip{background:var(--chip);border:1px solid var(--divider);padding:10px 12px;border-radius:10px;text-align:center;font-weight:800;letter-spacing:.08em}
 
-    /* ROW 2: YOUTUBE THUMBS */
+    /* Cleaned category boxes: only labels bold */
+    .kv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .field{background:#fff;border:1px solid var(--divider);border-radius:10px;padding:10px 12px}
+    .field .k{font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;color:var(--muted);margin-bottom:4px}
+    .field .v{font-weight:400;font-size:.95rem}
+
+    /* ===== ROW 2: VIDEOS (more graceful titles) ===== */
     .videos{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .vcard{border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fff}
-    .vtitle{padding:12px 14px;font-weight:900;letter-spacing:.02em}
+    .vtitle{
+      padding:12px 14px;
+      font-family:"Playfair Display",serif; font-weight:600; /* lighter, graceful */
+      letter-spacing:.01em; line-height:1.35;
+    }
     .thumb{display:block;aspect-ratio:16/9;background:#000;overflow:hidden}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
     .vcard a:hover .thumb img{transform:scale(1.02)}
 
-    /* ROW 3: SCOUTING REPORT */
+    /* ===== ROW 3: SCOUTING REPORT ===== */
     .report{margin-top:36px;border:1px solid var(--divider);border-radius:14px;background:
       radial-gradient(140% 100% at 0% 0%, #f7fbff 0%, #ffffff 40%),
       linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
       box-shadow:0 8px 30px rgba(2,6,23,.06)
     }
     .report header{padding:18px 18px 0}
-    .report h2{margin:0;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.02em}
+    .report h2{margin:0;font-family:"Playfair Display",serif;font-weight:700;letter-spacing:.01em}
     .meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
     .badge{border:1px dashed #cbd5e1;border-radius:999px;padding:6px 10px;font-size:.82rem;background:#f8fafc}
     .rgrid{display:grid;grid-template-columns:1fr;gap:18px;padding:18px}
     .statline{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
     .stat{border:1px solid var(--divider);border-radius:10px;text-align:center;padding:10px 8px;background:#fff}
     .stat .k{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.16em}
-    .stat .v{font-size:1.05rem;font-weight:900}
+    .stat .v{font-size:1.05rem;font-weight:800}
     .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .card{border:1px solid var(--divider);border-radius:12px;background:#fff;padding:14px 16px}
     .card h3{margin:0 0 8px;font-size:1rem}
     .list{margin:0;padding-left:18px}
     .list li{margin:6px 0}
 
-    /* ROW 4: 4 VERTICAL PHOTOS */
+    /* ===== ROW 4: 4 VERTICAL PHOTOS ===== */
     .gallery{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .gimg{border-radius:12px;overflow:hidden;border:1px solid var(--divider);background:#000;aspect-ratio:3/4}
     .gimg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
     .gimg:hover img{transform:scale(1.02)}
 
-    /* FOOTER */
+    /* ===== FOOTER ===== */
     footer{margin:56px 0 28px}
     .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;border-top:1px solid var(--divider);text-align:center}
     .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
@@ -96,7 +111,7 @@
     .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
     .foot .follow img{width:18px;height:18px}
 
-    /* MOBILE */
+    /* ===== MOBILE ===== */
     @media (max-width:980px){
       .hero{grid-template-columns:1fr}
       .panel{max-width:520px;margin:0 auto}
@@ -108,27 +123,35 @@
       .links a{padding:12px 10px}
     }
     @media (max-width:560px){
-      .brand{display:none}
+      .brand .kicker{display:none}
       .links a{font-size:.86rem;letter-spacing:.18em}
-      .portrait img{max-width:220px}
+      .portrait img{width:220px;height:220px}
       .kv{grid-template-columns:repeat(2,1fr)}
       .gallery{grid-template-columns:1fr}
+      .vtitle{font-size:1rem}
     }
   </style>
 </head>
 <body>
   <!-- HEADER -->
   <div class="nav-wrap">
-    <nav class="nav">
+    <nav class="nav" role="navigation" aria-label="Main">
       <div class="brand">
         <div class="name">The NBA Agent</div>
         <div class="kicker">Player Representation</div>
       </div>
-      <div class="links">
-        <a href="../index.html">About</a>
-        <a class="active" href="./index.html">Players</a>
-        <a href="../contact.html">Contact</a>
-      </div>
+      <ul class="links">
+        <li><a href="/" >About</a></li>
+        <li class="has-sub" aria-haspopup="true">
+          <a href="/players/" class="active">Players</a>
+          <button class="caret" aria-expanded="false" aria-label="Toggle Players menu"></button>
+          <ul class="sub" aria-label="Players submenu">
+            <li><a href="/players/lacey.html">Lacey James</a></li>
+            <li><a href="/players/birima.html">Birima Seck</a></li>
+          </ul>
+        </li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
     </nav>
   </div>
 
@@ -136,15 +159,12 @@
 
     <!-- ROW 1: IMAGE + PROFILE -->
     <section class="hero">
+      <!-- Left: Headshot (transparent PNG) -->
       <aside class="panel">
         <div class="panel-inner">
           <div class="portrait">
             <img
               src="https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1"
-              srcset="
-                https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1 1x,
-                https://www.dropbox.com/scl/fi/rtxjppoeq4419zxz96cst/headshot.png?raw=1 2x
-              "
               alt="Lacey James headshot"
             />
           </div>
@@ -152,34 +172,29 @@
           <div class="rule"></div>
           <div class="player-role">PF / C</div>
         </div>
-        <div class="panel-footer">
-          <div class="icons">
-            <a aria-label="X" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
-            <a aria-label="LinkedIn" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
-            <a aria-label="Instagram" href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-          </div>
-        </div>
       </aside>
 
+      <!-- Right: Profile -->
       <article class="profile">
         <div class="summary">
           <strong>Summary:</strong> Lacey James is a rugged, high-motor big man whose game is defined by physicality, rebounding, and defensive effort. His resilience in overcoming a heart condition and his track record of leadership and hustle make him a respected figure on and off the court. While he is not a primary offensive weapon, his ability to impact games with energy, toughness, and team-first play make him a valuable asset for teams needing interior presence and grit.
         </div>
 
+        <!-- Clean category boxes: bold label, regular value -->
         <div class="kv">
-          <div class="chip">Status: Free Agent — Raptors 905 (Starting C, last season)</div>
-          <div class="chip">Position: PF/C</div>
-          <div class="chip">Height/Weight: 6‑9, 240 lbs</div>
-          <div class="chip">DOB: 7/12/96</div>
-          <div class="chip">Hometown: Grand Rapids, MI</div>
+          <div class="field"><div class="k">Status</div><div class="v">Free Agent — Toronto Raptors 905 (Starting Center last season)</div></div>
+          <div class="field"><div class="k">Position</div><div class="v">PF/C</div></div>
+          <div class="field"><div class="k">Height/Weight</div><div class="v">6‑9, 240 lbs</div></div>
+          <div class="field"><div class="k">DOB</div><div class="v">7/12/96</div></div>
+          <div class="field"><div class="k">Hometown</div><div class="v">Grand Rapids, MI</div></div>
         </div>
       </article>
     </section>
 
-    <!-- ROW 2: YOUTUBE THUMBS -->
+    <!-- ROW 2: VIDEOS (lighter, graceful titles) -->
     <section class="videos">
       <div class="vcard">
-        <div class="vtitle">Lacey James - Toronto Raptors 905 Game Highlight & Minutes - NBA G League</div>
+        <div class="vtitle">Lacey James – Toronto Raptors 905 Game Highlight &amp; Minutes — NBA G League</div>
         <a href="https://www.youtube.com/watch?v=WP9wTkMJ_HU" target="_blank" rel="noopener">
           <span class="thumb">
             <img src="https://i.ytimg.com/vi/WP9wTkMJ_HU/hqdefault.jpg" alt="Raptors 905 Highlights" loading="lazy">
@@ -188,7 +203,7 @@
       </div>
 
       <div class="vcard">
-        <div class="vtitle">Lacey James - Drew League Basketball - July 26th, 2025 (26 Pts & 10 RBS) Led All Players</div>
+        <div class="vtitle">Lacey James – Drew League Basketball — July 26, 2025 (26 Pts &amp; 10 Reb) Led All Players</div>
         <a href="https://www.youtube.com/watch?v=WbexDYHoge0" target="_blank" rel="noopener">
           <span class="thumb">
             <img src="https://i.ytimg.com/vi/WbexDYHoge0/hqdefault.jpg" alt="Drew League Highlights" loading="lazy">
@@ -207,7 +222,7 @@
           <span class="badge">DOB: 7/12/96</span>
           <span class="badge">College: Northern Illinois</span>
           <span class="badge">Hometown: Grand Rapids, MI</span>
-          <span class="badge">Pro: G League & BBL (Surrey)</span>
+          <span class="badge">Pro: G League &amp; BBL (Surrey)</span>
         </div>
       </header>
 
@@ -235,7 +250,7 @@
               <li>High IQ, Adaptable, Team‑First, Coachable</li>
               <li>Size Advantage in Paint, Dominant Rebounder</li>
               <li>Ball Handling for size, Off‑Ball Awareness</li>
-              <li>Rim Protection & Shot Blocking</li>
+              <li>Rim Protection &amp; Shot Blocking</li>
               <li>High Motor, Defensive Minded, Playmaker, Versatility</li>
             </ul>
           </div>
@@ -245,7 +260,7 @@
             <ul class="list">
               <li><strong>Elite Rebounding</strong> on both ends, especially offensive glass</li>
               <li><strong>Physical Defense</strong>—battles in paint, contests shots, absorbs contact</li>
-              <li><strong>Effort & Hustle</strong>—energy, hard screens, dirty‑work plays</li>
+              <li><strong>Effort &amp; Hustle</strong>—energy, hard screens, dirty‑work plays</li>
               <li><strong>Versatility</strong>—PF/C, multi‑position defending (G League/international)</li>
               <li><strong>Intangibles</strong>—leadership, resilience, high character</li>
             </ul>
@@ -253,7 +268,7 @@
         </div>
 
         <div class="card">
-          <h3>Physical Profile & Athleticism</h3>
+          <h3>Physical Profile &amp; Athleticism</h3>
           <p>Sturdy, physically mature big with a strong, broad frame suited for PF or small‑ball C roles. Not an explosive leaper, but compensates with strength, balance, positioning, and a relentless motor.</p>
         </div>
 
@@ -280,33 +295,25 @@
         </div>
 
         <div class="card">
-          <h3>Player History & Notable Background</h3>
+          <h3>Player History &amp; Notable Background</h3>
           <p>Began in Grand Rapids, MI; standout at Wayland Union HS. Started at Rider; transferred to Northern Illinois, becoming a consistent starter and front‑court anchor. A high‑school health scare led to discovery of hypertrophic cardiomyopathy; cleared to play with monitoring—shaped his perspective and drive. Professionally, has played in the NBA G League (Windy City Bulls, Raptors 905, Grand Rapids, Rip City) and the British Basketball League (Surrey Scorchers).</p>
         </div>
 
         <div class="card">
-          <h3>Projection & Fit</h3>
+          <h3>Projection &amp; Fit</h3>
           <p>Projects as a rotation big for teams seeking rebounding, defense, and toughness. Fits as a reliable G League rotation/spot starter or international starter/rotation piece. Continued growth in shooting consistency and foul discipline will further raise value.</p>
         </div>
       </div>
     </section>
 
-    <!-- ROW 4: 4 VERTICAL PHOTOS (use JPGs) -->
+    <!-- ROW 4: 4 VERTICAL PHOTOS (JPGs) -->
     <section class="gallery">
-      <!-- Replace the two placeholders below with the converted JPG Dropbox links (end with ?raw=1) -->
-      <figure class="gimg">
-        <img src="PHOTO1_JPG_URL" alt="Lacey James photo 1" loading="lazy">
-      </figure>
-      <figure class="gimg">
-        <img src="PHOTO2_JPG_URL" alt="Lacey James photo 2" loading="lazy">
-      </figure>
-      <!-- These two are already JPG and good to go -->
-      <figure class="gimg">
-        <img src="https://www.dropbox.com/scl/fi/sdj9ho7ycf1pqjf3njaui/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?raw=1" alt="Lacey James photo 3" loading="lazy">
-      </figure>
-      <figure class="gimg">
-        <img src="https://www.dropbox.com/scl/fi/c9x6la1jm9tl4uuqi2fdh/0ECB59FB-3807-4466-A6CE-172B02E8A0FE.JPG?raw=1" alt="Lacey James photo 4" loading="lazy">
-      </figure>
+      <!-- Replace these two placeholders with the converted JPG Dropbox links (end with ?raw=1) -->
+      <figure class="gimg"><img src="PHOTO1_JPG_URL" alt="Lacey James photo 1" loading="lazy"></figure>
+      <figure class="gimg"><img src="PHOTO2_JPG_URL" alt="Lacey James photo 2" loading="lazy"></figure>
+      <!-- These two are already JPGs -->
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/sdj9ho7ycf1pqjf3njaui/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?raw=1" alt="Lacey James photo 3" loading="lazy"></figure>
+      <figure class="gimg"><img src="https://www.dropbox.com/scl/fi/c9x6la1jm9tl4uuqi2fdh/0ECB59FB-3807-4466-A6CE-172B02E8A0FE.JPG?raw=1" alt="Lacey James photo 4" loading="lazy"></figure>
     </section>
 
     <!-- FOOTER -->
@@ -331,5 +338,23 @@
       </div>
     </footer>
   </main>
+
+  <!-- Dropdown script -->
+  <script>
+    document.querySelectorAll('.has-sub > .caret').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const item = e.currentTarget.closest('.has-sub');
+        const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.has-sub.open').forEach(el => { if (el!==item) el.classList.remove('open'); });
+        item.classList.toggle('open', !expanded);
+        e.currentTarget.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+    const path = location.pathname.replace(/\/+$/,'');
+    document.querySelectorAll('.links a').forEach(a=>{
+      const href = a.getAttribute('href').replace(/\/+$/,'');
+      if (href && href !== '' && (href === path || (href !== '/' && path.startsWith(href)))) a.classList.add('active');
+    });
+  </script>
 </body>
 </html>
