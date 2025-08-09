@@ -11,6 +11,7 @@
       <span></span><span></span><span></span>
     </button>
 
+    <!-- Primary links (desktop-visible; mobile repurposed as overlay content) -->
     <ul class="links" data-navlist data-nav>
       <li><a href="/">About</a></li>
 
@@ -27,85 +28,238 @@
     </ul>
   </div>
 
-  <!-- Mobile-only behavior CSS (style-neutral: no colors/spacing altered) -->
+  <!-- ===== Mobile-only design & behavior (scoped) ===== -->
   <style>
-    /* Prevent horizontal wobble */
-    html, body { overflow-x: hidden; }
-
+    /* We don't change your desktop styles; mobile kicks in below. */
     @media (max-width: 900px){
-      /* Lock background scroll when menu open */
-      body.nav-open { overflow: hidden; }
+      :root{
+        --hdr-h: 64px;
+        --panel-bg: #0b0b0b;   /* overlay background */
+        --panel-ink: #ffffff;  /* overlay text */
+        --muted: #9aa0a6;
+      }
 
-      /* Make the nav list a fixed, full-height panel when open (under header) */
+      /* Sticky minimal header */
+      .nav-wrap{
+        position: sticky; top: 0; z-index: 1000;
+        background: #ffffff;
+        border-bottom: 1px solid rgba(0,0,0,.06);
+      }
+      .nav{
+        min-height: var(--hdr-h);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 10px 14px;
+        gap: 10px;
+      }
+
+      /* Brand: stack name/kicker tighter on mobile for a clean bar */
+      .brand{
+        display: inline-flex; flex-direction: column; gap: 2px;
+        text-decoration: none;
+      }
+      .brand .name{
+        font-weight: 800; letter-spacing: .02em; line-height: 1; font-size: 18px; color: #0b0b0b;
+      }
+      .brand .kicker{
+        font-size: 12px; letter-spacing: .12em; color: #6b7280; text-transform: uppercase;
+      }
+
+      /* Hide desktop nav list; we present a full-screen overlay instead */
+      .links{ display: none; }
+
+      /* Hamburger button (bigger/tappable) */
+      .hamburger{
+        -webkit-tap-highlight-color: transparent;
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 44px; height: 44px;
+        border: 1px solid rgba(0,0,0,.12); border-radius: 12px;
+        background: #fff;
+      }
+      .hamburger span{
+        display:block; width: 20px; height: 2px; background:#0b0b0b; margin: 2.5px 0; transition: transform .25s ease, opacity .25s ease;
+      }
+      /* Animate to X when open */
+      .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
+      .hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+      .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
+
+      /* ===== Full-screen overlay menu ===== */
+      .nav-wrap::after{
+        /* Backdrop (hidden by default) */
+        content: "";
+        position: fixed; inset: 0; background: rgba(0,0,0,.28);
+        opacity: 0; pointer-events: none; transition: opacity .2s ease;
+      }
+      .nav-wrap.menu-open::after{ opacity: 1; pointer-events: auto; }
+
+      /* The panel itself */
       [data-nav]{
-        /* your desktop styles stay via your existing CSS; mobile adds only when open */
+        /* repurposed list as panel content container */
       }
-      [data-nav].open{
-        position: fixed;
-        left: 0; right: 0;
-        top: 60px;             /* adjust if your header is taller */
-        max-height: calc(100dvh - 60px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        z-index: 9999;
-        background: inherit;   /* keeps your current background */
+      .mobile-panel{
+        position: fixed; inset: var(--hdr-h) 0 0 0;
+        background: var(--panel-bg);
+        color: var(--panel-ink);
+        transform: translateY(8px); opacity: 0;
+        transition: transform .22s ease, opacity .22s ease;
+        display: grid; grid-template-rows: 1fr auto;
+        z-index: 1001;
+      }
+      .mobile-panel.open{ transform: translateY(0); opacity: 1; }
+      .mobile-scroll{
+        overflow-y: auto; -webkit-overflow-scrolling: touch;
+        padding: 16px 18px 18px;
+      }
+      .mobile-links{ list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+      .mobile-links > li > a{
+        display: block; padding: 14px 10px; font-size: 18px; text-decoration: none; color: var(--panel-ink);
       }
 
-      /* Submenu: collapsed by default on mobile; open class shows it */
-      .has-sub > .sub{ display: none; }
-      .has-sub.open > .sub{ display: block; }
-
-      /* Make caret easier to tap on mobile */
-      .has-sub > [data-subtoggle]{
-        touch-action: manipulation;
+      /* Submenu accordion */
+      .mobile-links .has-sub > .row{
+        display:flex; align-items:center; justify-content:space-between;
+        padding: 14px 10px; cursor: pointer; user-select: none;
       }
+      .mobile-links .has-sub .row .label{
+        font-size: 18px; color: var(--panel-ink); text-decoration: none;
+      }
+      .mobile-links .has-sub .row .car{
+        width: 14px; height: 14px; border-right: 2px solid var(--panel-ink); border-bottom: 2px solid var(--panel-ink);
+        transform: rotate(-45deg); transition: transform .2s ease;
+      }
+      .mobile-links .has-sub.open .row .car{ transform: rotate(135deg); }
+
+      .mobile-links .sub{
+        list-style:none; margin:0; padding: 0 0 8px 10px; display:none;
+      }
+      .mobile-links .has-sub.open .sub{ display:block; }
+      .mobile-links .sub a{
+        display:block; padding: 10px; color: var(--panel-ink); text-decoration:none; font-size:16px; opacity:.95;
+      }
+
+      /* Panel footer (optional contact quick actions) */
+      .mobile-panel .panel-footer{
+        border-top: 1px solid rgba(255,255,255,.12);
+        padding: 12px 18px;
+        display:flex; gap:12px; flex-wrap: wrap;
+      }
+      .mobile-panel .panel-footer a{
+        text-decoration:none; color:#fff; background: transparent;
+        border:1px solid rgba(255,255,255,.35); border-radius: 999px; padding:8px 12px; font-size:14px;
+      }
+
+      /* Lock page scroll when panel open */
+      body.nav-open{ overflow: hidden; }
     }
   </style>
 
   <script>
-    (function () {
-      const btn = document.querySelector('[data-nav-toggle]');
-      const panel = document.querySelector('[data-nav]');
-      const caretBtns = document.querySelectorAll('[data-subtoggle]');
-      if (!btn || !panel) return;
+    (function(){
+      const hdr = document.querySelector('.nav-wrap');
+      const hamb = hdr.querySelector('[data-nav-toggle]');
+      const desktopList = hdr.querySelector('[data-navlist]');
+      const caretBtns = hdr.querySelectorAll('[data-subtoggle]');
 
-      function setOpen(isOpen) {
-        panel.classList.toggle('open', isOpen);
-        document.body.classList.toggle('nav-open', isOpen);
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (!hdr || !hamb || !desktopList) return;
+
+      // Build a mobile overlay panel dynamically (so desktop markup remains untouched)
+      const panel = document.createElement('div');
+      panel.className = 'mobile-panel';
+      panel.setAttribute('aria-hidden','true');
+
+      const scroll = document.createElement('div');
+      scroll.className = 'mobile-scroll';
+
+      // Clone the desktop list but convert to mobile-friendly structure
+      const mobList = document.createElement('ul');
+      mobList.className = 'mobile-links';
+      // Build items
+      desktopList.querySelectorAll(':scope > li').forEach((li) => {
+        const liMobile = document.createElement('li');
+        if (li.classList.contains('has-sub')) {
+          liMobile.className = 'has-sub';
+          // Row (label + caret)
+          const row = document.createElement('div');
+          row.className = 'row';
+          const labelLink = li.querySelector(':scope > a');
+          const label = document.createElement('a');
+          label.className = 'label';
+          label.href = labelLink ? labelLink.getAttribute('href') : '#';
+          label.textContent = labelLink ? labelLink.textContent : 'Players';
+          const car = document.createElement('i');
+          car.className = 'car';
+          row.append(label, car);
+          liMobile.appendChild(row);
+
+          // Sub UL
+          const sub = document.createElement('ul'); sub.className = 'sub';
+          li.querySelectorAll(':scope > .sub > li > a').forEach(a => {
+            const sLi = document.createElement('li');
+            const sA = document.createElement('a');
+            sA.href = a.getAttribute('href'); sA.textContent = a.textContent;
+            sLi.appendChild(sA); sub.appendChild(sLi);
+          });
+          liMobile.appendChild(sub);
+
+          // Toggle behavior
+          row.addEventListener('click', (e) => {
+            e.preventDefault();
+            liMobile.classList.toggle('open');
+          });
+        } else {
+          const a = li.querySelector('a');
+          const aM = document.createElement('a');
+          aM.href = a.getAttribute('href'); aM.textContent = a.textContent;
+          liMobile.appendChild(aM);
+        }
+        mobList.appendChild(liMobile);
+      });
+
+      scroll.appendChild(mobList);
+
+      // Optional quick actions at bottom (edit/remove as you like)
+      const pf = document.createElement('div');
+      pf.className = 'panel-footer';
+      pf.innerHTML = `
+        <a href="tel:+14089090900">Call</a>
+        <a href="mailto:RJ@TheNBAAgent.com">Email</a>
+        <a href="/contact.html">Contact Page</a>
+      `;
+
+      panel.append(scroll, pf);
+      hdr.appendChild(panel);
+
+      function setOpen(open){
+        panel.classList.toggle('open', open);
+        hdr.classList.toggle('menu-open', open);
+        document.body.classList.toggle('nav-open', open);
+        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+        hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
 
-      // Toggle main menu
-      btn.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+      // Toggle main overlay
+      hamb.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
 
-      // Close menu when a link is clicked
+      // Close on any link tap inside panel
       panel.addEventListener('click', (e) => {
         const a = e.target.closest('a');
         if (a) setOpen(false);
       });
 
-      // Close when tapping outside the panel or button
-      document.addEventListener('click', (e) => {
+      // Close if tapping outside (on the dim backdrop area)
+      hdr.addEventListener('click', (e) => {
         if (!panel.classList.contains('open')) return;
-        if (e.target.closest('[data-nav]') || e.target.closest('[data-nav-toggle]')) return;
-        setOpen(false);
+        const insidePanel = e.target.closest('.mobile-panel') || e.target.closest('[data-nav-toggle]');
+        if (!insidePanel) setOpen(false);
       });
 
-      // Submenu toggles (Players)
-      caretBtns.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const li = btn.closest('.has-sub');
-          const isOpen = li.classList.toggle('open');
-          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-      });
-
-      // Ensure panel height stays correct on orientation change
+      // Keep height stable on orientation change
       window.addEventListener('resize', () => {
         if (panel.classList.contains('open')) {
-          // reflow keeps max-height tied to 100dvh reliably on iOS
-          panel.style.maxHeight = getComputedStyle(panel).maxHeight;
+          // force reflow; Safari/iOS quirk
+          panel.style.transform = 'translateY(0)';
         }
       });
     })();
