@@ -6,18 +6,18 @@
       <span class="kicker">Player Representation</span>
     </a>
 
-    <!-- Mobile hamburger -->
+    <!-- Mobile hamburger (becomes X when open) -->
     <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
       <span></span><span></span><span></span>
     </button>
 
-    <!-- Primary links (desktop-visible; mobile repurposed as overlay content) -->
-    <ul class="links" data-navlist data-nav>
+    <!-- Desktop links (unchanged for desktop) -->
+    <ul class="links" data-navlist>
       <li><a href="/">About</a></li>
 
       <li class="has-sub" aria-haspopup="true">
         <a href="/players/">Players</a>
-        <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu" data-subtoggle></button>
+        <button class="caret" aria-expanded="false" aria-label="Toggle Players submenu"></button>
         <ul class="sub" aria-label="Players submenu">
           <li><a href="/players/lacey.html">Lacey James</a></li>
           <li><a href="/players/birima.html">Birima Seck</a></li>
@@ -28,240 +28,180 @@
     </ul>
   </div>
 
-  <!-- ===== Mobile-only design & behavior (scoped) ===== -->
+  <!-- Mobile full-screen overlay menu -->
+  <div class="mobile-overlay" aria-hidden="true" hidden>
+    <div class="overlay-inner" role="dialog" aria-modal="true" aria-label="Site Menu">
+      <nav class="overlay-nav">
+        <ul class="overlay-links">
+          <li><a href="/">About</a></li>
+          <li class="has-sub">
+            <button class="overlay-accordion" aria-expanded="false">
+              <span>Players</span><i class="car"></i>
+            </button>
+            <ul class="overlay-sub">
+              <li><a href="/players/lacey.html">Lacey James</a></li>
+              <li><a href="/players/birima.html">Birima Seck</a></li>
+            </ul>
+          </li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- Clickable backdrop area to close -->
+    <button class="overlay-backdrop" aria-label="Close menu"></button>
+  </div>
+
   <style>
-    /* We don't change your desktop styles; mobile kicks in below. */
-    @media (max-width: 900px){
-      :root{
-        --hdr-h: 64px;
-        --panel-bg: #0b0b0b;   /* overlay background */
-        --panel-ink: #ffffff;  /* overlay text */
-        --muted: #9aa0a6;
-      }
+    /* Prevent horizontal wobble */
+    html, body { overflow-x: hidden; }
 
-      /* Sticky minimal header */
-      .nav-wrap{
-        position: sticky; top: 0; z-index: 1000;
-        background: #ffffff;
-        border-bottom: 1px solid rgba(0,0,0,.06);
-      }
-      .nav{
-        min-height: var(--hdr-h);
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        padding: 10px 14px;
-        gap: 10px;
-      }
+    /* --- BASE header layout remains controlled by your site CSS --- */
+    .nav-wrap { width: 100%; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; }
+    .brand { text-decoration:none; display:inline-flex; flex-direction:column; gap:2px; }
+    .brand .name { font-weight:800; letter-spacing:.02em; line-height:1; }
+    .brand .kicker { font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; }
 
-      /* Brand: stack name/kicker tighter on mobile for a clean bar */
-      .brand{
-        display: inline-flex; flex-direction: column; gap: 2px;
-        text-decoration: none;
-      }
-      .brand .name{
-        font-weight: 800; letter-spacing: .02em; line-height: 1; font-size: 18px; color: #0b0b0b;
-      }
-      .brand .kicker{
-        font-size: 12px; letter-spacing: .12em; color: #6b7280; text-transform: uppercase;
-      }
-
-      /* Hide desktop nav list; we present a full-screen overlay instead */
-      .links{ display: none; }
-
-      /* Hamburger button (bigger/tappable) */
-      .hamburger{
-        -webkit-tap-highlight-color: transparent;
-        display: inline-flex; align-items: center; justify-content: center;
-        width: 44px; height: 44px;
-        border: 1px solid rgba(0,0,0,.12); border-radius: 12px;
-        background: #fff;
-      }
-      .hamburger span{
-        display:block; width: 20px; height: 2px; background:#0b0b0b; margin: 2.5px 0; transition: transform .25s ease, opacity .25s ease;
-      }
-      /* Animate to X when open */
-      .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
-      .hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
-      .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
-
-      /* ===== Full-screen overlay menu ===== */
-      .nav-wrap::after{
-        /* Backdrop (hidden by default) */
-        content: "";
-        position: fixed; inset: 0; background: rgba(0,0,0,.28);
-        opacity: 0; pointer-events: none; transition: opacity .2s ease;
-      }
-      .nav-wrap.menu-open::after{ opacity: 1; pointer-events: auto; }
-
-      /* The panel itself */
-      [data-nav]{
-        /* repurposed list as panel content container */
-      }
-      .mobile-panel{
-        position: fixed; inset: var(--hdr-h) 0 0 0;
-        background: var(--panel-bg);
-        color: var(--panel-ink);
-        transform: translateY(8px); opacity: 0;
-        transition: transform .22s ease, opacity .22s ease;
-        display: grid; grid-template-rows: 1fr auto;
-        z-index: 1001;
-      }
-      .mobile-panel.open{ transform: translateY(0); opacity: 1; }
-      .mobile-scroll{
-        overflow-y: auto; -webkit-overflow-scrolling: touch;
-        padding: 16px 18px 18px;
-      }
-      .mobile-links{ list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-      .mobile-links > li > a{
-        display: block; padding: 14px 10px; font-size: 18px; text-decoration: none; color: var(--panel-ink);
-      }
-
-      /* Submenu accordion */
-      .mobile-links .has-sub > .row{
-        display:flex; align-items:center; justify-content:space-between;
-        padding: 14px 10px; cursor: pointer; user-select: none;
-      }
-      .mobile-links .has-sub .row .label{
-        font-size: 18px; color: var(--panel-ink); text-decoration: none;
-      }
-      .mobile-links .has-sub .row .car{
-        width: 14px; height: 14px; border-right: 2px solid var(--panel-ink); border-bottom: 2px solid var(--panel-ink);
-        transform: rotate(-45deg); transition: transform .2s ease;
-      }
-      .mobile-links .has-sub.open .row .car{ transform: rotate(135deg); }
-
-      .mobile-links .sub{
-        list-style:none; margin:0; padding: 0 0 8px 10px; display:none;
-      }
-      .mobile-links .has-sub.open .sub{ display:block; }
-      .mobile-links .sub a{
-        display:block; padding: 10px; color: var(--panel-ink); text-decoration:none; font-size:16px; opacity:.95;
-      }
-
-      /* Panel footer (optional contact quick actions) */
-      .mobile-panel .panel-footer{
-        border-top: 1px solid rgba(255,255,255,.12);
-        padding: 12px 18px;
-        display:flex; gap:12px; flex-wrap: wrap;
-      }
-      .mobile-panel .panel-footer a{
-        text-decoration:none; color:#fff; background: transparent;
-        border:1px solid rgba(255,255,255,.35); border-radius: 999px; padding:8px 12px; font-size:14px;
-      }
-
-      /* Lock page scroll when panel open */
-      body.nav-open{ overflow: hidden; }
+    /* Hamburger */
+    .hamburger {
+      display:none;
+      -webkit-tap-highlight-color: transparent;
+      width:44px; height:44px; border:1px solid rgba(0,0,0,.12);
+      border-radius:12px; background:#fff; align-items:center; justify-content:center;
     }
+    .hamburger span { display:block; width:20px; height:2px; background:#0b0b0b; margin:2.5px 0; transition:transform .25s ease, opacity .25s ease; }
+    .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(4.5px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-4.5px) rotate(-45deg); }
+
+    /* Desktop keeps your existing links; mobile replaces with overlay */
+    @media (max-width: 900px){
+      .hamburger { display:inline-flex; }
+      .links { display:none; }
+      body.nav-open { overflow:hidden; }
+    }
+
+    /* ===== Mobile full-screen overlay ===== */
+    .mobile-overlay[hidden] { display:none !important; }
+    .mobile-overlay {
+      position: fixed; inset: 0; z-index: 9999; /* above page */
+    }
+    /* Semi-opaque grey backdrop (80%) */
+    .overlay-backdrop {
+      position:absolute; inset:0;
+      background: rgba(128,128,128,0.8);
+      border:0; padding:0; margin:0; cursor: default;
+    }
+    /* Content area */
+    .overlay-inner {
+      position:absolute; inset:0;
+      display:grid; grid-template-rows: var(--topbar,64px) 1fr;
+      color:#fff; pointer-events:none; /* children re-enable */
+    }
+    /* Keep a top bar space so the X sits exactly where the hamburger is */
+    .overlay-inner::before{
+      content:""; display:block; height:var(--topbar,64px);
+      pointer-events:none;
+    }
+
+    /* The actual nav */
+    .overlay-nav { pointer-events:auto; }
+    .overlay-links {
+      list-style:none; margin:0; padding:18px;
+      display:grid; gap:6px;
+    }
+    .overlay-links > li > a {
+      display:block; padding:14px 4px; font-size:22px; color:#fff; text-decoration:none;
+    }
+
+    /* Accordion for Players */
+    .overlay-accordion {
+      -webkit-tap-highlight-color: transparent;
+      width:100%; display:flex; align-items:center; justify-content:space-between;
+      padding:14px 4px; font-size:22px; color:#fff;
+      background:transparent; border:0; text-align:left; cursor:pointer;
+    }
+    .overlay-accordion .car{
+      width:14px; height:14px; border-right:2px solid #fff; border-bottom:2px solid #fff;
+      transform: rotate(-45deg); transition: transform .2s ease;
+      flex: 0 0 14px;
+    }
+    .overlay-accordion[aria-expanded="true"] .car{ transform: rotate(135deg); }
+
+    .overlay-sub { list-style:none; margin:0; padding: 0 0 8px 10px; display:none; }
+    .overlay-sub li a { display:block; padding:10px 4px; font-size:18px; color:#fff; text-decoration:none; opacity:.95; }
+    .overlay-sub.open { display:block; }
   </style>
 
   <script>
     (function(){
-      const hdr = document.querySelector('.nav-wrap');
-      const hamb = hdr.querySelector('[data-nav-toggle]');
-      const desktopList = hdr.querySelector('[data-navlist]');
-      const caretBtns = hdr.querySelectorAll('[data-subtoggle]');
+      const navWrap = document.querySelector('.nav-wrap');
+      const hamb = navWrap.querySelector('[data-nav-toggle]');
+      const overlay = navWrap.querySelector('.mobile-overlay');
+      const backdrop = navWrap.querySelector('.overlay-backdrop');
+      const overlayNav = navWrap.querySelector('.overlay-nav');
+      const accordions = navWrap.querySelectorAll('.overlay-accordion');
 
-      if (!hdr || !hamb || !desktopList) return;
+      if (!hamb || !overlay || !backdrop || !overlayNav) return;
 
-      // Build a mobile overlay panel dynamically (so desktop markup remains untouched)
-      const panel = document.createElement('div');
-      panel.className = 'mobile-panel';
-      panel.setAttribute('aria-hidden','true');
-
-      const scroll = document.createElement('div');
-      scroll.className = 'mobile-scroll';
-
-      // Clone the desktop list but convert to mobile-friendly structure
-      const mobList = document.createElement('ul');
-      mobList.className = 'mobile-links';
-      // Build items
-      desktopList.querySelectorAll(':scope > li').forEach((li) => {
-        const liMobile = document.createElement('li');
-        if (li.classList.contains('has-sub')) {
-          liMobile.className = 'has-sub';
-          // Row (label + caret)
-          const row = document.createElement('div');
-          row.className = 'row';
-          const labelLink = li.querySelector(':scope > a');
-          const label = document.createElement('a');
-          label.className = 'label';
-          label.href = labelLink ? labelLink.getAttribute('href') : '#';
-          label.textContent = labelLink ? labelLink.textContent : 'Players';
-          const car = document.createElement('i');
-          car.className = 'car';
-          row.append(label, car);
-          liMobile.appendChild(row);
-
-          // Sub UL
-          const sub = document.createElement('ul'); sub.className = 'sub';
-          li.querySelectorAll(':scope > .sub > li > a').forEach(a => {
-            const sLi = document.createElement('li');
-            const sA = document.createElement('a');
-            sA.href = a.getAttribute('href'); sA.textContent = a.textContent;
-            sLi.appendChild(sA); sub.appendChild(sLi);
-          });
-          liMobile.appendChild(sub);
-
-          // Toggle behavior
-          row.addEventListener('click', (e) => {
-            e.preventDefault();
-            liMobile.classList.toggle('open');
-          });
-        } else {
-          const a = li.querySelector('a');
-          const aM = document.createElement('a');
-          aM.href = a.getAttribute('href'); aM.textContent = a.textContent;
-          liMobile.appendChild(aM);
-        }
-        mobList.appendChild(liMobile);
-      });
-
-      scroll.appendChild(mobList);
-
-      // Optional quick actions at bottom (edit/remove as you like)
-      const pf = document.createElement('div');
-      pf.className = 'panel-footer';
-      pf.innerHTML = `
-        <a href="tel:+14089090900">Call</a>
-        <a href="mailto:RJ@TheNBAAgent.com">Email</a>
-        <a href="/contact.html">Contact Page</a>
-      `;
-
-      panel.append(scroll, pf);
-      hdr.appendChild(panel);
-
-      function setOpen(open){
-        panel.classList.toggle('open', open);
-        hdr.classList.toggle('menu-open', open);
-        document.body.classList.toggle('nav-open', open);
-        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
-        hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
+      function openMenu(){
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden','false');
+        document.body.classList.add('nav-open');
+        hamb.setAttribute('aria-expanded','true');
+      }
+      function closeMenu(){
+        overlay.hidden = true;
+        overlay.setAttribute('aria-hidden','true');
+        document.body.classList.remove('nav-open');
+        hamb.setAttribute('aria-expanded','false');
+        // collapse accordions
+        accordions.forEach(btn => {
+          btn.setAttribute('aria-expanded','false');
+          const sub = btn.parentElement.querySelector('.overlay-sub');
+          if (sub) sub.classList.remove('open');
+        });
       }
 
-      // Toggle main overlay
-      hamb.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+      // Toggle
+      hamb.addEventListener('click', () => {
+        const expanded = hamb.getAttribute('aria-expanded') === 'true';
+        expanded ? closeMenu() : openMenu();
+      });
 
-      // Close on any link tap inside panel
-      panel.addEventListener('click', (e) => {
+      // Close on backdrop click
+      backdrop.addEventListener('click', closeMenu);
+
+      // Close on Esc
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      // Close when a link is tapped
+      overlayNav.addEventListener('click', (e) => {
         const a = e.target.closest('a');
-        if (a) setOpen(false);
+        if (a) closeMenu();
       });
 
-      // Close if tapping outside (on the dim backdrop area)
-      hdr.addEventListener('click', (e) => {
-        if (!panel.classList.contains('open')) return;
-        const insidePanel = e.target.closest('.mobile-panel') || e.target.closest('[data-nav-toggle]');
-        if (!insidePanel) setOpen(false);
+      // Accordion behavior
+      accordions.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          const sub = btn.parentElement.querySelector('.overlay-sub');
+          if (sub) sub.classList.toggle('open', !expanded);
+        });
       });
 
-      // Keep height stable on orientation change
-      window.addEventListener('resize', () => {
-        if (panel.classList.contains('open')) {
-          // force reflow; Safari/iOS quirk
-          panel.style.transform = 'translateY(0)';
-        }
-      });
+      // Ensure overlay top bar height matches header height on mobile
+      function syncTopbarHeight(){
+        const rect = navWrap.getBoundingClientRect();
+        const h = Math.round(rect.height);
+        overlay.style.setProperty('--topbar', h + 'px');
+      }
+      syncTopbarHeight();
+      window.addEventListener('resize', syncTopbarHeight);
     })();
   </script>
 </nav>
