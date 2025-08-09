@@ -12,6 +12,7 @@
   <!-- Shared site CSS (nav + footer + mobile fixes) -->
   <link rel="stylesheet" href="/assets/site.css">
 
+  <!-- Page-specific styles only -->
   <style>
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#6b7280; --panel:#F1E6DE; --divider:#e5e7eb; --brand:#0b0b0b; --accent:#111827;
@@ -46,15 +47,6 @@
     .copy .lead{font-size:1.05rem;font-weight:700}
     .copy p{margin:0 0 16px}
 
-    /* PAGE FOOTER SPACING (content area’s footer container) */
-    footer{margin:56px 0 28px}
-    .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:16px;border-top:1px solid var(--divider);text-align:center}
-    .foot h4{margin:0 0 8px;font-size:.9rem;color:var(--muted);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-    .foot .cell,.foot .email{font-weight:700}
-    .foot .follow{display:flex;gap:10px;justify-content:center}
-    .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
-    .foot .follow img{width:18px;height:18px}
-
     /* MOBILE */
     @media (max-width:980px){
       .about{grid-template-columns:1fr}
@@ -68,7 +60,7 @@
   </style>
 </head>
 <body>
-  <!-- Shared header injected from /header.html -->
+  <!-- Shared header -->
   <div id="site-header" data-src="/header.html"></div>
 
   <!-- ABOUT SECTION -->
@@ -80,10 +72,6 @@
           <div class="portrait">
             <img 
               src="https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1"
-              srcset="
-                https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1 1x,
-                https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1 2x
-              "
               alt="Ramsin Jacob headshot" />
           </div>
           <div class="name">RAMSIN JACOB</div>
@@ -115,10 +103,10 @@
     </section>
   </main>
 
-  <!-- Shared footer injected from /footer.html -->
+  <!-- Shared footer -->
   <div id="site-footer" data-src="/footer.html"></div>
 
-  <!-- Shared behavior (injects partials; handles hover+click; mobile menu) -->
+  <!-- Shared behavior -->
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
