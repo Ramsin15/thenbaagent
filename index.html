@@ -29,16 +29,40 @@
     .links a{color:var(--brand);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:10px;position:relative;text-transform:uppercase;letter-spacing:.14em;font-size:.85rem;display:inline-block}
     .links a.active::after,.links a:hover::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:var(--accent)}
 
-    /* Dropdown */
-    .has-sub{display:inline-flex;align-items:center}
-    .has-sub>.caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
-    .has-sub>.caret::after{content:"▾";font-size:.9rem}
-    .sub{position:absolute;top:100%;left:8px;min-width:220px;margin-top:6px;background:#fff;border:1px solid var(--divider);border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,.12);padding:8px;display:none}
-    .sub li{list-style:none}
-    .sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
-    .sub a:hover{background:#f8fafc}
-    @media (pointer:fine){ .has-sub:hover .sub{display:block} }
-    .has-sub.open .sub{display:block}
+    /* Dropdown (stable hover + focus + click) */
+.has-sub{position:relative; display:inline-flex; align-items:center}
+.has-sub > .caret{margin-left:4px;border:0;background:transparent;cursor:pointer;line-height:1;padding:8px;display:inline-flex;align-items:center;justify-content:center}
+.has-sub > .caret::after{content:"▾";font-size:.9rem}
+
+/* Remove the gap that causes flicker; keep it open on hover/focus */
+.sub{
+  position:absolute;
+  top:100%;              /* sit flush under the parent (no hover gap) */
+  left:0;
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--divider);
+  border-radius:10px;
+  box-shadow:0 12px 30px rgba(2,6,23,.12);
+  padding:8px;           /* we use padding instead of margin-top to avoid gaps */
+  margin-top:0;          /* important: no margin gap */
+  display:none;
+  z-index:50;
+}
+
+/* Show submenu while hovering the li, or when keyboard focusing inside */
+.has-sub:hover .sub,
+.has-sub:focus-within .sub{ display:block; }
+
+/* Optional: tighter hit area on items */
+.sub li{list-style:none}
+.sub a{display:block;padding:10px 12px;border-radius:8px;letter-spacing:.08em;text-transform:none;font-weight:700}
+.sub a:hover{background:#f8fafc}
+
+/* Keep the hover-driven behavior only on devices with a mouse */
+@media (pointer:fine){
+  .has-sub:hover .sub{ display:block; }
+}
 
     /* ===== LAYOUT ===== */
     .wrap{width:min(1100px,94vw);margin:32px auto 0}
