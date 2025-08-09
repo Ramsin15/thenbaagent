@@ -83,12 +83,14 @@
   .brand {
     text-decoration: none;
     color: #000;
+    text-align: left;
   }
 
   .name {
     display: block;
     font-size: 1.5rem;
     font-weight: bold;
+    white-space: nowrap;
   }
 
   .kicker {
@@ -203,8 +205,8 @@
     z-index: 9999;
   }
 
-  /* Show overlay when checkbox is checked */
-  .m-toggle:checked ~ .m-overlay {
+  /* Show overlay when checkbox is checked - more specific selector for contact page */
+  .nav-wrap .m-toggle:checked ~ .m-overlay {
     display: block;
   }
 
@@ -250,6 +252,21 @@
 
   .m-links summary {
     cursor: pointer;
+    position: relative;
+  }
+
+  .m-links summary::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #666;
+  }
+
+  .m-links details[open] summary::after {
+    transform: translateY(-50%) rotate(180deg);
   }
 
   .m-links summary::-webkit-details-marker {
