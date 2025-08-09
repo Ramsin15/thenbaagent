@@ -27,17 +27,23 @@
 
     /* LAYOUT */
     .wrap{width:min(1100px,94vw);margin:32px auto 0}
-    .about{display:grid;grid-template-columns:390px 1fr;gap:44px;align-items:stretch} /* stretch ensures equal column heights */
+    .about{display:grid;grid-template-columns:390px 1fr;gap:44px;align-items:stretch}
 
     /* LEFT PANEL */
-    .panel{background:var(--panel);border-radius:14px;overflow:hidden;border:1px solid #eee;box-shadow:0 10px 34px rgba(17,24,39,.08);display:flex;flex-direction:column} /* flex so footer locks to bottom */
+    .panel{background:var(--panel);border-radius:14px;overflow:hidden;border:1px solid #eee;box-shadow:0 10px 34px rgba(17,24,39,.08);display:flex;flex-direction:column}
     .panel-inner{padding:26px 22px 18px}
     .portrait{display:grid;place-items:center;padding:8px 0 12px}
-    .portrait img{width:248px;height:248px;object-fit:cover;border-radius:999px;display:block;box-shadow:0 12px 28px rgba(0,0,0,.15)}
-    .name{ text-align:center;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.05em;margin-top:18px;font-size:clamp(1.4rem,3.2vw,1.8rem)}
+    .portrait img{
+      max-width:248px; /* visual display size */
+      height:auto;     /* keep aspect ratio */
+      border-radius:999px;
+      display:block;
+      box-shadow:0 12px 28px rgba(0,0,0,.15);
+    }
+    .name{text-align:center;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.05em;margin-top:18px;font-size:clamp(1.4rem,3.2vw,1.8rem)}
     .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
     .role{text-align:center;font-weight:900;letter-spacing:.35em;font-size:.9rem}
-    .panel-footer{background:#fff;padding:16px 18px;border-top:1px solid var(--divider);margin-top:auto} /* push to bottom */
+    .panel-footer{background:#fff;padding:16px 18px;border-top:1px solid var(--divider);margin-top:auto}
     .icons{display:flex;gap:12px;justify-content:center}
     .icons a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--divider)}
     .icons img{width:18px;height:18px;display:block}
@@ -46,9 +52,6 @@
     .copy{font-size:1rem;max-width:70ch;margin-inline:auto;display:flex;flex-direction:column;justify-content:space-between}
     .copy .lead{font-size:1.05rem;font-weight:700}
     .copy p{margin:0 0 16px}
-
-    /* SECTION BOTTOM LINEUP */
-    .about > *{min-height:100%} /* ensure both columns share grid row height */
 
     /* FOOTER */
     footer{margin:56px 0 28px}
@@ -70,7 +73,7 @@
       .nav{justify-content:center;gap:12px}
       .brand{display:none}
       .links a{font-size:.86rem;letter-spacing:.18em}
-      .portrait img{width:220px;height:220px}
+      .portrait img{max-width:220px}
       .name{font-size:1.5rem}
     }
   </style>
@@ -91,15 +94,21 @@
     </nav>
   </div>
 
-  <!-- ABOUT SECTION (HOME) -->
+  <!-- ABOUT SECTION -->
   <main class="wrap">
     <section class="about">
       <!-- LEFT PORTRAIT PANEL -->
       <aside class="panel">
         <div class="panel-inner">
           <div class="portrait">
-            <!-- Dropbox share links should use raw=1 to render -->
-            <img src="https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1" alt="Ramsin Jacob headshot" />
+            <img 
+              src="https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1"
+              srcset="
+                https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1 1x,
+                https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1 2x
+              "
+              alt="Ramsin Jacob headshot"
+            />
           </div>
           <div class="name">RAMSIN JACOB</div>
           <div class="rule"></div>
@@ -125,7 +134,7 @@
       </article>
     </section>
 
-    <!-- DUPLICATED FOOTER -->
+    <!-- FOOTER -->
     <footer>
       <div class="foot">
         <div>
