@@ -214,7 +214,7 @@
         /* PAGE HEADER */
         .page-header {
             text-align: center;
-            margin-bottom: 56px;
+            margin-bottom: 48px;
         }
 
         .page-title {
@@ -233,20 +233,23 @@
             font-size: .9rem;
         }
 
-        /* PLAYERS GRID */
+        /* PLAYERS GRID - Reduced size by 20% */
         .players-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 36px;
-            margin-top: 48px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* Reduced from 450px */
+            gap: 28px; /* Reduced from 36px */
+            margin-top: 40px; /* Reduced from 48px */
+            max-width: 900px; /* Added max-width to center and constrain */
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* PLAYER CARD */
+        /* PLAYER CARD - Reduced size by 20% */
         .player-card {
             background: var(--panel);
             border: 1px solid #eee;
-            border-radius: 14px;
-            box-shadow: 0 10px 34px rgba(17, 24, 39, .08);
+            border-radius: 12px; /* Reduced from 14px */
+            box-shadow: 0 8px 28px rgba(17, 24, 39, .08); /* Reduced shadow */
             overflow: hidden;
             transition: all 0.3s ease;
             text-decoration: none;
@@ -255,8 +258,8 @@
         }
 
         .player-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(17, 24, 39, .12);
+            transform: translateY(-3px); /* Reduced from -4px */
+            box-shadow: 0 14px 40px rgba(17, 24, 39, .12); /* Reduced shadow */
         }
 
         .player-image {
@@ -274,19 +277,19 @@
         }
 
         .player-card:hover .player-image img {
-            transform: scale(1.05);
+            transform: scale(1.04); /* Reduced from 1.05 */
         }
 
         .player-info {
-            padding: 28px 24px;
+            padding: 22px 20px; /* Reduced from 28px 24px */
             text-align: center;
         }
 
         .player-name {
             font-family: "Playfair Display", serif;
             font-weight: 700;
-            font-size: 1.8rem;
-            margin: 0 0 8px;
+            font-size: 1.5rem; /* Reduced from 1.8rem */
+            margin: 0 0 6px; /* Reduced from 8px */
             letter-spacing: .02em;
         }
 
@@ -295,21 +298,21 @@
             font-weight: 800;
             letter-spacing: .28em;
             text-transform: uppercase;
-            font-size: .85rem;
-            margin: 0 0 16px;
+            font-size: .75rem; /* Reduced from .85rem */
+            margin: 0 0 14px; /* Reduced from 16px */
         }
 
         .player-status {
-            font-size: .9rem;
+            font-size: .85rem; /* Reduced from .9rem */
             line-height: 1.5;
-            margin: 0 0 20px;
+            margin: 0 0 16px; /* Reduced from 20px */
             color: var(--ink);
             opacity: 0.8;
         }
 
         .view-profile {
             display: inline-block;
-            padding: 10px 24px;
+            padding: 8px 20px; /* Reduced from 10px 24px */
             background: var(--brand);
             color: white;
             text-decoration: none;
@@ -317,13 +320,13 @@
             font-weight: 800;
             letter-spacing: .14em;
             text-transform: uppercase;
-            font-size: .75rem;
+            font-size: .7rem; /* Reduced from .75rem */
             transition: all 0.3s ease;
         }
 
         .player-card:hover .view-profile {
             background: var(--accent);
-            transform: scale(1.05);
+            transform: scale(1.04); /* Reduced from 1.05 */
         }
 
         /* FOOTER (matching site footer) */
@@ -382,8 +385,8 @@
         @media (max-width: 980px) {
             .players-grid {
                 grid-template-columns: 1fr;
-                max-width: 520px;
-                margin: 48px auto;
+                max-width: 420px; /* Reduced from 520px */
+                margin: 40px auto;
             }
             
             .nav {
@@ -417,7 +420,7 @@
             }
             
             .players-grid {
-                gap: 28px;
+                gap: 22px; /* Reduced from 28px */
             }
         }
     </style>
@@ -430,7 +433,7 @@
     <main class="wrap">
         <header class="page-header">
             <h1 class="page-title">Our Players</h1>
-            <p class="page-subtitle">Elite Basketball Talent</p>
+            <p class="page-subtitle">NBA Basketball Talent</p>
         </header>
 
         <div class="players-grid">
