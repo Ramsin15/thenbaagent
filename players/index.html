@@ -22,13 +22,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     
-    <!-- Preconnect to Dropbox for faster image loading -->
-    <link rel="preconnect" href="https://www.dropbox.com">
-    <link rel="dns-prefetch" href="https://www.dropbox.com">
+    <!-- Preconnect to Cloudinary for faster image loading -->
+    <link rel="preconnect" href="https://res.cloudinary.com">
+    <link rel="dns-prefetch" href="https://res.cloudinary.com">
     
-    <!-- Preload critical images -->
-    <link rel="preload" as="image" href="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" fetchpriority="high">
-    <link rel="preload" as="image" href="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" fetchpriority="high">
+    <!-- Preload critical images from Cloudinary -->
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658951/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927_lllhxi.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658946/convert_2_gkafwu.jpg" fetchpriority="high">
     
     <style>
         :root {
@@ -469,10 +469,10 @@
             <a href="lacey.html" class="player-card">
                 <div class="player-image">
                     <picture>
-                        <!-- WebP version for browsers that support it (smaller file size) -->
-                        <source type="image/webp" srcset="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1">
-                        <!-- Fallback to JPEG -->
-                        <img src="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" 
+                        <!-- WebP version for browsers that support it (Cloudinary can auto-format) -->
+                        <source type="image/webp" srcset="https://res.cloudinary.com/dfuqj6djw/image/upload/f_webp,q_auto/v1755658951/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927_lllhxi.jpg">
+                        <!-- Standard JPEG from Cloudinary -->
+                        <img src="https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658951/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927_lllhxi.jpg" 
                              alt="Lacey James in action" 
                              loading="eager"
                              decoding="async"
@@ -491,10 +491,10 @@
             <a href="birima.html" class="player-card">
                 <div class="player-image">
                     <picture>
-                        <!-- WebP version for browsers that support it -->
-                        <source type="image/webp" srcset="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1">
-                        <!-- Fallback to JPEG -->
-                        <img src="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" 
+                        <!-- WebP version for browsers that support it (Cloudinary can auto-format) -->
+                        <source type="image/webp" srcset="https://res.cloudinary.com/dfuqj6djw/image/upload/f_webp,q_auto/v1755658946/convert_2_gkafwu.jpg">
+                        <!-- Standard JPEG from Cloudinary -->
+                        <img src="https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658946/convert_2_gkafwu.jpg" 
                              alt="Birima Seck in action" 
                              loading="eager"
                              decoding="async"
@@ -571,10 +571,10 @@
         
         // Preload images after page load for instant viewing
         window.addEventListener('load', function() {
-            // Preload both images in background after initial page load
+            // Preload both Cloudinary images in background after initial page load
             const imageUrls = [
-                'https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1',
-                'https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1'
+                'https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658951/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927_lllhxi.jpg',
+                'https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658946/convert_2_gkafwu.jpg'
             ];
             
             imageUrls.forEach(url => {
