@@ -281,12 +281,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
-        
-        .player-image img.loaded {
-            opacity: 1;
+            transition: transform 0.3s ease;
         }
 
         .player-card:hover .player-image img {
@@ -531,13 +526,11 @@
                 const placeholder = new Image();
                 placeholder.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533"%3E%3Cfilter id="blur"%3E%3CfeGaussianBlur stdDeviation="5"/%3E%3C/filter%3E%3Crect fill="%23F1E6DE" width="400" height="533" filter="url(%23blur)"/%3E%3C/svg%3E';
                 
-                // When image loads, remove loading and add loaded class
+                // When image loads, remove loading class
                 if (img.complete && img.naturalHeight !== 0) {
-                    img.classList.add('loaded');
                     img.parentElement.classList.remove('loading');
                 } else {
                     img.addEventListener('load', function() {
-                        this.classList.add('loaded');
                         this.parentElement.classList.remove('loading');
                     });
                 }
