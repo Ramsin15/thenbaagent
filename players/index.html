@@ -22,6 +22,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     
+    <!-- Preconnect to Dropbox for faster image loading -->
+    <link rel="preconnect" href="https://www.dropbox.com">
+    <link rel="dns-prefetch" href="https://www.dropbox.com">
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" fetchpriority="high">
+    <link rel="preload" as="image" href="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" fetchpriority="high">
+    
     <style>
         :root {
             --bg: #ffffff;
@@ -460,12 +468,21 @@
             <!-- Lacey James Card -->
             <a href="lacey.html" class="player-card">
                 <div class="player-image">
-                    <img src="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" alt="Lacey James in action" loading="lazy" decoding="async">
+                    <picture>
+                        <!-- WebP version for browsers that support it (smaller file size) -->
+                        <source type="image/webp" srcset="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1">
+                        <!-- Fallback to JPEG -->
+                        <img src="https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1" 
+                             alt="Lacey James in action" 
+                             loading="eager"
+                             decoding="async"
+                             fetchpriority="high">
+                    </picture>
                 </div>
                 <div class="player-info">
                     <h2 class="player-name">LACEY JAMES</h2>
                     <p class="player-position">PF / C</p>
-                    <p class="player-status">Free Agent<br>2024/25 Season:<br> Toronto Raptors 905 (Starting Center)</p>
+                    <p class="player-status">Free Agent<br>2024/25 Season: Toronto Raptors 905 (Starting Center)</p>
                     <span class="view-profile">View Profile</span>
                 </div>
             </a>
@@ -473,12 +490,21 @@
             <!-- Birima Seck Card -->
             <a href="birima.html" class="player-card">
                 <div class="player-image">
-                    <img src="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" alt="Birima Seck in action" loading="lazy" decoding="async">
+                    <picture>
+                        <!-- WebP version for browsers that support it -->
+                        <source type="image/webp" srcset="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1">
+                        <!-- Fallback to JPEG -->
+                        <img src="https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1" 
+                             alt="Birima Seck in action" 
+                             loading="eager"
+                             decoding="async"
+                             fetchpriority="high">
+                    </picture>
                 </div>
                 <div class="player-info">
                     <h2 class="player-name">BIRIMA SECK</h2>
                     <p class="player-position">PF / C</p>
-                    <p class="player-status">Undrafted Free Agent<br>2024/25 Season:<br> @ Fairfield College</p>
+                    <p class="player-status">Undrafted Free Agent<br>2024/25 Season: @ Fairfield College</p>
                     <span class="view-profile">View Profile</span>
                 </div>
             </a>
@@ -493,7 +519,7 @@
     
     <!-- Image loading optimization -->
     <script>
-        // Add fade-in effect when images load
+        // Progressive image loading with blur-up technique
         document.addEventListener('DOMContentLoaded', function() {
             const images = document.querySelectorAll('.player-image img');
             
@@ -501,8 +527,12 @@
                 // Add loading class to parent
                 img.parentElement.classList.add('loading');
                 
+                // Create a low-quality placeholder
+                const placeholder = new Image();
+                placeholder.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533"%3E%3Cfilter id="blur"%3E%3CfeGaussianBlur stdDeviation="5"/%3E%3C/filter%3E%3Crect fill="%23F1E6DE" width="400" height="533" filter="url(%23blur)"/%3E%3C/svg%3E';
+                
                 // When image loads, remove loading and add loaded class
-                if (img.complete) {
+                if (img.complete && img.naturalHeight !== 0) {
                     img.classList.add('loaded');
                     img.parentElement.classList.remove('loading');
                 } else {
@@ -512,11 +542,47 @@
                     });
                 }
                 
-                // Handle error case
+                // Handle error case with a better fallback
                 img.addEventListener('error', function() {
                     this.parentElement.classList.remove('loading');
-                    this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533"%3E%3Crect fill="%23ddd" width="400" height="533"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="20"%3EImage Loading...%3C/text%3E%3C/svg%3E';
+                    // Create a styled placeholder
+                    this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533"%3E%3Crect fill="%23F1E6DE" width="400" height="533"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="18"%3EPlayer Image%3C/text%3E%3C/svg%3E';
                 });
+            });
+            
+            // Intersection Observer for truly lazy loading
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            // Start loading the image when it's about to enter viewport
+                            img.classList.add('loading-started');
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '50px' // Start loading 50px before entering viewport
+                });
+                
+                images.forEach(img => imageObserver.observe(img));
+            }
+        });
+        
+        // Preload images after page load for instant viewing
+        window.addEventListener('load', function() {
+            // Preload both images in background after initial page load
+            const imageUrls = [
+                'https://www.dropbox.com/scl/fi/qkztfuw4myptop9v8f9c4/03262025_LongIslandNets_Raptors905_Bonin-75-851_6927.JPG?rlkey=svyta6slrfbmv49alprzsjx8l&raw=1',
+                'https://www.dropbox.com/scl/fi/3eyw5jslxpitncpgufb3w/convert-2.jpeg?rlkey=i0jp3efd64xyobx7iphupqwx8&st=7l68bmc1&raw=1'
+            ];
+            
+            imageUrls.forEach(url => {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.as = 'image';
+                link.href = url;
+                document.head.appendChild(link);
             });
         });
     </script>
