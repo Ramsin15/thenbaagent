@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The NBA Agent — About</title>
   <meta name="description" content="About Ramsin Jacob — Licensed NBA Player Agent via NBPA." />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Preconnect to Cloudinary for faster image loading -->
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  
+  <!-- Preload critical image from Cloudinary -->
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658951/CROP_2_s4rekv.png" fetchpriority="high">
 
   <!-- Shared site CSS (nav + footer + mobile fixes) -->
   <link rel="stylesheet" href="/assets/site.css">
@@ -33,6 +41,11 @@
     .portrait img{
       max-width:248px;height:auto;display:block;border-radius:999px;box-shadow:0 12px 28px rgba(0,0,0,.15);
       image-rendering:auto;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    .portrait img.loaded{
+      opacity: 1;
     }
     .name{text-align:center;font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.05em;margin-top:18px;font-size:clamp(1.4rem,3.2vw,1.8rem)}
     .rule{height:1px;background:#1f2937;opacity:.25;margin:14px auto;width:72%}
@@ -46,6 +59,23 @@
     .copy{font-size:1rem;max-width:70ch;margin-inline:auto;display:flex;flex-direction:column;justify-content:space-between}
     .copy .lead{font-size:1.05rem;font-weight:700}
     .copy p{margin:0 0 16px}
+    
+    /* Loading skeleton animation */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    .portrait.loading {
+      background: linear-gradient(90deg, 
+        #f0f0f0 0%, 
+        #f8f8f8 50%, 
+        #f0f0f0 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 999px;
+      min-height: 248px;
+    }
 
     /* MOBILE */
     @media (max-width:980px){
@@ -70,9 +100,17 @@
       <aside class="panel">
         <div class="panel-inner">
           <div class="portrait">
-            <img 
-              src="https://www.dropbox.com/scl/fi/qcmsn4729tmzj0joo7z5r/CROP_2.png?rlkey=9bmzfwsrrt4jm0cl4kkol1ai7&raw=1"
-              alt="Ramsin Jacob headshot" />
+            <picture>
+              <!-- WebP version for browsers that support it (Cloudinary can auto-format) -->
+              <source type="image/webp" srcset="https://res.cloudinary.com/dfuqj6djw/image/upload/f_webp,q_auto/v1755658951/CROP_2_s4rekv.png">
+              <!-- PNG from Cloudinary with auto quality -->
+              <img 
+                src="https://res.cloudinary.com/dfuqj6djw/image/upload/q_auto/v1755658951/CROP_2_s4rekv.png"
+                alt="Ramsin Jacob headshot"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high" />
+            </picture>
           </div>
           <div class="name">RAMSIN JACOB</div>
           <div class="rule"></div>
@@ -108,5 +146,46 @@
 
   <!-- Shared behavior -->
   <script src="/assets/site.js" defer></script>
+  
+  <!-- Image loading optimization -->
+  <script>
+    // Progressive image loading
+    document.addEventListener('DOMContentLoaded', function() {
+      const portraitContainer = document.querySelector('.portrait');
+      const portraitImg = portraitContainer.querySelector('img');
+      
+      if (portraitImg) {
+        // Add loading class to container
+        portraitContainer.classList.add('loading');
+        
+        // When image loads, remove loading and add loaded class
+        if (portraitImg.complete && portraitImg.naturalHeight !== 0) {
+          portraitImg.classList.add('loaded');
+          portraitContainer.classList.remove('loading');
+        } else {
+          portraitImg.addEventListener('load', function() {
+            this.classList.add('loaded');
+            portraitContainer.classList.remove('loading');
+          });
+        }
+        
+        // Handle error case
+        portraitImg.addEventListener('error', function() {
+          portraitContainer.classList.remove('loading');
+          // Create a styled placeholder
+          this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 248"%3E%3Ccircle cx="124" cy="124" r="124" fill="%23F1E6DE"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="18"%3EProfile%3C/text%3E%3C/svg%3E';
+        });
+      }
+    });
+    
+    // Preload image after page load for optimal performance
+    window.addEventListener('load', function() {
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = 'https://res.cloudinary.com/dfuqj6djw/image/upload/v1755658951/CROP_2_s4rekv.png';
+      document.head.appendChild(link);
+    });
+  </script>
 </body>
 </html>
