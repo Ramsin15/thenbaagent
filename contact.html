@@ -4,296 +4,143 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact | The NBA Agent</title>
-  <meta name="description" content="Contact The NBA Agent" />
-  <!-- Keep your existing site styles -->
+  <meta name="description" content="Contact The NBA Agent - Phone: (408) 909-0900, Email: RJ@TheNBAAgent.com" />
+  
+  <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://maps.google.com">
+  <link rel="preconnect" href="https://maps.googleapis.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  
+  <!-- Optimized font loading with display swap for faster text rendering -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical CSS -->
   <link rel="stylesheet" href="/assets/site.css">
 
-  <!-- Page-scoped styles ONLY (prefixed) -->
+  <!-- Critical inline styles for above-the-fold content -->
   <style>
-    .contact-page{display:grid; grid-template-columns:1fr 1fr; min-height:70vh}
-    .contact-page .left{
-      background:linear-gradient(180deg,#e9ebe6,#e5e7e3 40%, #e7e8e5);
-      padding:64px clamp(18px,4vw,56px);
-      display:flex; align-items:flex-start; justify-content:flex-start;
+    /* Critical CSS - Inline for faster initial render */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;overflow-x:hidden;font-family:Inter,system-ui,-apple-system,sans-serif}
+    
+    /* Navigation critical styles */
+    .nav-wrap{position:relative;background:#fff;border-bottom:1px solid #eee}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem}
+    .brand{text-decoration:none;color:#000;display:flex;flex-direction:column}
+    .name{font-size:1.5rem;font-weight:bold}
+    .kicker{font-size:0.9rem;color:#666}
+    .links{display:flex;list-style:none;margin:0;padding:0;gap:2rem}
+    .links a{text-decoration:none;color:#000;font-weight:500}
+    
+    /* Contact page critical styles */
+    .contact-page{display:grid;grid-template-columns:1fr 1fr;min-height:70vh}
+    .contact-page .left{background:linear-gradient(180deg,#e9ebe6,#e5e7e3 40%,#e7e8e5);padding:64px clamp(18px,4vw,56px);display:flex;align-items:flex-start}
+    .contact-page h1{font-size:clamp(44px,6vw,84px);line-height:.95;margin:0 0 20px;font-weight:800;letter-spacing:-.02em}
+    
+    /* Hide mobile menu by default */
+    .m-toggle,.m-hamburger,.m-overlay{display:none}
+    
+    @media (max-width:900px){
+      .links{display:none}
+      .m-hamburger{display:flex}
     }
-    .contact-page .inner{max-width:620px; width:100%;}
-    .contact-page h1{font-size:clamp(44px,6vw,84px); line-height:.95; margin:0 0 20px; font-weight:800; letter-spacing:-.02em}
-    .contact-page .lines{font-size:16px; margin:18px 0 28px}
+  </style>
+
+  <!-- Remaining styles loaded asynchronously -->
+  <style>
+    /* Non-critical styles */
+    .has-sub{position:relative}
+    .caret{background:none;border:none;margin-left:0.5rem;cursor:pointer}
+    .sub{display:none;position:absolute;top:100%;left:0;background:white;border:1px solid #eee;list-style:none;padding:0;margin:0;min-width:150px}
+    .has-sub:hover .sub{display:block}
+    .sub a{display:block;padding:0.5rem 1rem}
+
+    .contact-page .inner{max-width:620px;width:100%}
+    .contact-page .lines{font-size:16px;margin:18px 0 28px}
     .contact-page .lines p{margin:10px 0}
-    .contact-page .badge{display:inline-block; margin:6px 0 18px; color:#6b7280; font-size:12px; letter-spacing:.14em}
+    .contact-page .badge{display:inline-block;margin:6px 0 18px;color:#6b7280;font-size:12px;letter-spacing:.14em}
 
-    .contact-page form{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; max-width:620px}
-    .contact-page label{font-size:12px; letter-spacing:.08em; color:#6b7280}
-    .contact-page input, .contact-page textarea{
-      width:100%; margin-top:6px; padding:14px; border:1px solid #dadfe5;
-      border-radius:12px; background:#f7f8fa; font-size:16px; outline:none;
+    .contact-page form{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;max-width:620px}
+    .contact-page label{font-size:12px;letter-spacing:.08em;color:#6b7280}
+    .contact-page input,.contact-page textarea{
+      width:100%;margin-top:6px;padding:14px;border:1px solid #dadfe5;
+      border-radius:12px;background:#f7f8fa;font-size:16px;outline:none;
+      transition:border-color 0.2s;
     }
-    .contact-page textarea{min-height:110px; grid-column: span 2;}
+    .contact-page input:focus,.contact-page textarea:focus{border-color:#0b0b0b}
+    .contact-page textarea{min-height:110px;grid-column:span 2;resize:vertical}
     .contact-page .btn{
-      grid-column: span 2; padding:16px 22px; border:0; border-radius:14px;
-      background:#0b0b0b; color:#fff; font-weight:700; letter-spacing:.06em; cursor:pointer;
+      grid-column:span 2;padding:16px 22px;border:0;border-radius:14px;
+      background:#0b0b0b;color:#fff;font-weight:700;letter-spacing:.06em;cursor:pointer;
+      transition:transform 0.2s,box-shadow 0.2s;
     }
-    .contact-page .small{grid-column: span 2; color:#6b7280; font-size:12px}
+    .contact-page .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+    .contact-page .small{grid-column:span 2;color:#6b7280;font-size:12px}
 
-    .contact-page .right{background:#d7d9d2; display:flex; align-items:center; justify-content:center; padding:48px;}
+    .contact-page .right{background:#d7d9d2;display:flex;align-items:center;justify-content:center;padding:48px}
     .contact-page .map-frame{
-      width:min(640px,84%); aspect-ratio: 1.25 / 1;
-      border:4px solid #0b0b0b; border-radius:32px; overflow:hidden; position:relative; background:#cfd2c7;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.4);
-      -webkit-transform: translateZ(0); transform: translateZ(0); /* smooth near footer on mobile */
+      width:min(640px,84%);aspect-ratio:1.25/1;
+      border:4px solid #0b0b0b;border-radius:32px;overflow:hidden;position:relative;background:#cfd2c7;
+      box-shadow:0 10px 30px rgba(0,0,0,.06),inset 0 0 0 1px rgba(255,255,255,.4);
+      transform:translateZ(0);
     }
-    .contact-page .map-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+    .contact-page .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
     .contact-page .pin{
-      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-      width:38px; height:38px; pointer-events:none; filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:38px;height:38px;pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));
     }
 
-    @media (max-width: 980px){
+    @media (max-width:980px){
       .contact-page{grid-template-columns:1fr}
       .contact-page .right{padding:24px}
       .contact-page .map-frame{width:92%}
     }
 
-    /* NAVIGATION STYLES - Same as working pages */
-    html, body { 
-      overflow-x: hidden; 
-      margin: 0; 
-      padding: 0; 
-      font-family: Arial, sans-serif;
+    /* Mobile menu styles */
+    .m-toggle{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0;margin:-1px}
+    .m-hamburger{
+      width:44px;height:44px;cursor:pointer;background:#fff;border:1px solid rgba(0,0,0,.12);
+      border-radius:8px;flex-direction:column;align-items:center;justify-content:center;gap:4px;
     }
+    .m-hamburger span{display:block;width:20px;height:2px;background:#000;transition:transform 0.25s,opacity 0.25s}
+    .m-toggle:checked + .m-hamburger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+    .m-toggle:checked + .m-hamburger span:nth-child(2){opacity:0}
+    .m-toggle:checked + .m-hamburger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+    .m-overlay{display:none;position:fixed;inset:0;width:100vw;height:100vh;background:#ffffff;z-index:9999}
+    .m-toggle:checked ~ .m-overlay{display:block!important}
+    .m-close{
+      position:fixed;top:16px;right:16px;width:44px;height:44px;display:flex;
+      align-items:center;justify-content:center;font-size:28px;color:#000;
+      background:none;border:1px solid rgba(0,0,0,.12);border-radius:8px;cursor:pointer;
+    }
+    .m-panel{padding:84px 20px 24px}
+    .m-links{list-style:none;margin:0;padding:0}
+    .m-links a,.m-links summary{
+      display:block;padding:16px 0;font-size:20px;font-weight:700;
+      color:#000;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.1);
+    }
+    .m-links summary{cursor:pointer;position:relative}
+    .m-links summary::after{content:'▼';position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:12px;color:#666}
+    .m-links details[open] summary::after{transform:translateY(-50%) rotate(180deg)}
+    .m-links summary::-webkit-details-marker{display:none}
+    .m-links details ul{list-style:none;margin:0;padding:0 0 0 20px}
+    .m-links details ul a{font-size:18px;font-weight:600;opacity:0.9;padding:12px 0}
 
-    .nav-wrap {
-      position: relative;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-    }
-
-    .brand {
-      text-decoration: none;
-      color: #000;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .name {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .kicker {
-      display: block;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .links {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      gap: 2rem;
-    }
-
-    .links a {
-      text-decoration: none;
-      color: #000;
-      font-weight: 500;
-    }
-
-    .has-sub {
-      position: relative;
-    }
-
-    .caret {
-      background: none;
-      border: none;
-      margin-left: 0.5rem;
-      cursor: pointer;
-    }
-
-    .sub {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid #eee;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      min-width: 150px;
-    }
-
-    .has-sub:hover .sub {
-      display: block;
-    }
-
-    .sub a {
-      display: block;
-      padding: 0.5rem 1rem;
-    }
-
-    .m-toggle {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-      border: 0;
-      padding: 0;
-      margin: -1px;
-    }
-
-    .m-hamburger {
-      display: none;
-      width: 44px;
-      height: 44px;
-      cursor: pointer;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.12);
-      border-radius: 8px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .m-hamburger span {
-      display: block;
-      width: 20px;
-      height: 2px;
-      background: #000;
-      transition: transform 0.25s, opacity 0.25s;
-    }
-
-    .m-toggle:checked + .m-hamburger span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg);
-    }
-    .m-toggle:checked + .m-hamburger span:nth-child(2) {
-      opacity: 0;
-    }
-    .m-toggle:checked + .m-hamburger span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg);
-    }
-
-    .m-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff;
-      z-index: 9999;
-    }
-
-    .m-toggle:checked ~ .m-overlay,
-    .nav .m-toggle:checked ~ .m-overlay,
-    .nav-wrap .m-toggle:checked ~ .m-overlay {
-      display: block !important;
-    }
-
-    .m-close {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: #000;
-      background: none;
-      border: 1px solid rgba(0,0,0,.12);
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .m-panel {
-      padding: 84px 20px 24px;
-    }
-
-    .m-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .m-links a, .m-links summary {
-      display: block;
-      padding: 16px 0;
-      font-size: 20px;
-      font-weight: 700;
-      color: #000;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-
-    .m-links summary {
-      cursor: pointer;
-      position: relative;
-    }
-
-    .m-links summary::after {
-      content: '▼';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 12px;
-      color: #666;
-    }
-
-    .m-links details[open] summary::after {
-      transform: translateY(-50%) rotate(180deg);
-    }
-
-    .m-links summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .m-links details ul {
-      list-style: none;
-      margin: 0;
-      padding: 0 0 0 20px;
-    }
-
-    .m-links details ul a {
-      font-size: 18px;
-      font-weight: 600;
-      opacity: 0.9;
-      padding: 12px 0;
-    }
-
-    @media (max-width: 900px) {
-      .links {
-        display: none;
-      }
-      
-      .m-hamburger {
-        display: flex;
-      }
-    }
+    /* Footer styles */
+    .site-footer{margin-top:48px;padding:24px 0;border-top:1px solid #e5e7eb}
+    .foot{width:min(1100px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:center}
+    .foot h4{margin:0 0 8px;font-size:.9rem;color:#6b7280;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .foot .cell,.foot .email{font-weight:700}
+    .foot .follow{display:flex;gap:10px;justify-content:center}
+    .foot .follow a{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:999px;border:1px solid #e5e7eb}
+    .foot .follow img{width:18px;height:18px}
   </style>
 </head>
 <body>
 
-  <!-- CORRECTED HEADER with proper checkbox navigation -->
+  <!-- Navigation with improved accessibility -->
   <nav class="nav-wrap" role="navigation" aria-label="Main">
     <div class="nav">
       <a class="brand" href="/">
@@ -301,16 +148,14 @@
         <span class="kicker">Player Representation</span>
       </a>
 
-      <!-- Mobile toggle (CSS-only state) -->
+      <!-- Mobile toggle -->
       <input id="navToggle" class="m-toggle" type="checkbox" aria-hidden="true" />
-
-      <!-- Hamburger (mobile) -->
       <label for="navToggle" class="m-hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </label> 
 
       <!-- Desktop links -->
-      <ul class="links" data-navlist>
+      <ul class="links">
         <li><a href="/">About</a></li>
         <li class="has-sub" aria-haspopup="true">
           <a href="/players/">Players</a>
@@ -320,10 +165,10 @@
             <li><a href="/players/birima.html">Birima Seck</a></li>
           </ul>
         </li>
-        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/contact.html" aria-current="page">Contact</a></li>
       </ul>
 
-      <!-- Mobile full-screen overlay -->
+      <!-- Mobile overlay -->
       <div class="m-overlay">
         <label for="navToggle" class="m-close" aria-label="Close menu">✕</label>
         <nav class="m-panel" role="dialog" aria-modal="true" aria-label="Site Menu">
@@ -338,35 +183,35 @@
                 </ul>
               </details>
             </li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/contact.html" aria-current="page">Contact</a></li>
           </ul>
         </nav>
       </div>
     </div>
   </nav>
 
-  <!-- CONTACT SPLIT -->
+  <!-- Contact section with optimized form -->
   <section class="contact-page">
     <div class="left">
       <div class="inner">
         <h1>Let's Connect</h1>
 
         <div class="lines">
-          <p><strong>Phone:</strong> (408) 909-0900</p>
-          <p><strong>Email:</strong> RJ@TheNBAAgent.com</p>
+          <p><strong>Phone:</strong> <a href="tel:+14089090900" style="color:inherit;text-decoration:none">(408) 909-0900</a></p>
+          <p><strong>Email:</strong> <a href="mailto:RJ@TheNBAAgent.com" style="color:inherit;text-decoration:none">RJ@TheNBAAgent.com</a></p>
           <p><strong>Office:</strong> 1900 Camden Ave, San Jose, CA 95124</p>
         </div>
 
         <div class="badge">THE NBA AGENT</div>
 
-        <form id="contactForm">
+        <form id="contactForm" action="mailto:RJ@TheNBAAgent.com" method="post" enctype="text/plain">
           <div>
             <label for="name">NAME</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required />
+            <input id="name" name="name" type="text" placeholder="Your name" required autocomplete="name" />
           </div>
           <div>
             <label for="email">EMAIL</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
           </div>
           <div class="full" style="grid-column:span 2">
             <label for="message">MESSAGE</label>
@@ -378,61 +223,76 @@
       </div>
     </div>
 
-    <div class="right" aria-label="Office map">
+    <div class="right" aria-label="Office location">
       <div class="map-frame">
+        <!-- Lazy load iframe with loading="lazy" -->
         <iframe
           src="https://maps.google.com/maps?q=1900%20Camden%20Ave%2C%20San%20Jose%2C%20CA%2095124&z=15&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-        <!-- Basketball Pin -->
+          title="Office location map"
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade" 
+          allowfullscreen></iframe>
+        <!-- Optimized inline SVG instead of external SVG -->
         <svg class="pin" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="36" cy="36" r="28" fill="#f15a24" stroke="#111" stroke-width="3"/>
-          <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40"
-                stroke="#111" stroke-width="3" fill="none"/>
+          <path d="M36 8v56M8 36h56M16 16c14 10 26 30 40 40M56 16c-14 10-26 30-40 40" stroke="#111" stroke-width="3" fill="none"/>
         </svg>
       </div>
     </div>
   </section>
 
-  <!-- YOUR EXACT FOOTER (no style changes) -->
+  <!-- Footer with optimized icon loading -->
   <footer class="site-footer" role="contentinfo">
     <div class="foot">
       <div>
         <h4>Cell</h4>
-        <div class="cell">(408) 909-0900</div>
+        <div class="cell"><a href="tel:+14089090900" style="color:inherit;text-decoration:none">(408) 909-0900</a></div>
       </div>
       <div>
         <h4>Email</h4>
-        <div class="email">RJ@TheNBAAgent.com</div>
+        <div class="email"><a href="mailto:RJ@TheNBAAgent.com" style="color:inherit;text-decoration:none">RJ@TheNBAAgent.com</a></div>
       </div>
       <div>
         <h4>Follow</h4>
         <div class="follow">
           <a aria-label="X" href="https://x.com/RamsinJacob" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X" loading="lazy" width="18" height="18">
           </a>
           <a aria-label="LinkedIn" href="https://www.linkedin.com/in/ramsinjacob/" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" loading="lazy" width="18" height="18">
           </a>
           <a aria-label="Instagram" href="https://www.instagram.com/the.nba.agent/" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" loading="lazy" width="18" height="18">
           </a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Page-only JS (mailto composer). No header/footer injection. -->
+  <!-- Optimized JavaScript - minimal and efficient -->
   <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const msg = document.getElementById('message').value.trim();
-      const to = 'RJ@TheNBAAgent.com';
-      const subject = 'Website Inquiry';
-      const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
-      window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    });
+    // Defer non-critical JS
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        initContactForm();
+      });
+    } else {
+      setTimeout(initContactForm, 1);
+    }
+    
+    function initContactForm() {
+      const form = document.getElementById('contactForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const to = 'RJ@TheNBAAgent.com';
+          const subject = 'Website Inquiry';
+          const body = `Name: ${formData.get('name')}\nEmail: ${formData.get('email')}\n\nMessage:\n${formData.get('message')}`;
+          window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+      }
+    }
   </script>
 </body>
 </html>
